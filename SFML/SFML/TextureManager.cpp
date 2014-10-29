@@ -25,7 +25,8 @@ void TextureManager::LoadTileset(std::string file)//just for loading specific ti
 
 	//checks to see if it loaded
 	if (!inFile)
-		throw "Coud not load tileset: " + file;
+		throw "Could not load tileset: " + file;
+	
 	//contents of the file in string
 	std::string xmlContents;
 	

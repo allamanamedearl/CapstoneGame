@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include <iostream>
 
 Engine::Engine()
 {
@@ -19,12 +20,20 @@ Engine::~Engine()
 }
 void Engine::LoadTextures()
 {
-	//loads top left square
-	sprite.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Assets/tileset.png",sf::IntRect(0,0,32,32));
-	textureManager->AddTexture(sprite);
+	
+	//OLD WAY TO LOAD TILES
+	/*sprite.loadFromFile("tileset.png",sf::IntRect(0,0,32,32));//loads top left square
+	textureManager->AddTexture(sprite,0);
 	sprite.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Assets/tileset.png", sf::IntRect(32, 0, 32, 32));
-	textureManager->AddTexture(sprite);
-	testTile = new Tile(textureManager->GetTexture(0));
+	textureManager->AddTexture(sprite,1);
+	testTile = new Tile(textureManager->GetTexture(0));*/
+	try{
+		textureManager->LoadTileset("tileset.xml");
+	}
+	catch(std::string msg){
+		std::cout << msg << std::endl;
+	}
+	
 }
 bool Engine::Init()
 {
