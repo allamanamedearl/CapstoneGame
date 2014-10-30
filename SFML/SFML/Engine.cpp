@@ -128,6 +128,7 @@ void Engine::RenderFrame()
 void Engine::ProcessInput()
 {
 	sf::Event evt;
+	player->GetInput();
 	//loop through all window events
 	while (window->pollEvent(evt))
 	{
@@ -138,7 +139,7 @@ void Engine::ProcessInput()
 			/*int x = camera->GetPosition().x;
 			int y = camera->GetPosition().y + 1;
 			camera->GoToCenter(x, y);*/
-			player->GetInput();
+			//player->GetInput();
 			keyDown = true;
 
 		}
