@@ -1,11 +1,13 @@
 #include "Engine.h"
 #include <iostream>
+#include <Windows.h>
 
 Engine::Engine()
 {
 	tileSize = 32;
 	camera = new Camera(720, 480, 0.2f);
 	keyDown = false;
+	timeSinceLastUpdate = 0;
 }
 Engine::~Engine()
 {
@@ -27,6 +29,7 @@ void Engine::LoadTextures()
 	sprite.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Assets/tileset.png", sf::IntRect(32, 0, 32, 32));
 	textureManager->AddTexture(sprite,1);
 	testTile = new Tile(textureManager->GetTexture(0));*/
+	playerTexture.loadFromFile("C:/Users/Cassie/Pictures/race_car.jpg");
 	textureManager->SetTileSize(tileSize);
 	std::cout << "LOAD TEXTURES" << std::endl;
 	//FOR TESTING LOADING TILESET FROM XML
@@ -47,6 +50,7 @@ bool Engine::Init()
 	//for testing
 	LoadLevel();
 	std::cout << "After LoadLevel() call" << std::endl;
+	player = new Player(&playerTexture);
 	if (!window)
 		return false;
 	return true;
@@ -118,6 +122,7 @@ void Engine::RenderFrame()
 	}
 	//window->draw(sprite);
 	//testTile->Draw(10, 10, window);
+	player->Draw(window);
 	window->display();
 }
 void Engine::ProcessInput()
@@ -130,19 +135,28 @@ void Engine::ProcessInput()
 			window->close();
 		if (evt.type == sf::Event::KeyPressed && keyDown ==false)
 		{
-			int x = camera->GetPosition().x;
+			/*int x = camera->GetPosition().x;
 			int y = camera->GetPosition().y + 1;
-			camera->GoToCenter(x, y);
+			camera->GoToCenter(x, y);*/
+			player->GetInput();
 			keyDown = true;
 
 		}
 		if (evt.type == sf::Event::KeyReleased)
+		{
 			keyDown = false;
+			player->SetVelocity(sf::Vector2f(0.0f, 0.0f));
+		}
 	}
+	//player->GetInput(window);
 }
 void Engine::Update()
 {
+	currentTime = GetTickCount64();
+	timeStep = currentTime - timeSinceLastUpdate;
 	camera->Update();
+	player->Update(timeStep);
+	timeSinceLastUpdate = currentTime;
 }
 void Engine::MainLoop()
 {

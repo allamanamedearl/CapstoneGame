@@ -4,6 +4,7 @@
 #include <SFML\Graphics.hpp>
 #include "TileMap.h"
 #include "Camera.h"
+#include "Player.h"
 class Engine
 {
 private:
@@ -22,6 +23,15 @@ private:
 	//map
 	TileMap* currLevel;
 	int tileSize;
+
+	//Player
+	Player *player;
+	sf::Texture playerTexture;
+
+	//Time
+	float currentTime;
+	float timeSinceLastUpdate;
+	float timeStep;
 
 	//initializes the engine
 	bool Init();
