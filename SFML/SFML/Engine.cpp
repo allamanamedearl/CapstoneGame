@@ -27,12 +27,15 @@ void Engine::LoadTextures()
 	sprite.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Assets/tileset.png", sf::IntRect(32, 0, 32, 32));
 	textureManager->AddTexture(sprite,1);
 	testTile = new Tile(textureManager->GetTexture(0));*/
+	textureManager->SetTileSize(tileSize);
+	std::cout << "BALLS" << std::endl;
 	try{
 		textureManager->LoadTileset("tileset.xml");
 	}
 	catch(std::string msg){
-		std::cout << msg << std::endl;
+		std::cout << "Failed to load.  Caught any exception." << std::endl;
 	}
+	
 	
 }
 bool Engine::Init()
@@ -42,7 +45,7 @@ bool Engine::Init()
 	LoadTextures();
 	//for testing
 	LoadLevel();
-	
+	std::cout << "After LoadLevel() call" << std::endl;
 	if (!window)
 		return false;
 	return true;

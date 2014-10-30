@@ -1,4 +1,5 @@
 #include "TextureManager.h"
+#include <iostream>
 
 TextureManager::TextureManager()
 {
@@ -60,6 +61,8 @@ void TextureManager::LoadTileset(std::string file)//just for loading specific ti
 
 		//go through each tile
 		rapidxml::xml_node<>* tile = imageFile->first_node("tile");
+
+		std::cout << "L1\n";
 		while (tile)
 		{
 			//get all the attributes of tile
@@ -74,6 +77,8 @@ void TextureManager::LoadTileset(std::string file)//just for loading specific ti
 
 			//go to next tile
 			tile = tile->next_sibling();
+			std::cout << "L2";
 		}
+		imageFile = imageFile->next_sibling();
 	}
 }
