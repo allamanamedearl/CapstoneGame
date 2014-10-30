@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Tile.h"
+#include "TextureManager.h"
 class TileMap
 {
 private:
@@ -19,7 +20,7 @@ public:
 	void AddTile(int x, int y, Tile* tile);
 	Tile* GetTile(int x, int y);
 
-	void LoadLevel();
+	void LoadLevel(std::string filename, TextureManager& textureMan);
 
 	int GetWidth();
 	int GetHeight();

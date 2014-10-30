@@ -28,14 +28,15 @@ void Engine::LoadTextures()
 	textureManager->AddTexture(sprite,1);
 	testTile = new Tile(textureManager->GetTexture(0));*/
 	textureManager->SetTileSize(tileSize);
-	std::cout << "BALLS" << std::endl;
-	try{
+	std::cout << "LOAD TEXTURES" << std::endl;
+	//FOR TESTING LOADING TILESET FROM XML
+	/*try{
 		textureManager->LoadTileset("tileset.xml");
 	}
 	catch(std::string msg){
 		std::cout << "Failed to load.  Caught any exception." << std::endl;
 	}
-	
+	*/
 	
 }
 bool Engine::Init()
@@ -52,7 +53,8 @@ bool Engine::Init()
 }
 void Engine::LoadLevel()
 {
-	int numTiles = 40;
+	//OLD WAY TESTING
+	/*int numTiles = 40;
 	currLevel = new TileMap(numTiles,numTiles);
 	Tile* tile;
 	for (int y = 0; y < numTiles; y++)
@@ -70,8 +72,9 @@ void Engine::LoadLevel()
 			}
 			currLevel->AddTile(x, y, tile);
 		}
-	}
-
+	}*/
+	currLevel = new TileMap(20, 20);//values don't matter, going to be changed in load level
+	currLevel->LoadLevel("level.xml", *textureManager);
 }
 void Engine::RenderFrame()
 {
@@ -83,6 +86,16 @@ void Engine::RenderFrame()
 	//how much to offset each tile
 	camOffsetX = camera->GetTileOffset(tileSize).x;
 	camOffsetY = camera->GetTileOffset(tileSize).y;
+
+	//so we don't get a vector out of bounds error
+	if (bounds.width > currLevel->GetWidth())
+	{
+		bounds.width = currLevel->GetWidth();
+	}
+	if (bounds.height > currLevel->GetHeight())
+	{
+		bounds.height = currLevel->GetHeight();
+	}
 	//loop and draw each tile
 	//keeping track of two variables in each loop. How many tiles
 	//drawn (x and y), and which tile on the map is being drawn (tileX

@@ -2,7 +2,6 @@
 #define ENGINE_H
 
 #include <SFML\Graphics.hpp>
-#include "TextureManager.h"
 #include "TileMap.h"
 #include "Camera.h"
 class Engine
