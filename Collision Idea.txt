@@ -1,0 +1,38 @@
+Collision Handling class
+
+#include tileMap and textureManager
+
+//TODO: add a parameter bool isWalkable to Tile constructor
+
+int width;
+int height;
+int tileSize;
+vector2 GetWorldToTileSpaceCoord(int x, int y)///maybe add width and height of tile
+{
+	//width = tileMap->getWidth();
+	//height = tileMap->getHeight();
+	tileSize = textureMan->GetTileSize();
+	int tileX = x/tileSize;
+	int tileY = y/tileSize;
+	//maybe round up number
+	return x and y
+}
+void or bool CheckForCollidables(int x, int y)//pass it future destination after player would move
+{
+	//could check if curr position(actually future pos) tile is walkable
+	//if not return false, if false change update so player doesn;t move that direction
+
+	//or check all tiles surrounding player
+	//if I don't use this for player can use it for npcs
+	vec2 currPos = GetWorldToTileSpaceCord(x,y);	
+	vec2 north = vec2(currPos.x,currPos.y -1); //bc y increases as it goes down
+	vec2 ne = vec2(currPos.x + 1, currPos.y-1);
+	vec2 east =vec2(currPos.x + 1, currPos.y);	
+	vec2 se = vec2(currPos.x + 1, currPos.y+1);
+	vec2 south = vec2(currPos.x, currPos.y+1);
+	vec2 sw = vec2(currPos.x - 1, currPos.y+1);
+	vec2 west = vec2(currPos.x - 1, currPos.y);
+	vec2 nw = vec2(currPos.x - 1, currPos.y-1);
+	
+	//eg. TileMap->getTile(north.x,north.y).isWalkable?
+}
