@@ -2,7 +2,8 @@
 #define ENGINE_H
 
 #include <SFML\Graphics.hpp>
-#include "TileMap.h"
+#include "CollisionHandling.h"
+//#include "TileMap.h"
 #include "Camera.h"
 #include "Player.h"
 class Engine
@@ -32,6 +33,9 @@ private:
 	float currentTime;
 	float timeSinceLastUpdate;
 	float timeStep;
+
+	//Collision Stuff
+	CollisionHandling* collisionHandling;
 
 	//initializes the engine
 	bool Init();

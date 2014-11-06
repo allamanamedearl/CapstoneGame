@@ -6,6 +6,7 @@ Player::Player(sf::Texture *texture)
 	sprite = new sf::Sprite(*texture);
 	position = sf::Vector2f(0.0f, 0.0f);
 	velocity = sf::Vector2f(0.0f, 0.0f);
+	SetPosition(position);
 	sprite->setPosition(position);
 	isVisible = true;
 }
@@ -45,6 +46,7 @@ void Player::GetInput()
 void Player::Update(float timeStep)
 {
 	position += velocity*timeStep;
+	SetPosition(position);
 	sprite->setPosition(position);
 	
 }

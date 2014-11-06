@@ -1,7 +1,7 @@
 #include "Engine.h"
 #include <iostream>
 #include <Windows.h>
-
+int num = 0;
 Engine::Engine()
 {
 	tileSize = 32;
@@ -19,6 +19,8 @@ Engine::~Engine()
 	camera = nullptr;
 	delete currLevel;
 	currLevel = nullptr;
+	delete collisionHandling;
+	collisionHandling = nullptr;
 }
 void Engine::LoadTextures()
 {
@@ -49,7 +51,7 @@ bool Engine::Init()
 	LoadTextures();
 	//for testing
 	LoadLevel();
-	std::cout << "After LoadLevel() call" << std::endl;
+	std::cout << "\nAfter LoadLevel() call" << std::endl;
 	player = new Player(&playerTexture);
 	if (!window)
 		return false;
@@ -77,8 +79,13 @@ void Engine::LoadLevel()
 			currLevel->AddTile(x, y, tile);
 		}
 	}*/
+
+	std::cout << "LOADING LEVEL" << std::endl;
 	currLevel = new TileMap(20, 20);//values don't matter, going to be changed in load level
 	currLevel->LoadLevel("level.xml", *textureManager);
+
+	//initialize collisionHandling
+	collisionHandling = new CollisionHandling(textureManager);
 }
 void Engine::RenderFrame()
 {
@@ -128,6 +135,13 @@ void Engine::RenderFrame()
 void Engine::ProcessInput()
 {
 	sf::Event evt;
+	if (num >= 1000)
+	{
+		std::cout << "Player Pos = " << player->GetPosition().x << " " << player->GetPosition().y << std::endl;
+		collisionHandling->GetWorldToTileCoords(player->GetPosition());
+		num = 0;
+	}
+	num++;
 	player->GetInput();
 	//loop through all window events
 	while (window->pollEvent(evt))
@@ -141,7 +155,7 @@ void Engine::ProcessInput()
 			camera->GoToCenter(x, y);*/
 			//player->GetInput();
 			keyDown = true;
-
+			std::cout << "KeyPressed" << std::endl;
 		}
 		if (evt.type == sf::Event::KeyReleased)
 		{

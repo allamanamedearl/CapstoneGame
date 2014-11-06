@@ -16,7 +16,7 @@ public:
 	void AddTexture(sf::Texture& image,int id);
 	sf::Texture* GetTexture(int id);
 	void SetTileSize(int tileSize){ this->tileSize = tileSize; }
-	int GetTileSize(){ return tileSize; }
+	int GetTileSize(){ return this->tileSize; }
 	//load tileset from xml 
 	void LoadTileset(std::string file);
 };
