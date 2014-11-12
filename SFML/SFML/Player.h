@@ -1,9 +1,10 @@
 #pragma once
 #include<SFML\Graphics.hpp>//may need to remove this later if player inherits
+#include "CollisionHandling.h"
 class Player
 {
 public:
-	Player(sf::Texture *texture);
+	Player(sf::Texture *texture, CollisionHandling* collHand);
 	~Player();
 	
 	sf::Vector2f GetPosition(){ return this->position; }
@@ -21,6 +22,8 @@ private:
 	float awareness;
 	sf::Sprite *sprite;
 	sf::Texture texture;
+
+	CollisionHandling* cHandler;
 	//NPC targetNPC;
 	
 	//NPC GetNearbyNPC();

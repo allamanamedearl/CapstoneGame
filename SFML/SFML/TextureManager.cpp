@@ -1,6 +1,7 @@
 #include "TextureManager.h"
 #include <iostream>
 
+
 TextureManager::TextureManager()
 {
 
@@ -9,6 +10,7 @@ TextureManager::~TextureManager()
 {
 
 }
+
 void TextureManager::AddTexture(sf::Texture& image, int id)
 {
 	textureList.push_back(image);

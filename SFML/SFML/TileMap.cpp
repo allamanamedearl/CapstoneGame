@@ -99,7 +99,7 @@ void TileMap::LoadLevel(std::string filename, TextureManager& textureMan)
 		bool isWalkable = (walkString == "true") ? true : false;//ternery yay! Phil would be proud
 
 		//create the tile and add it to the level
-		Tile* newTile = new Tile(textureMan.GetTexture(baseid));
+		Tile* newTile = new Tile(textureMan.GetTexture(baseid),isWalkable);
 		AddTile(x, y, newTile);
 		
 		//go to next tile

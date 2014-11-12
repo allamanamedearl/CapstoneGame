@@ -3,11 +3,13 @@
 class CollisionHandling
 {
 public:
-	CollisionHandling(TextureManager* tm);
+	CollisionHandling(TextureManager* tm, TileMap* map);
 	~CollisionHandling();
-	void GetWorldToTileCoords(sf::Vector2f pos);
+	sf::Vector2f GetWorldToTileCoords(sf::Vector2f pos);
+	sf::Vector2f PlayerCollisionDetection(char pressed, sf::Vector2f playerPos, sf::Vector2f playerVel);
 private:
 	int tileSize;
 	TextureManager* textMan;
+	TileMap* tileMap;
 };
 

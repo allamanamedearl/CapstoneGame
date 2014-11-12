@@ -52,7 +52,8 @@ bool Engine::Init()
 	//for testing
 	LoadLevel();
 	std::cout << "\nAfter LoadLevel() call" << std::endl;
-	player = new Player(&playerTexture);
+	collisionHandling = new CollisionHandling(textureManager, currLevel);
+	player = new Player(&playerTexture,collisionHandling);
 	if (!window)
 		return false;
 	return true;
@@ -85,7 +86,7 @@ void Engine::LoadLevel()
 	currLevel->LoadLevel("level.xml", *textureManager);
 
 	//initialize collisionHandling
-	collisionHandling = new CollisionHandling(textureManager);
+	//collisionHandling = new CollisionHandling();
 }
 void Engine::RenderFrame()
 {
@@ -138,7 +139,7 @@ void Engine::ProcessInput()
 	if (num >= 1000)
 	{
 		std::cout << "Player Pos = " << player->GetPosition().x << " " << player->GetPosition().y << std::endl;
-		collisionHandling->GetWorldToTileCoords(player->GetPosition());
+		//collisionHandling->GetWorldToTileCoords(player->GetPosition());
 		num = 0;
 	}
 	num++;
