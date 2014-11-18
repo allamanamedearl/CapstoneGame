@@ -161,7 +161,7 @@ void Engine::ProcessInput()
 		if (evt.type == sf::Event::KeyReleased)
 		{
 			keyDown = false;
-			player->SetVelocity(sf::Vector2f(0.0f, 0.0f));
+			//player->SetVelocity(sf::Vector2f(0.0f, 0.0f));
 		}
 	}
 	//player->GetInput(window);
