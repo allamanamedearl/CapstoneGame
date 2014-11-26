@@ -5,6 +5,7 @@
 Player::Player(sf::Texture *texture , CollisionHandling* collHand)
 {
 	//sprite = new sf::Sprite(*texture);
+	//texture = new sf::Texture (*texture);
 	position = sf::Vector2f(0.0f, 0.0f);
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	SetPosition(position);
@@ -13,7 +14,7 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand)
 	animation = new Animation();
 	isMoving = false;
 
-	animation->SetFrames(texture, 32, 32, (int)texture->getSize().x, (int)texture->getSize().y);
+	animation->SetFrames(*texture, 32, 32, (int)texture->getSize().x, (int)texture->getSize().y);
 	animation->SetPosition(position);
 	pixelsToMove = 32;//tile size
 	cHandler = collHand;
@@ -22,8 +23,8 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand)
 
 Player::~Player()
 {
-	delete sprite;
-	sprite = nullptr;
+	//delete sprite;
+	//sprite = nullptr;
 	delete cHandler;
 	cHandler = nullptr;
 	delete animation;
@@ -34,6 +35,7 @@ void Player::GetInput()
 {
 	
 	if (!isMoving){
+		animation->Pause();//no idle animation so when sprite is stopped it stays on currentFrame
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
 			animation->Up();
@@ -121,7 +123,7 @@ void Player::GetInput()
 	}
 	
 }
-void Player::Update(float timeStep)
+void Player::Update()
 {
 
 	position += velocity;// *timeStep;
@@ -135,6 +137,8 @@ void Player::Update(float timeStep)
 }
 void Player::Draw(sf::RenderWindow *rw)
 {
+	
 	//rw->draw(*sprite);
 	rw->draw(*(animation->GetCurrentFrame()));
+	//rw->draw(*te);
 }

@@ -30,9 +30,10 @@ private:
 	sf::Texture playerTexture;
 
 	//Time
-	float currentTime;
-	float timeSinceLastUpdate;
-	float timeStep;
+	//float currentTime;
+	//float timeSinceLastUpdate;
+	//float timeStep;
+	
 
 	//Collision Stuff
 	CollisionHandling* collisionHandling;

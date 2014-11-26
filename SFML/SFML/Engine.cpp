@@ -7,7 +7,8 @@ Engine::Engine()
 	tileSize = 32;
 	camera = new Camera(720, 640, 0.2f);
 	keyDown = false;
-	timeSinceLastUpdate = 0;
+	
+	//timeSinceLastUpdate = 0;
 }
 Engine::~Engine()
 {
@@ -146,6 +147,8 @@ void Engine::ProcessInput()
 	if (num >= 1000)
 	{
 		std::cout << "Player Pos = " << player->GetPosition().x << " " << player->GetPosition().y << std::endl;
+		/*std::cout << "currtime " << currentTime << std::endl;
+		std::cout << "timeStep " << timeStep << std::endl;*/
 		//collisionHandling->GetWorldToTileCoords(player->GetPosition());
 		num = 0;
 	}
@@ -175,12 +178,12 @@ void Engine::ProcessInput()
 }
 void Engine::Update()
 {
-	currentTime = GetTickCount64();
-	timeStep = currentTime - timeSinceLastUpdate;
+	//currentTime = clock.getElapsedTime().asMilliseconds();
+	//timeStep = currentTime - timeSinceLastUpdate;
 	//camera->GoToCenter((int)player->GetPosition().x, (int)player->GetPosition().y);
 	camera->Update();
-	player->Update(timeStep);
-	timeSinceLastUpdate = currentTime;
+	player->Update();
+	//timeSinceLastUpdate = currentTime;
 }
 void Engine::MainLoop()
 {

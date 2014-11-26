@@ -15,14 +15,14 @@ public:
 	
 	void GetInput();
 	void Draw(sf::RenderWindow *rw);
-	void Update(float timeStep);
+	void Update();
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 	bool isVisible;
 	float awareness;
-	sf::Sprite *sprite;
-	sf::Texture texture;
+	//sf::Sprite *sprite;
+	//sf::Texture* texture;
 	bool isMoving;
 	float pixelsToMove;
 
