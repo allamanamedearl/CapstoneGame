@@ -1,6 +1,7 @@
 #pragma once
 #include<SFML\Graphics.hpp>//may need to remove this later if player inherits
 #include "CollisionHandling.h"
+#include "Animation.h"
 class Player
 {
 public:
@@ -22,11 +23,15 @@ private:
 	float awareness;
 	sf::Sprite *sprite;
 	sf::Texture texture;
+	bool isMoving;
+	float pixelsToMove;
 
 	CollisionHandling* cHandler;
 	//NPC targetNPC;
 	
 	//NPC GetNearbyNPC();
+
+	Animation* animation;
 	
 	
 };

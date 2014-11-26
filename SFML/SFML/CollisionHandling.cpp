@@ -178,21 +178,56 @@ bool CollisionHandling::PlayerCollisionDetection(char pressed, sf::Vector2f play
 	//return playerVel;
 
 	sf::Vector2f tilePos = GetWorldToTileCoords(playerPos);
+	
 	if (pressed == 'r')
 	{
-		return tileMap->GetTile((int)tilePos.x + 1, (int)tilePos.y)->CheckIfWalkable();
+		if (tilePos.x >= tileMap->GetWidth()-1)
+		{
+			return false;
+		}
+		
+		else
+		{
+			return tileMap->GetTile((int)tilePos.x + 1, (int)tilePos.y)->CheckIfWalkable();
+		}
+		
 	
 	}
 	if (pressed == 'l')
 	{
-		return tileMap->GetTile((int)tilePos.x - 1, (int)tilePos.y)->CheckIfWalkable();
+		if (tilePos.x <= 0)
+		{
+			return false;
+		}
+		else
+		{
+			return tileMap->GetTile((int)tilePos.x - 1, (int)tilePos.y)->CheckIfWalkable();
+		}
+		
 	}
 	if (pressed == 'u')
 	{
-		return tileMap->GetTile((int)tilePos.x, (int)tilePos.y - 1)->CheckIfWalkable();
+		
+		if (tilePos.y <= 0)
+		{
+			return false;
+		}
+		else
+		{
+			return tileMap->GetTile((int)tilePos.x, (int)tilePos.y - 1)->CheckIfWalkable();
+		}
 	}
 	if (pressed == 'd')
 	{
-		return tileMap->GetTile((int)tilePos.x, (int)tilePos.y + 1)->CheckIfWalkable();
+		if (tilePos.y >= tileMap->GetHeight()-1)
+		{
+			std::cout << "Tilemap height : " << tileMap->GetHeight() << std::endl;
+			return false;
+		}
+		else
+		{
+			return tileMap->GetTile((int)tilePos.x, (int)tilePos.y + 1)->CheckIfWalkable();
+		}
+		
 	}
 }

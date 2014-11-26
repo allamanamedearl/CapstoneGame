@@ -5,7 +5,7 @@ int num = 0;
 Engine::Engine()
 {
 	tileSize = 32;
-	camera = new Camera(720, 480, 0.2f);
+	camera = new Camera(720, 640, 0.2f);
 	keyDown = false;
 	timeSinceLastUpdate = 0;
 }
@@ -31,7 +31,14 @@ void Engine::LoadTextures()
 	sprite.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Assets/tileset.png", sf::IntRect(32, 0, 32, 32));
 	textureManager->AddTexture(sprite,1);
 	testTile = new Tile(textureManager->GetTexture(0));*/
-	playerTexture.loadFromFile("C:/Users/Cassie/Pictures/race_car.jpg");
+	//OLD TEST SPRITE
+	//playerTexture.loadFromFile("C:/Users/Cassie/Pictures/race_car.jpg");
+	
+	if (!playerTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/blondeSprite.png"))
+	{
+		std::cout << "Unable to load player texture";
+		std::exit;
+	}
 	textureManager->SetTileSize(tileSize);
 	std::cout << "LOAD TEXTURES" << std::endl;
 	//FOR TESTING LOADING TILESET FROM XML
@@ -170,6 +177,7 @@ void Engine::Update()
 {
 	currentTime = GetTickCount64();
 	timeStep = currentTime - timeSinceLastUpdate;
+	//camera->GoToCenter((int)player->GetPosition().x, (int)player->GetPosition().y);
 	camera->Update();
 	player->Update(timeStep);
 	timeSinceLastUpdate = currentTime;
