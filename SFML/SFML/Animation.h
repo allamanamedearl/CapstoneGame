@@ -21,7 +21,7 @@ private:
 public:
 	Animation();
 	~Animation();
-	void SetFrames(sf::Texture sheet, int sizeX,int sizeY, int row, int column);
+	void SetFrames(sf::Texture sheet, int sizeX,int sizeY, int width, int height);
 	void Left();
 	void Right();
 	void Up();

@@ -22,6 +22,10 @@ Engine::~Engine()
 	currLevel = nullptr;
 	delete collisionHandling;
 	collisionHandling = nullptr;
+	delete player;
+	player = nullptr;
+	delete npc;
+	npc = nullptr;
 }
 void Engine::LoadTextures()
 {
@@ -38,6 +42,11 @@ void Engine::LoadTextures()
 	if (!playerTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/blondeSprite.png"))
 	{
 		std::cout << "Unable to load player texture";
+		std::exit;
+	}
+	if (!npcTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/otherSprite.png"))
+	{
+		std::cout << "Unable to load npc texture";
 		std::exit;
 	}
 	textureManager->SetTileSize(tileSize);
@@ -62,6 +71,8 @@ bool Engine::Init()
 	std::cout << "\nAfter LoadLevel() call" << std::endl;
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
 	player = new Player(&playerTexture,collisionHandling);
+	npc = new NPC(&npcTexture, collisionHandling, sf::Vector2f(5.0f, 5.0f));
+	npc->SetBehaviour("Idle");
 	if (!window)
 		return false;
 	return true;
@@ -139,6 +150,7 @@ void Engine::RenderFrame()
 	//window->draw(sprite);
 	//testTile->Draw(10, 10, window);
 	player->Draw(window);
+	npc->Draw(window);
 	window->display();
 }
 void Engine::ProcessInput()
@@ -154,6 +166,7 @@ void Engine::ProcessInput()
 	}
 	num++;
 	player->GetInput();
+	//npc->GetMovement();
 	//loop through all window events
 	while (window->pollEvent(evt))
 	{
@@ -183,6 +196,7 @@ void Engine::Update()
 	//camera->GoToCenter((int)player->GetPosition().x, (int)player->GetPosition().y);
 	camera->Update();
 	player->Update();
+	npc->Update();
 	//timeSinceLastUpdate = currentTime;
 }
 void Engine::MainLoop()

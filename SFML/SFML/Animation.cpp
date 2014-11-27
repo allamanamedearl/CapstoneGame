@@ -14,13 +14,13 @@ Animation::~Animation()
 {
 
 }
-void Animation::SetFrames(sf::Texture sheet, int sizeX,int sizeY, int row, int column)
+void Animation::SetFrames(sf::Texture sheet, int sizeX,int sizeY, int width, int height)
 {
 	spriteSheet = sheet;//save the sheet so I don't lose the texture!!!
 	
-	for (int y = 0; y < column/sizeY; y++)
+	for (int y = 0; y < height/sizeY; y++)
 	{
-		for (int x = 0; x < row/sizeX; x++)//row width
+		for (int x = 0; x < width/sizeX; x++)//row width
 		{
 			sf::Sprite *temp= new sf::Sprite(spriteSheet, sf::IntRect(x *sizeX, y*sizeY, sizeX, sizeY));
 			temp->setPosition(sf::Vector2f(0.0f, 0.0f));//initialize position

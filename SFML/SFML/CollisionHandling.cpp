@@ -17,7 +17,7 @@ CollisionHandling::~CollisionHandling()
 }
 sf::Vector2f CollisionHandling::GetWorldToTileCoords(sf::Vector2f pos)
 {
-	std::cout << "TIleSIze COllision " << tileSize << std::endl;
+	//std::cout << "TIleSIze COllision " << tileSize << std::endl;
 	tileSize = textMan->GetTileSize();
 	float tileX = pos.x / tileSize;
 	float tileY = pos.y / tileSize;
@@ -25,6 +25,13 @@ sf::Vector2f CollisionHandling::GetWorldToTileCoords(sf::Vector2f pos)
 	std::cout << "Tile X = " << tileX << " Tile Y = " << tileY << " tileSize "<< tileSize << std::endl;
 	return sf::Vector2f(tileX, tileY);
 
+}
+sf::Vector2f CollisionHandling::GetTileToWorldCoords(sf::Vector2f pos)
+{
+	tileSize = textMan->GetTileSize();
+	float tileX = pos.x *tileSize;
+	float tileY = pos.y *tileSize;
+	return sf::Vector2f(tileX, tileY);
 }
 bool CollisionHandling::PlayerCollisionDetection(char pressed, sf::Vector2f playerPos, sf::Vector2f playerVel)
 {
