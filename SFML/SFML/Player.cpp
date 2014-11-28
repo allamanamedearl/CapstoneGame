@@ -6,6 +6,7 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand)
 {
 	//sprite = new sf::Sprite(*texture);
 	//texture = new sf::Texture (*texture);
+	speed = 2.0f;
 	position = sf::Vector2f(0.0f, 0.0f);
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	SetPosition(position);
@@ -44,7 +45,7 @@ void Player::GetInput()
 			{
 				isMoving = true;
 				velocity.x = 0.0f;
-				velocity.y = -2.0f;
+				velocity.y = -speed;
 			}
 			else//if next tile isn't walkable
 			{
@@ -60,7 +61,7 @@ void Player::GetInput()
 			{
 				isMoving = true;
 				velocity.x = 0.0f;
-				velocity.y = 2.0f;
+				velocity.y = speed;
 			}
 			else//if next tile isn't walkable
 			{
@@ -75,7 +76,7 @@ void Player::GetInput()
 			if (isWalkable)
 			{
 				isMoving = true;
-				velocity.x = -2.0f;
+				velocity.x = -speed;
 				velocity.y = 0.0f;
 			}
 			else//if next tile isn't walkable
@@ -91,7 +92,7 @@ void Player::GetInput()
 			if (isWalkable)
 			{
 				isMoving = true;
-				velocity.x = 2.0f;
+				velocity.x = speed;
 				velocity.y = 0.0f;
 			}
 			else//if next tile isn't walkable
@@ -105,7 +106,7 @@ void Player::GetInput()
 	{
 		sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
 		std::cout << "PLayer tile pos: " << playerTilePos.x << " " << playerTilePos.y <<std::endl;
-		pixelsToMove -= 2;
+		pixelsToMove -= speed;
 		if (pixelsToMove <= 0)
 		{
 			isMoving = false;

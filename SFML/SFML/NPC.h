@@ -10,6 +10,7 @@ private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 	sf::Clock clock;
+	float speed;
 	bool isMoving;
 	float pixelsToMove;
 

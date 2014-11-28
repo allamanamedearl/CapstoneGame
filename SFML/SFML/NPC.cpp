@@ -4,6 +4,7 @@
 NPC::NPC(sf::Texture *texture, CollisionHandling* collHand, sf::Vector2f startPos)
 {
 
+	speed = 1.0f;
 	SetPosition(collHand->GetTileToWorldCoords(startPos));
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	isMoving = false;
@@ -62,11 +63,11 @@ void NPC::GetMovement()
 		case 'l':
 		{
 					bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
-					
+
 					animation->Left();
 					if (isWalkable)
 					{
-						velocity.x = -2.0f;
+						velocity.x = -speed;
 						velocity.y = 0.0f;
 						isMoving = true;
 					}
@@ -76,13 +77,14 @@ void NPC::GetMovement()
 					}
 					break;
 		}
+		
 		case 'r':
 		{
 					bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
 					animation->Right();
 					if (isWalkable)
 					{
-						velocity.x = 2.0f;
+						velocity.x = speed;
 						velocity.y = 0.0f;
 						isMoving = true;
 					}
@@ -99,7 +101,7 @@ void NPC::GetMovement()
 					if (isWalkable)
 					{
 						velocity.x = 0.0f;
-						velocity.y = -2.0f;
+						velocity.y = -speed;
 						isMoving = true;
 					}
 					else//if next tile isn't walkable
@@ -115,7 +117,7 @@ void NPC::GetMovement()
 					if (isWalkable)
 					{
 						velocity.x = 0.0f;
-						velocity.y = 2.0f;
+						velocity.y = speed;
 						isMoving = true;
 					}
 					else//if next tile isn't walkable
@@ -130,7 +132,7 @@ void NPC::GetMovement()
 	{
 		sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
 		std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
-		pixelsToMove -= 2;
+		pixelsToMove -= speed;
 		if (pixelsToMove <= 0)
 		{
 			isMoving = false;

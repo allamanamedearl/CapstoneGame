@@ -19,6 +19,7 @@ public:
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
+	float speed;
 	bool isVisible;
 	float awareness;
 	//sf::Sprite *sprite;
