@@ -6,6 +6,7 @@ NPC::NPC(sf::Texture *texture, CollisionHandling* collHand, sf::Vector2f startPo
 
 	speed = 1.0f;
 	SetPosition(collHand->GetTileToWorldCoords(startPos));
+	SetStartPos(startPos);
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	isMoving = false;
 	animation = new Animation();
@@ -34,6 +35,7 @@ void NPC::SetBehaviour(std::string b)
 	else if (b == "Patrol")
 	{
 		behaviour->SetCurrentAI(AIBehaviour::Behaviour::Patrol);
+
 	}
 	else if (b == "Pursue")
 	{
@@ -41,27 +43,40 @@ void NPC::SetBehaviour(std::string b)
 	}
 	
 }
-void NPC::GetMovement()
+void NPC::GetMovement(sf::Vector2f playerPos)
 {
 	char direction;
-	if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Idle)
-	{
-		direction = behaviour->IdleAI(position, velocity);
-	}
-	if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Patrol)
-	{
-		//direction = behaviour->PatrolAI();
-	}
-	if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Pursue)
-	{ 
-		//direction = behaviour->PursueAI();
-	}
+	
 	if (!isMoving){
-		animation->Pause();
+		
+		if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Patrol)
+		{
+			//for when npc reaches end of patrol, reverse patrol
+			if (cHandler->GetWorldToTileCoords(position) == end)
+			{
+				sf::Vector2f temp = start;
+				SetStartPos(end);
+				SetEndPos(temp);
+				behaviour->ClearClosedList();
+			}
+			direction = behaviour->PatrolAI(position, velocity, cHandler->GetWorldToTileCoords(position), end);
+			std::cout << "Direction: " << direction << std::endl;
+			std::cout << "StartPos: " << GetStartPos().x << " " << GetStartPos().y << " EndPos: " << GetEndPos().x << " " << GetEndPos().y << std::endl;
+		}
+		if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Pursue)
+		{
+			//direction = behaviour->PursueAI();
+		}
+		
+		if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Idle)
+		{
+			direction = behaviour->IdleAI(position, velocity);
+		}
 		switch (direction)
 		{
 		case 'l':
 		{
+					std::cout << "left left left" << std::endl;
 					bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
 
 					animation->Left();
@@ -80,6 +95,7 @@ void NPC::GetMovement()
 		
 		case 'r':
 		{
+					std::cout << "right right right" << std::endl;
 					bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
 					animation->Right();
 					if (isWalkable)
@@ -96,6 +112,7 @@ void NPC::GetMovement()
 		}
 		case 'u':
 		{
+					std::cout << "up up up" << std::endl;
 					bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
 					animation->Up();
 					if (isWalkable)
@@ -112,6 +129,7 @@ void NPC::GetMovement()
 		}
 		case 'd':
 		{
+					std::cout<<"down down down" << std::endl;
 					bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
 					animation->Down();
 					if (isWalkable)
@@ -149,7 +167,7 @@ void NPC::Update()
 {
 	//if (clock.getElapsedTime().asMilliseconds() >= 1000)//so he doesn't spaz out
 	//{
-		GetMovement();
+		//GetMovement();
 		position += velocity;// *timeStep;
 		//clock.restart();
 	//}

@@ -72,7 +72,8 @@ bool Engine::Init()
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
 	player = new Player(&playerTexture,collisionHandling);
 	npc = new NPC(&npcTexture, collisionHandling, sf::Vector2f(5.0f, 5.0f));
-	npc->SetBehaviour("Idle");
+	npc->SetBehaviour("Patrol");
+	npc->SetEndPos(sf::Vector2f(10.0f, 10.0f));
 	if (!window)
 		return false;
 	return true;
@@ -166,7 +167,7 @@ void Engine::ProcessInput()
 	}
 	num++;
 	player->GetInput();
-	//npc->GetMovement();
+	npc->GetMovement(player->GetPosition());
 	//loop through all window events
 	while (window->pollEvent(evt))
 	{

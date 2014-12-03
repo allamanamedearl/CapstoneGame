@@ -22,7 +22,7 @@ sf::Vector2f CollisionHandling::GetWorldToTileCoords(sf::Vector2f pos)
 	float tileX = pos.x / tileSize;
 	float tileY = pos.y / tileSize;
 	//maybe round up number
-	std::cout << "Tile X = " << tileX << " Tile Y = " << tileY << " tileSize "<< tileSize << std::endl;
+	//std::cout << "Tile X = " << tileX << " Tile Y = " << tileY << " tileSize "<< tileSize << std::endl;
 	return sf::Vector2f(tileX, tileY);
 
 }
