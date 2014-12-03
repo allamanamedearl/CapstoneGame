@@ -5,6 +5,8 @@
 AIBehaviour::AIBehaviour(CollisionHandling *collHandling)
 {
 	cHandler = collHandling;
+	prevPlayerPos = sf::Vector2f(0.0f, 0.0f);
+	currPlayerPos = sf::Vector2f(0.0f, 0.0f);
 }
 
 
@@ -204,10 +206,26 @@ char AIBehaviour::PatrolAI(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f star
 	//g value will be 10 for alldirections except diagonals and non walkable tiles
 	//return 'r';
 }
-char AIBehaviour::PursueAI(sf::Vector2f pos, sf::Vector2f vel)
+char AIBehaviour::PursueAI(sf::Vector2f pos, sf::Vector2f vel,sf::Vector2f end)
 {
-
-	return 'r';
+	currPlayerPos = cHandler->GetWorldToTileCoords(end);
+	//for when player position changes, that way you can walk on previously walked on tiles
+	if (currPlayerPos != prevPlayerPos)
+	{
+		ClearClosedList();
+	}
+	prevPlayerPos = currPlayerPos;
+	//check if npc is in same position as player
+	if (cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos))
+	{
+		return 's';//s for stop
+	}
+	else
+	{
+		//pass npc position, velocity, start which is pos converted to tile coords, end is playerPos converted to tileCoords
+		return PatrolAI(pos, vel, cHandler->GetWorldToTileCoords(pos), cHandler->GetWorldToTileCoords(end));
+	}
+	
 }
 int AIBehaviour::ManhattanDistance(sf::Vector2f point, sf::Vector2f goal)
 {

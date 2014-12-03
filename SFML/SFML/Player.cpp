@@ -114,13 +114,7 @@ void Player::GetInput()
 			velocity.x = 0;
 			velocity.y = 0;
 		}
-		//if position is on tile--reached destination
-		/*if (playerTilePos.x - floor(playerTilePos.x) == 0 && playerTilePos.y - floor(playerTilePos.y)==0)
-		{
-			isMoving = false;
-			velocity.x = 0;
-			velocity.y = 0;
-		}*/
+		
 	}
 	
 }

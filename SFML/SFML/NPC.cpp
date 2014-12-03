@@ -65,7 +65,8 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 		}
 		if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Pursue)
 		{
-			//direction = behaviour->PursueAI();
+			//Pursue ai will convert playerPos to tile coords
+			direction = behaviour->PursueAI(position, velocity, playerPos);
 		}
 		
 		if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Idle)
@@ -142,6 +143,13 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 					{
 						velocity.y = 0.0f;
 					}
+					break;
+		}
+		case 's':
+		{
+					animation->Pause();
+					velocity.x = 0.0f;
+					velocity.y = 0.0f;
 					break;
 		}
 		}

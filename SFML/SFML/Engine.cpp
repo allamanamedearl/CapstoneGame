@@ -72,7 +72,7 @@ bool Engine::Init()
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
 	player = new Player(&playerTexture,collisionHandling);
 	npc = new NPC(&npcTexture, collisionHandling, sf::Vector2f(5.0f, 5.0f));
-	npc->SetBehaviour("Patrol");
+	npc->SetBehaviour("Pursue");
 	npc->SetEndPos(sf::Vector2f(10.0f, 10.0f));
 	if (!window)
 		return false;
