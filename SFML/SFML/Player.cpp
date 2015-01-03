@@ -101,6 +101,11 @@ void Player::GetInput()
 				velocity.y = 0.0f;
 			}
 		}
+		//trigger others's madness
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+		{
+			std::cout << "TRIGGER SOMEONE'S MADNESS" << std::endl;
+		}
 	}
 	else//so you can;t get input while player is still moving
 	{

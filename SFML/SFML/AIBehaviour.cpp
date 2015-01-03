@@ -216,7 +216,10 @@ char AIBehaviour::PursueAI(sf::Vector2f pos, sf::Vector2f vel,sf::Vector2f end)
 	}
 	prevPlayerPos = currPlayerPos;
 	//check if npc is in same position as player
-	if (cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos))
+	if (cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(0,1) ||
+		cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(1,0)||
+		cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(0,-1)||
+		cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(-1,0))
 	{
 		return 's';//s for stop
 	}

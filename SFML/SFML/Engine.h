@@ -29,7 +29,11 @@ private:
 	//Player
 	Player *player;
 	sf::Texture playerTexture;
-	NPC *npc;
+
+	std::vector<NPC*>level_NPCs;
+	/*NPC *npc;
+	NPC *npc2;
+	NPC *npc3;*/
 	sf::Texture npcTexture;
 
 	//Time

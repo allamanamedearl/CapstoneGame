@@ -97,6 +97,27 @@ void TileMap::LoadLevel(std::string filename, TextureManager& textureMan)
 
 		std::string walkString = tile->first_attribute("walkable")->value();
 		bool isWalkable = (walkString == "true") ? true : false;//ternery yay! Phil would be proud
+		//adding npcs to map based on tile pos
+		std::string npcString = tile->first_attribute("npc")->value();
+		NPC_ATTRIBUTES attrib;
+		if (npcString == "Idle")
+		{
+			attrib.behaviour = "Idle";
+			attrib.startPos = sf::Vector2f(x, y);
+			npcs.push_back(attrib);
+		}
+		else if (npcString == "Patrol")
+		{
+			attrib.behaviour = "Patrol";
+			attrib.startPos = sf::Vector2f(x, y);
+			npcs.push_back(attrib);
+		}
+		else if (npcString == "Pursue")
+		{
+			attrib.behaviour = "Pursue";
+			attrib.startPos = sf::Vector2f(x, y);
+			npcs.push_back(attrib);
+		}
 
 		//create the tile and add it to the level
 		Tile* newTile = new Tile(textureMan.GetTexture(baseid),isWalkable);

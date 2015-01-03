@@ -24,8 +24,6 @@ Engine::~Engine()
 	collisionHandling = nullptr;
 	delete player;
 	player = nullptr;
-	delete npc;
-	npc = nullptr;
 }
 void Engine::LoadTextures()
 {
@@ -71,9 +69,20 @@ bool Engine::Init()
 	std::cout << "\nAfter LoadLevel() call" << std::endl;
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
 	player = new Player(&playerTexture,collisionHandling);
-	npc = new NPC(&npcTexture, collisionHandling, sf::Vector2f(5.0f, 5.0f));
-	npc->SetBehaviour("Pursue");
-	npc->SetEndPos(sf::Vector2f(10.0f, 10.0f));
+	for (int i = 0; i < currLevel->npcs.size(); i++)
+	{
+		NPC* npc = new NPC(&npcTexture, collisionHandling, currLevel->npcs[i].startPos);
+		npc->SetBehaviour(currLevel->npcs[i].behaviour);
+		npc->SetEndPos(sf::Vector2f(10.0f, 10.0f));//in case it's a patrol npc
+		level_NPCs.push_back(npc);
+	}
+	/*npc = new NPC(&npcTexture, collisionHandling, sf::Vector2f(5.0f, 5.0f));
+	npc2 = new NPC(&npcTexture, collisionHandling, sf::Vector2f(10.0f, 10.0f));
+	npc3 = new NPC(&npcTexture, collisionHandling, sf::Vector2f(0.0f, 5.0f));
+	npc->SetBehaviour("Patrol");
+	npc2->SetBehaviour("Pursue");
+	npc3->SetBehaviour("Idle");*/
+	//npc->SetEndPos(sf::Vector2f(10.0f, 10.0f));
 	if (!window)
 		return false;
 	return true;
@@ -104,6 +113,7 @@ void Engine::LoadLevel()
 	std::cout << "LOADING LEVEL" << std::endl;
 	currLevel = new TileMap(20, 20);//values don't matter, going to be changed in load level
 	currLevel->LoadLevel("level.xml", *textureManager);
+	std::cout << currLevel->npcs.size() << std::endl;
 
 	//initialize collisionHandling
 	//collisionHandling = new CollisionHandling();
@@ -151,7 +161,13 @@ void Engine::RenderFrame()
 	//window->draw(sprite);
 	//testTile->Draw(10, 10, window);
 	player->Draw(window);
-	npc->Draw(window);
+	for (int i = 0; i < level_NPCs.size(); i++)
+	{
+		level_NPCs[i]->Draw(window);
+	}
+	//npc->Draw(window);
+	/*npc2->Draw(window);
+	npc3->Draw(window);*/
 	window->display();
 }
 void Engine::ProcessInput()
@@ -167,7 +183,13 @@ void Engine::ProcessInput()
 	}
 	num++;
 	player->GetInput();
-	npc->GetMovement(player->GetPosition());
+	for (int i = 0; i < level_NPCs.size(); i++)
+	{
+		level_NPCs[i]->GetMovement(player->GetPosition());
+	}
+	/*npc->GetMovement(player->GetPosition());
+	npc2->GetMovement(player->GetPosition());
+	npc3->GetMovement(player->GetPosition());*/
 	//loop through all window events
 	while (window->pollEvent(evt))
 	{
@@ -197,7 +219,14 @@ void Engine::Update()
 	//camera->GoToCenter((int)player->GetPosition().x, (int)player->GetPosition().y);
 	camera->Update();
 	player->Update();
-	npc->Update();
+	
+	for (int i = 0; i < level_NPCs.size(); i++)
+	{
+		level_NPCs[i]->Update();
+	}
+	/*npc->Update();
+	npc2->Update();
+	npc3->Update();*/
 	//timeSinceLastUpdate = currentTime;
 }
 void Engine::MainLoop()
