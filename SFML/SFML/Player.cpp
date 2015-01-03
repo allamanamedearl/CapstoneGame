@@ -19,6 +19,11 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand)
 	animation->SetPosition(position);
 	pixelsToMove = 32;//tile size
 	cHandler = collHand;
+
+	//powers
+	triggerMadness = false;
+	psychoticRage = false;
+	controlNPC = false;
 }
 
 
@@ -32,7 +37,7 @@ Player::~Player()
 	animation = nullptr;
 }
 
-void Player::GetInput()
+void Player::GetInput(std::vector<NPC*>& NPCs)
 {
 	
 	if (!isMoving){
@@ -101,10 +106,32 @@ void Player::GetInput()
 				velocity.y = 0.0f;
 			}
 		}
+		//*******POWERS***********
 		//trigger others's madness
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M) && !triggerMadness)
 		{
 			std::cout << "TRIGGER SOMEONE'S MADNESS" << std::endl;
+			sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+			for (int i = 0; i < NPCs.size(); i++)
+			{
+				sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(NPCs[i]->GetPosition());
+				//check to see if any of the npcs are in range
+				if (npcTilePos.x >= (playerTilePos.x - 1) && npcTilePos.x <= (playerTilePos.x + 1) &&
+					npcTilePos.y >= (playerTilePos.y - 1) && npcTilePos.y <= (playerTilePos.y + 1))
+				{
+					//if they are set a bool to true
+					triggerMadness = true;
+					//play power animation
+
+					//set ai to freakout
+					NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 2.0f);
+					NPCs[i]->SetBehaviour("Idle");//idle for now
+					
+					break;
+				}
+				
+				//have a delay so that you can't keep triggering power, also so that there is a recharge time
+			}
 		}
 	}
 	else//so you can;t get input while player is still moving

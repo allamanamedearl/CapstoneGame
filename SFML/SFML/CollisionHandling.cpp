@@ -202,7 +202,7 @@ bool CollisionHandling::PlayerCollisionDetection(char pressed, sf::Vector2f play
 	}
 	if (pressed == 'l')
 	{
-		if (tilePos.x <= 0)
+		if (tilePos.x -1 < 0)
 		{
 			return false;
 		}
@@ -215,7 +215,7 @@ bool CollisionHandling::PlayerCollisionDetection(char pressed, sf::Vector2f play
 	if (pressed == 'u')
 	{
 		
-		if (tilePos.y <= 0)
+		if (tilePos.y -1 < 0)
 		{
 			return false;
 		}

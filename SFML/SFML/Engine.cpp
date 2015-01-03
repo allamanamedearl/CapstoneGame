@@ -182,7 +182,7 @@ void Engine::ProcessInput()
 		num = 0;
 	}
 	num++;
-	player->GetInput();
+	player->GetInput(level_NPCs);
 	for (int i = 0; i < level_NPCs.size(); i++)
 	{
 		level_NPCs[i]->GetMovement(player->GetPosition());

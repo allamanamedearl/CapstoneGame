@@ -79,7 +79,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 		{
 					std::cout << "left left left" << std::endl;
 					bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
-
+					std::cout << "*******ISWALKABLE LEFT = " << isWalkable <<std::endl;
 					animation->Left();
 					if (isWalkable)
 					{
@@ -89,6 +89,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 					}
 					else//if next tile isn't walkable
 					{
+						std::cout << "********TILE NOT WALKABLE" << std::endl;
 						velocity.x = 0.0f;
 					}
 					break;

@@ -28,6 +28,8 @@ public:
 	sf::Vector2f GetVelocity(){ return this->velocity; }
 	void SetVelocity(sf::Vector2f vel){ this->velocity = vel; }
 	
+	float GetSpeed(){ return this->speed; }
+	void SetSpeed(float val){ this->speed = val; }
 	void SetStartPos(sf::Vector2f startPos){ this->start = startPos; }
 	void SetEndPos(sf::Vector2f endPos){ this->end = endPos; }
 

@@ -6,7 +6,7 @@
 //#include "TileMap.h"
 #include "Camera.h"
 #include "Player.h"
-#include "NPC.h"
+//#include "NPC.h"
 class Engine
 {
 private:

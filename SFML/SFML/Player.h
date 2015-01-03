@@ -2,6 +2,7 @@
 #include<SFML\Graphics.hpp>//may need to remove this later if player inherits
 #include "CollisionHandling.h"
 #include "Animation.h"
+#include "NPC.h"
 class Player
 {
 public:
@@ -13,7 +14,7 @@ public:
 	sf::Vector2f GetVelocity(){ return this->velocity; }
 	void SetVelocity(sf::Vector2f vel){ this->velocity = vel; }
 	
-	void GetInput();
+	void GetInput(std::vector<NPC*> &NPCs);
 	void Draw(sf::RenderWindow *rw);
 	void Update();
 private:
@@ -33,6 +34,11 @@ private:
 	//NPC GetNearbyNPC();
 
 	Animation* animation;
+
+	//powers
+	bool triggerMadness;
+	bool psychoticRage;
+	bool controlNPC;
 	
 	
 };
