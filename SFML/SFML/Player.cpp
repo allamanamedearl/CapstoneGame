@@ -7,7 +7,7 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand)
 	//sprite = new sf::Sprite(*texture);
 	//texture = new sf::Texture (*texture);
 	speed = 2.0f;
-	position = sf::Vector2f(0.0f, 0.0f);
+	position = sf::Vector2f(0.0f, 256.0f);
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	SetPosition(position);
 	//sprite->setPosition(position);

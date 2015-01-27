@@ -124,12 +124,16 @@ void Engine::RenderFrame()
 	Tile* tile;
 	window->clear();
 	//get the tile bounds needed to draw and camera bounds
+	//returns camera view window as rect based on tilesizes 
+	//eg. 10 tiles by 10 tiles top left is tile 5,3,
+	//rect is updated when camera is moved
 	sf::IntRect bounds = camera->GetTileBounds(tileSize);
 	//how much to offset each tile
 	camOffsetX = camera->GetTileOffset(tileSize).x;
 	camOffsetY = camera->GetTileOffset(tileSize).y;
 
-	//so we don't get a vector out of bounds error
+#pragma region old way nvm
+	////so we don't get a vector out of bounds error
 	if (bounds.width > currLevel->GetWidth())
 	{
 		bounds.width = currLevel->GetWidth();
@@ -138,26 +142,28 @@ void Engine::RenderFrame()
 	{
 		bounds.height = currLevel->GetHeight();
 	}
-	//loop and draw each tile
-	//keeping track of two variables in each loop. How many tiles
-	//drawn (x and y), and which tile on the map is being drawn (tileX
-	//and tileY)
-	//bounds.top = y coordinate of rect
+	////loop and draw each tile
+	////keeping track of two variables in each loop. How many tiles
+	////drawn (x and y), and which tile on the map is being drawn (tileX
+	////and tileY)
+	////bounds.top = y coordinate of rect
 	for (int y = 0, tileY = bounds.top; y < bounds.height; y++, tileY++)
 	{
 		for (int x = 0, tileX = bounds.left; x < bounds.width; x++, tileX++)
 		{
-			if (tileY >= 0 && tileX >= 0)
+			if (tileY >= 0 && tileX >= 0)//only rendering tiles that are seeable not offscreen shit
 			{
 
 				//Get the tile we're drawing
-				tile = currLevel->GetTile(tileX, tileY);
+				tile = currLevel->GetTile(x, y);//(tileX, tileY);
 
 				if (tile)
-					tile->Draw((x * tileSize), (y * tileSize), window);
+					tile->Draw((tileX* tileSize), (tileY * tileSize), window);
 			}
 		}
 	}
+#pragma endregion and now for something completely different
+
 	//window->draw(sprite);
 	//testTile->Draw(10, 10, window);
 	player->Draw(window);
@@ -217,7 +223,9 @@ void Engine::Update()
 	//currentTime = clock.getElapsedTime().asMilliseconds();
 	//timeStep = currentTime - timeSinceLastUpdate;
 	//camera->GoToCenter((int)player->GetPosition().x, (int)player->GetPosition().y);
+	
 	camera->Update();
+	camera->GoTo(0, tileSize * 5);
 	player->Update();
 	
 	for (int i = 0; i < level_NPCs.size(); i++)

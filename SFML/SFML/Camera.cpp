@@ -102,8 +102,8 @@ sf::IntRect Camera::GetTileBounds(int tileSize)
 	int y = (int)(position.y / tileSize);
 
 	//+1 incase size/tileSize = 0
-	int w = (int)(size.x / tileSize)+ 2;
-	int h = (int)(size.y / tileSize)+ 2;
+	int w = (int)(size.x / tileSize);//+ 2;
+	int h = (int)(size.y / tileSize);//+ 2;
 
 	//may need to add +1 if offset from tile
 	if(x%tileSize!=0)
