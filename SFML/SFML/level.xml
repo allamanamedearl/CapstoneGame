@@ -1004,7 +1004,7 @@
 	<tile x="0" y="10" baseid="0" walkable="true" npc="0"/>
 	<tile x="1" y="10" baseid="0" walkable="true" npc="0"/>
 	<tile x="2" y="10" baseid="0" walkable="true" npc="0"/>
-	<tile x="3" y="10" baseid="0" walkable="true" npc="0"/>
+	<tile x="3" y="10" baseid="1" walkable="false" npc="0"/>
 	<tile x="4" y="10" baseid="0" walkable="true" npc="0"/>
 	<tile x="5" y="10" baseid="0" walkable="true" npc="0"/>
 	<tile x="6" y="10" baseid="0" walkable="true" npc="0"/>
@@ -1098,9 +1098,9 @@
 	<tile x="94" y="10" baseid="0" walkable="true" npc="0"/>
 	<tile x="95" y="10" baseid="0" walkable="true" npc="0"/>
 	<tile x="96" y="10" baseid="0" walkable="true" npc="0"/>
-	<tile x="97" y="10" baseid="0" walkable="true" npc="0"/>
-	<tile x="98" y="10" baseid="0" walkable="true" npc="0"/>
-	<tile x="99" y="10" baseid="0" walkable="true" npc="0"/>
+	<tile x="97" y="10" baseid="1" walkable="false" npc="0"/>
+	<tile x="98" y="10" baseid="1" walkable="false" npc="0"/>
+	<tile x="99" y="10" baseid="1" walkable="false" npc="0"/>
 	<tile x="0" y="11" baseid="0" walkable="true" npc="0"/>
 	<tile x="1" y="11" baseid="0" walkable="true" npc="0"/>
 	<tile x="2" y="11" baseid="0" walkable="true" npc="0"/>
@@ -1214,8 +1214,8 @@
 	<tile x="10" y="12" baseid="0" walkable="true" npc="0"/>
 	<tile x="11" y="12" baseid="0" walkable="true" npc="0"/>
 	<tile x="12" y="12" baseid="0" walkable="true" npc="0"/>
-	<tile x="13" y="12" baseid="0" walkable="true" npc="0"/>
-	<tile x="14" y="12" baseid="0" walkable="true" npc="0"/>
+	<tile x="13" y="12" baseid="1" walkable="false" npc="0"/>
+	<tile x="14" y="12" baseid="1" walkable="false" npc="0"/>
 	<tile x="15" y="12" baseid="0" walkable="true" npc="0"/>
 	<tile x="16" y="12" baseid="0" walkable="true" npc="0"/>
 	<tile x="17" y="12" baseid="0" walkable="true" npc="0"/>
@@ -1301,10 +1301,10 @@
 	<tile x="97" y="12" baseid="0" walkable="true" npc="0"/>
 	<tile x="98" y="12" baseid="0" walkable="true" npc="0"/>
 	<tile x="99" y="12" baseid="0" walkable="true" npc="0"/>
-	<tile x="0" y="13" baseid="0" walkable="true" npc="0"/>
-	<tile x="1" y="13" baseid="0" walkable="true" npc="0"/>
-	<tile x="2" y="13" baseid="0" walkable="true" npc="0"/>
-	<tile x="3" y="13" baseid="0" walkable="true" npc="0"/>
+	<tile x="0" y="13" baseid="1" walkable="false" npc="0"/>
+	<tile x="1" y="13" baseid="1" walkable="false" npc="0"/>
+	<tile x="2" y="13" baseid="1" walkable="false" npc="0"/>
+	<tile x="3" y="13" baseid="1" walkable="false" npc="0"/>
 	<tile x="4" y="13" baseid="0" walkable="true" npc="0"/>
 	<tile x="5" y="13" baseid="0" walkable="true" npc="0"/>
 	<tile x="6" y="13" baseid="0" walkable="true" npc="0"/>
@@ -4111,7 +4111,7 @@
 	<tile x="7" y="41" baseid="0" walkable="true" npc="0"/>
 	<tile x="8" y="41" baseid="0" walkable="true" npc="0"/>
 	<tile x="9" y="41" baseid="0" walkable="true" npc="0"/>
-	<tile x="10" y="41" baseid="0" walkable="true" npc="0"/>
+	<tile x="10" y="41" baseid="1" walkable="false" npc="0"/>
 	<tile x="11" y="41" baseid="0" walkable="true" npc="0"/>
 	<tile x="12" y="41" baseid="0" walkable="true" npc="0"/>
 	<tile x="13" y="41" baseid="0" walkable="true" npc="0"/>
@@ -4127,9 +4127,9 @@
 	<tile x="23" y="41" baseid="0" walkable="true" npc="0"/>
 	<tile x="24" y="41" baseid="0" walkable="true" npc="0"/>
 	<tile x="25" y="41" baseid="0" walkable="true" npc="0"/>
-	<tile x="26" y="41" baseid="0" walkable="true" npc="0"/>
-	<tile x="27" y="41" baseid="0" walkable="true" npc="0"/>
-	<tile x="28" y="41" baseid="0" walkable="true" npc="0"/>
+	<tile x="26" y="41" baseid="1" walkable="false" npc="0"/>
+	<tile x="27" y="41" baseid="1" walkable="false" npc="0"/>
+	<tile x="28" y="41" baseid="1" walkable="false" npc="0"/>
 	<tile x="29" y="41" baseid="0" walkable="true" npc="0"/>
 	<tile x="30" y="41" baseid="0" walkable="true" npc="0"/>
 	<tile x="31" y="41" baseid="0" walkable="true" npc="0"/>
@@ -4332,12 +4332,12 @@
 	<tile x="28" y="43" baseid="0" walkable="true" npc="0"/>
 	<tile x="29" y="43" baseid="0" walkable="true" npc="0"/>
 	<tile x="30" y="43" baseid="0" walkable="true" npc="0"/>
-	<tile x="31" y="43" baseid="0" walkable="true" npc="0"/>
-	<tile x="32" y="43" baseid="0" walkable="true" npc="0"/>
-	<tile x="33" y="43" baseid="0" walkable="true" npc="0"/>
-	<tile x="34" y="43" baseid="0" walkable="true" npc="0"/>
-	<tile x="35" y="43" baseid="0" walkable="true" npc="0"/>
-	<tile x="36" y="43" baseid="0" walkable="true" npc="0"/>
+	<tile x="31" y="43" baseid="1" walkable="false" npc="0"/>
+	<tile x="32" y="43" baseid="1" walkable="false" npc="0"/>
+	<tile x="33" y="43" baseid="1" walkable="false" npc="0"/>
+	<tile x="34" y="43" baseid="1" walkable="false" npc="0"/>
+	<tile x="35" y="43" baseid="1" walkable="false" npc="0"/>
+	<tile x="36" y="43" baseid="1" walkable="false" npc="0"/>
 	<tile x="37" y="43" baseid="0" walkable="true" npc="0"/>
 	<tile x="38" y="43" baseid="0" walkable="true" npc="0"/>
 	<tile x="39" y="43" baseid="0" walkable="true" npc="0"/>
@@ -4666,7 +4666,7 @@
 	<tile x="62" y="46" baseid="0" walkable="true" npc="0"/>
 	<tile x="63" y="46" baseid="0" walkable="true" npc="0"/>
 	<tile x="64" y="46" baseid="0" walkable="true" npc="0"/>
-	<tile x="65" y="46" baseid="0" walkable="true" npc="0"/>
+	<tile x="65" y="46" baseid="1" walkable="false" npc="0"/>
 	<tile x="66" y="46" baseid="0" walkable="true" npc="0"/>
 	<tile x="67" y="46" baseid="0" walkable="true" npc="0"/>
 	<tile x="68" y="46" baseid="0" walkable="true" npc="0"/>
@@ -5780,17 +5780,17 @@
 	<tile x="76" y="57" baseid="0" walkable="true" npc="0"/>
 	<tile x="77" y="57" baseid="0" walkable="true" npc="0"/>
 	<tile x="78" y="57" baseid="0" walkable="true" npc="0"/>
-	<tile x="79" y="57" baseid="0" walkable="true" npc="0"/>
-	<tile x="80" y="57" baseid="0" walkable="true" npc="0"/>
+	<tile x="79" y="57" baseid="1" walkable="false" npc="0"/>
+	<tile x="80" y="57" baseid="1" walkable="false" npc="0"/>
 	<tile x="81" y="57" baseid="0" walkable="true" npc="0"/>
 	<tile x="82" y="57" baseid="0" walkable="true" npc="0"/>
 	<tile x="83" y="57" baseid="0" walkable="true" npc="0"/>
-	<tile x="84" y="57" baseid="0" walkable="true" npc="0"/>
-	<tile x="85" y="57" baseid="0" walkable="true" npc="0"/>
-	<tile x="86" y="57" baseid="0" walkable="true" npc="0"/>
-	<tile x="87" y="57" baseid="0" walkable="true" npc="0"/>
-	<tile x="88" y="57" baseid="0" walkable="true" npc="0"/>
-	<tile x="89" y="57" baseid="0" walkable="true" npc="0"/>
+	<tile x="84" y="57" baseid="1" walkable="false" npc="0"/>
+	<tile x="85" y="57" baseid="1" walkable="false" npc="0"/>
+	<tile x="86" y="57" baseid="1" walkable="false" npc="0"/>
+	<tile x="87" y="57" baseid="1" walkable="false" npc="0"/>
+	<tile x="88" y="57" baseid="1" walkable="false" npc="0"/>
+	<tile x="89" y="57" baseid="1" walkable="false" npc="0"/>
 	<tile x="90" y="57" baseid="0" walkable="true" npc="0"/>
 	<tile x="91" y="57" baseid="0" walkable="true" npc="0"/>
 	<tile x="92" y="57" baseid="0" walkable="true" npc="0"/>
@@ -6028,7 +6028,7 @@
 	<tile x="24" y="60" baseid="0" walkable="true" npc="0"/>
 	<tile x="25" y="60" baseid="0" walkable="true" npc="0"/>
 	<tile x="26" y="60" baseid="0" walkable="true" npc="0"/>
-	<tile x="27" y="60" baseid="0" walkable="true" npc="0"/>
+	<tile x="27" y="60" baseid="1" walkable="false" npc="0"/>
 	<tile x="28" y="60" baseid="0" walkable="true" npc="0"/>
 	<tile x="29" y="60" baseid="0" walkable="true" npc="0"/>
 	<tile x="30" y="60" baseid="0" walkable="true" npc="0"/>
@@ -6128,7 +6128,7 @@
 	<tile x="24" y="61" baseid="0" walkable="true" npc="0"/>
 	<tile x="25" y="61" baseid="0" walkable="true" npc="0"/>
 	<tile x="26" y="61" baseid="0" walkable="true" npc="0"/>
-	<tile x="27" y="61" baseid="0" walkable="true" npc="0"/>
+	<tile x="27" y="61" baseid="1" walkable="false" npc="0"/>
 	<tile x="28" y="61" baseid="0" walkable="true" npc="0"/>
 	<tile x="29" y="61" baseid="0" walkable="true" npc="0"/>
 	<tile x="30" y="61" baseid="0" walkable="true" npc="0"/>

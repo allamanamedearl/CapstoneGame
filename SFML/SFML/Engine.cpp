@@ -152,7 +152,7 @@ void Engine::RenderFrame()
 	////and tileY)
 	////bounds.top = y coordinate of rect
 	int numDrawnTiles = 0;
-#pragma region balls
+#pragma region old way
 	//for (int y = 0, tileY = bounds.top; y < bounds.height; y++, tileY++)
 	//{
 	//	for (int x = 0, tileX = bounds.left; x < bounds.width; x++, tileX++)
@@ -176,7 +176,7 @@ void Engine::RenderFrame()
 	//		}
 	//	}
 	//}
-#pragma endregion fuck
+#pragma endregion old way
 
 	for (int y = 0; y < currLevel->GetHeight(); y++)
 	{
@@ -187,7 +187,7 @@ void Engine::RenderFrame()
 
 			if (tile)
 			{
-				if (camera->CheckIfOnscreen(x, y, tileSize, screenWidth, screenHeight))//CHANGE TO VARIABLES
+				if (camera->CheckIfOnscreen(x, y, tileSize, screenWidth, screenHeight))
 				{
 					tile->Draw((x* tileSize), (y * tileSize), window);
 					numDrawnTiles++;
@@ -248,8 +248,8 @@ void Engine::ProcessInput()
 			keyDown = true;
 			
 			//view->zoom(1.0f);
-			view->move(0.0f, 1.0f);
-			camera->SetRenderingRange(0, -1);//bc moving down
+			//view->move(0.0f, 1.0f);
+			//camera->SetRenderingRange(0, -1);//bc moving down
 			std::cout<<view->getTransform().getMatrix();
 			std::cout << "KeyPressed" << std::endl;
 		}
@@ -271,6 +271,32 @@ void Engine::Update()
 	//camera->Update();
 	//camera->GoTo(0, tileSize);
 	player->Update();
+	//if pos is greater than or equal to 2 thirds of the screen
+	if (player->GetPosition().x >= screenWidth / 3 * 2 && player->GetVelocity().x > 0)
+	{
+		//scroll left when walking right
+		view->move(2.0f, 0.0f);
+		camera->SetRenderingRange(-2, 0);//bc moving down
+	}
+	if (player->GetPosition().x <= screenWidth / 3  && player->GetVelocity().x < 0)
+	{
+		//scroll right when walking left
+		view->move(-2.0f, 0.0f);
+		camera->SetRenderingRange(2, 0);//bc moving down
+	}
+	if (player->GetPosition().y >= screenHeight / 3 * 2 && player->GetVelocity().y > 0)
+	{
+		//scroll up when walking down
+		view->move(0.0f, 2.0f);
+		camera->SetRenderingRange(0, -2);//bc moving down
+	}
+	if (player->GetPosition().y <= screenHeight / 3  && player->GetVelocity().y < 0)
+	{
+		//scroll down when walking up
+		view->move(0.0f, -2.0f);
+		camera->SetRenderingRange(0, 2);
+	}
+
 	
 	
 	for (int i = 0; i < level_NPCs.size(); i++)
