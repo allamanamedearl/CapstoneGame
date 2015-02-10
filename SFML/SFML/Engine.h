@@ -22,6 +22,9 @@ private:
 
 	//camera
 	Camera* camera;
+	int screenWidth;
+	int screenHeight;
+	sf::View* view;
 	//map
 	TileMap* currLevel;
 	int tileSize;

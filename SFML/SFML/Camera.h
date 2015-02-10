@@ -31,6 +31,12 @@ public:
 	{
 		return sf::Vector2i((int)position.x, (int)position.y);
 	}
+	inline void SetPosition(int x, int y)
+	{
+		this->position.x = x;
+		this->position.y = y;
+	}
+	
 	//helper function for retrieving camera's
 	//offset from nearest tile
 	inline sf::Vector2i GetTileOffset(int tileSize)
@@ -41,5 +47,11 @@ public:
 	//a rectangle defining which tiles
 	//are visible through camera
 	sf::IntRect GetTileBounds(int tileSize);
+
+	//adjusts range to render eg. renders 0 to 100 for height cam moves 1
+	//update to render 1 to 101 
+	void SetRenderingRange(int x, int y);
+
+	bool CheckIfOnscreen(int x, int y, int tileSize, int screenWidth, int screenHeight);
 };
 

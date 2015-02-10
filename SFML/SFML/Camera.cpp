@@ -5,6 +5,8 @@ Camera::Camera(int w, int h, float speed)
 {
 	size.x = w;
 	size.y = h;
+	position.x = 0.0f;
+	position.y = 0.0f;
 
 	if (speed < 0.0f)
 		speed = 0.0f;
@@ -95,6 +97,19 @@ void Camera::Update()
 		position.x += vx;
 		position.y += vy;
 	}
+}
+void Camera::SetRenderingRange(int x, int y)
+{
+	SetPosition((int)position.x + x, (int)position.y + y);
+}
+bool Camera::CheckIfOnscreen(int x, int y, int tileSize, int screenWidth,int screenHeight)
+{
+	//check to see if a tile is on screen
+	//camera width and height is set to fullsize of level
+	if (x*tileSize +position.x>= position.x && x*tileSize +position.x < screenWidth && y*tileSize +position.y >= position.y && y*tileSize +position.y < screenHeight)
+		return true;
+	else
+		return false;
 }
 sf::IntRect Camera::GetTileBounds(int tileSize)
 {

@@ -5,7 +5,9 @@ int num = 0;
 Engine::Engine()
 {
 	tileSize = 32;
-	camera = new Camera(720, 640, 0.2f);
+	camera = new Camera(3200, 3200, 0.2f);//map size to get bounds 100 by 100 times tile size
+	screenWidth = 800;
+	screenHeight = 600;
 	keyDown = false;
 	
 	//timeSinceLastUpdate = 0;
@@ -62,6 +64,8 @@ void Engine::LoadTextures()
 bool Engine::Init()
 {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600, 32), "RPG");
+	view = new sf::View();
+	view->reset(sf::FloatRect(0, 0, screenWidth,screenHeight ));//what part is shown
 	textureManager = new TextureManager();
 	LoadTextures();
 	//for testing
@@ -147,21 +151,53 @@ void Engine::RenderFrame()
 	////drawn (x and y), and which tile on the map is being drawn (tileX
 	////and tileY)
 	////bounds.top = y coordinate of rect
-	for (int y = 0, tileY = bounds.top; y < bounds.height; y++, tileY++)
+	int numDrawnTiles = 0;
+#pragma region balls
+	//for (int y = 0, tileY = bounds.top; y < bounds.height; y++, tileY++)
+	//{
+	//	for (int x = 0, tileX = bounds.left; x < bounds.width; x++, tileX++)
+	//	{
+	//		if (tileY >= 0 && tileX >= 0)//only rendering tiles that are seeable not offscreen shit
+	//		{
+
+	//			//Get the tile we're drawing
+	//			tile = currLevel->GetTile(x, y);//(tileX, tileY);
+
+	//			if (tile)
+	//			{
+	//				if (camera->CheckIfOnscreen(x, y, tileSize, screenWidth, screenHeight))//CHANGE TO VARIABLES
+	//				{
+	//					tile->Draw((tileX* tileSize), (tileY * tileSize), window);
+	//					numDrawnTiles++;
+	//				}
+	//				
+	//			}
+	//				
+	//		}
+	//	}
+	//}
+#pragma endregion fuck
+
+	for (int y = 0; y < currLevel->GetHeight(); y++)
 	{
-		for (int x = 0, tileX = bounds.left; x < bounds.width; x++, tileX++)
-		{
-			if (tileY >= 0 && tileX >= 0)//only rendering tiles that are seeable not offscreen shit
+		for (int x = 0; x < currLevel->GetWidth(); x++)
+		{		
+			//Get the tile we're drawing
+			tile = currLevel->GetTile(x, y);//(tileX, tileY);
+
+			if (tile)
 			{
+				if (camera->CheckIfOnscreen(x, y, tileSize, screenWidth, screenHeight))//CHANGE TO VARIABLES
+				{
+					tile->Draw((x* tileSize), (y * tileSize), window);
+					numDrawnTiles++;
+				}
 
-				//Get the tile we're drawing
-				tile = currLevel->GetTile(x, y);//(tileX, tileY);
-
-				if (tile)
-					tile->Draw((tileX* tileSize), (tileY * tileSize), window);
 			}
+
 		}
 	}
+	std::cout << numDrawnTiles;//I'm a genius
 #pragma endregion and now for something completely different
 
 	//window->draw(sprite);
@@ -174,6 +210,8 @@ void Engine::RenderFrame()
 	//npc->Draw(window);
 	/*npc2->Draw(window);
 	npc3->Draw(window);*/
+	
+	window->setView(*view);
 	window->display();
 }
 void Engine::ProcessInput()
@@ -208,6 +246,11 @@ void Engine::ProcessInput()
 			camera->GoToCenter(x, y);*/
 			//player->GetInput();
 			keyDown = true;
+			
+			//view->zoom(1.0f);
+			view->move(0.0f, 1.0f);
+			camera->SetRenderingRange(0, -1);//bc moving down
+			std::cout<<view->getTransform().getMatrix();
 			std::cout << "KeyPressed" << std::endl;
 		}
 		if (evt.type == sf::Event::KeyReleased)
@@ -218,15 +261,17 @@ void Engine::ProcessInput()
 	}
 	//player->GetInput(window);
 }
+
 void Engine::Update()
 {
 	//currentTime = clock.getElapsedTime().asMilliseconds();
 	//timeStep = currentTime - timeSinceLastUpdate;
 	//camera->GoToCenter((int)player->GetPosition().x, (int)player->GetPosition().y);
 	
-	camera->Update();
-	camera->GoTo(0, tileSize * 5);
+	//camera->Update();
+	//camera->GoTo(0, tileSize);
 	player->Update();
+	
 	
 	for (int i = 0; i < level_NPCs.size(); i++)
 	{
