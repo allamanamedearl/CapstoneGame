@@ -2,6 +2,7 @@
 #define ENGINE_H
 
 #include <SFML\Graphics.hpp>
+#include <string>
 #include "CollisionHandling.h"
 //#include "TileMap.h"
 #include "Camera.h"
@@ -19,6 +20,7 @@ private:
 	bool keyDown;
 	//SFML Render Window
 	sf::RenderWindow* window;
+	sf::Font guiFont;
 
 	//camera
 	Camera* camera;

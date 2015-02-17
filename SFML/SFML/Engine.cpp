@@ -49,6 +49,11 @@ void Engine::LoadTextures()
 		std::cout << "Unable to load npc texture";
 		std::exit;
 	}
+	if (!guiFont.loadFromFile("C:/Windows/Fonts/ALGER.ttf"))
+	{
+		std::cout << " FONT ERROR";
+		std::exit;
+	}
 	textureManager->SetTileSize(tileSize);
 	std::cout << "LOAD TEXTURES" << std::endl;
 	//FOR TESTING LOADING TILESET FROM XML
@@ -210,9 +215,25 @@ void Engine::RenderFrame()
 	//npc->Draw(window);
 	/*npc2->Draw(window);
 	npc3->Draw(window);*/
+	sf::Text posText;
+	sf::Text text;
+	text.setFont(guiFont);
+	text.setString("VIEW POS X: " + std::to_string(view->getCenter().x )+ " Y: " + std::to_string(view->getCenter().y));
+	text.setCharacterSize(24);
+	text.setColor(sf::Color::Blue);
+	text.setStyle(sf::Text::Bold);
+	text.setPosition(sf::Vector2f(0.0f, 24.0f));
+	posText.setFont(guiFont);
+	posText.setString("PLAYER POS X: " + std::to_string( player->GetPosition().x) + " Y: " + std::to_string(player->GetPosition().y));
+	posText.setCharacterSize(24);
+	posText.setColor(sf::Color::Red);
+	posText.setStyle(sf::Text::Bold);
 	
 	window->setView(*view);
+	window->draw(posText);
+	window->draw(text);
 	window->display();
+	
 }
 void Engine::ProcessInput()
 {
@@ -272,6 +293,7 @@ void Engine::Update()
 	//camera->GoTo(0, tileSize);
 	player->Update();
 	//if pos is greater than or equal to 2 thirds of the screen
+	
 	if (player->GetPosition().x >= screenWidth / 3 * 2 && player->GetVelocity().x > 0)
 	{
 		//scroll left when walking right
