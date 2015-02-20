@@ -218,17 +218,22 @@ void Engine::RenderFrame()
 	sf::Text posText;
 	sf::Text text;
 	text.setFont(guiFont);
+	//sf::Vector2f centerWorld = window->ma
 	text.setString("VIEW POS X: " + std::to_string(view->getCenter().x )+ " Y: " + std::to_string(view->getCenter().y));
 	text.setCharacterSize(24);
 	text.setColor(sf::Color::Blue);
 	text.setStyle(sf::Text::Bold);
-	text.setPosition(sf::Vector2f(0.0f, 24.0f));
+	text.setPosition(view->getCenter());
 	posText.setFont(guiFont);
-	posText.setString("PLAYER POS X: " + std::to_string( player->GetPosition().x) + " Y: " + std::to_string(player->GetPosition().y));
+	
+	//sf::Vector2i pPosI = sf::Vector2i((int)player->GetPosition().x, (int)player->GetPosition().y);
+	sf::Vector2i pWorldPos = window->mapCoordsToPixel(player->GetPosition());
+	posText.setString("PLAYER POS X: " + std::to_string( pWorldPos.x) + " Y: " + std::to_string(pWorldPos.y));
 	posText.setCharacterSize(24);
 	posText.setColor(sf::Color::Red);
 	posText.setStyle(sf::Text::Bold);
-	
+	posText.setPosition(view->getCenter().x, view->getCenter().y + 20);
+
 	window->setView(*view);
 	window->draw(posText);
 	window->draw(text);
@@ -293,26 +298,28 @@ void Engine::Update()
 	//camera->GoTo(0, tileSize);
 	player->Update();
 	//if pos is greater than or equal to 2 thirds of the screen
-	
-	if (player->GetPosition().x >= screenWidth / 3 * 2 && player->GetVelocity().x > 0)
+	//SCROLLING
+	//CONVERT PLAYER POSITION
+	sf::Vector2i playerPos = window->mapCoordsToPixel(player->GetPosition());
+	if (playerPos.x >= screenWidth/3 * 2 && player->GetVelocity().x > 0)
 	{
 		//scroll left when walking right
 		view->move(2.0f, 0.0f);
 		camera->SetRenderingRange(-2, 0);//bc moving down
 	}
-	if (player->GetPosition().x <= screenWidth / 3  && player->GetVelocity().x < 0)
+	if (playerPos.x <= screenWidth / 3 && player->GetVelocity().x < 0)
 	{
 		//scroll right when walking left
 		view->move(-2.0f, 0.0f);
 		camera->SetRenderingRange(2, 0);//bc moving down
 	}
-	if (player->GetPosition().y >= screenHeight / 3 * 2 && player->GetVelocity().y > 0)
+	if (playerPos.y >= screenHeight / 3 * 2 && player->GetVelocity().y > 0)
 	{
 		//scroll up when walking down
 		view->move(0.0f, 2.0f);
 		camera->SetRenderingRange(0, -2);//bc moving down
 	}
-	if (player->GetPosition().y <= screenHeight / 3  && player->GetVelocity().y < 0)
+	if (playerPos.y <= screenHeight / 3 && player->GetVelocity().y < 0)
 	{
 		//scroll down when walking up
 		view->move(0.0f, -2.0f);
