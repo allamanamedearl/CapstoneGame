@@ -6,8 +6,8 @@ Engine::Engine()
 {
 	tileSize = 32;
 	camera = new Camera(3200, 3200, 0.2f);//map size to get bounds 100 by 100 times tile size
-	screenWidth = 800;
-	screenHeight = 600;
+	screenWidth = 800; //800
+	screenHeight = 600;//600
 	keyDown = false;
 	
 	//timeSinceLastUpdate = 0;
@@ -54,6 +54,12 @@ void Engine::LoadTextures()
 		std::cout << " FONT ERROR";
 		std::exit;
 	}
+	if (!guiTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/UIWindow2.png"))
+	{
+		std::cout << "GUI ERROR";
+		std::exit;
+	}
+	guiSprite.setTexture(guiTexture, true);
 	textureManager->SetTileSize(tileSize);
 	std::cout << "LOAD TEXTURES" << std::endl;
 	//FOR TESTING LOADING TILESET FROM XML
@@ -78,6 +84,7 @@ bool Engine::Init()
 	std::cout << "\nAfter LoadLevel() call" << std::endl;
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
 	player = new Player(&playerTexture,collisionHandling);
+	//INIT NPCS
 	for (int i = 0; i < currLevel->npcs.size(); i++)
 	{
 		NPC* npc = new NPC(&npcTexture, collisionHandling, currLevel->npcs[i].startPos);
@@ -234,9 +241,17 @@ void Engine::RenderFrame()
 	posText.setStyle(sf::Text::Bold);
 	posText.setPosition(view->getCenter().x, view->getCenter().y + 20);
 
+	guiSprite.setPosition(view->getCenter().x - view->getCenter().x, view->getCenter().y * 2 - 100);
+	sf::View guiView;
+	guiView.reset(sf::FloatRect(view->getCenter().x - view->getCenter().x, view->getCenter().y * 2 - 100.0f, screenWidth, 100.0f));
+	guiView.setViewport(sf::FloatRect(0.0f, 0.8f, 1.0f,0.2f));
+	window->setView(guiView);
+	window->draw(guiSprite);
+
 	window->setView(*view);
 	window->draw(posText);
 	window->draw(text);
+	
 	window->display();
 	
 }

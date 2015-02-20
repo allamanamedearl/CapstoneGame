@@ -22,6 +22,10 @@ private:
 	sf::RenderWindow* window;
 	sf::Font guiFont;
 
+	//GUI STUFF
+	sf::Texture guiTexture;
+	sf::Sprite guiSprite;
+
 	//camera
 	Camera* camera;
 	int screenWidth;
