@@ -1,0 +1,44 @@
+GUI()
+
+init()
+//initialize/ load textures eg container and logos
+update()
+//update position if it moves the way the land scrolls
+draw(window)
+
+getters and setters
+//to indicate at the beginning or hint which power to use
+bool highlight1;//highlight power 1 eg trigger madness
+bool highlight2//highlight control ppl
+bool highlight3;//highlight anger
+if true it will draw a highlight behind key symbol taking into account gui positionm
+
+rectangles outlines for empty powers and fills for when powers
+are loading
+checkIfPowerUsed(player)
+
+player will have to have a getter
+if yes start draining bar
+if no reload bar
+
+Power class
+player has power maybe
+when button pressed trigger power animation
+madness--animates in spot triggered
+anger--follows player
+control--animates in spot--maybe controlled person is highlighted
+
+LevelBuilder
+
+draw set level size eg 100 x 100 in floor tile
+maybe draw grid
+click on option eg wall in gui click tile and it changes
+--highlights wall in gui sets wall to true every option to false
+check for click, check for position to figure out which tile
+
+modify xml to include starting and ending point for each patrol npc. eg Patrol is assigned a number a tile will be end1 or end2 or 0 patrol begins at tile it starts 
+
+opening is a comic with music and sound effects --skipable
+try out powers and collecting stuff
+
+
