@@ -42,24 +42,24 @@ void Engine::LoadTextures()
 	if (!playerTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/blondeSprite.png"))
 	{
 		std::cout << "Unable to load player texture";
-		std::exit;
+		std::exit(EXIT_FAILURE);
 	}
 	if (!npcTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/otherSprite.png"))
 	{
 		std::cout << "Unable to load npc texture";
-		std::exit;
+		std::exit(EXIT_FAILURE);
 	}
 	if (!guiFont.loadFromFile("C:/Windows/Fonts/ALGER.ttf"))
 	{
 		std::cout << " FONT ERROR";
-		std::exit;
+		std::exit(EXIT_FAILURE);
 	}
 	if (!guiTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/UIWindow2.png"))
 	{
 		std::cout << "GUI ERROR";
-		std::exit;
+		std::exit(EXIT_FAILURE);
 	}
-	guiSprite.setTexture(guiTexture, true);
+	//guiSprite.setTexture(guiTexture, true);
 	textureManager->SetTileSize(tileSize);
 	std::cout << "LOAD TEXTURES" << std::endl;
 	//FOR TESTING LOADING TILESET FROM XML
@@ -74,13 +74,17 @@ void Engine::LoadTextures()
 }
 bool Engine::Init()
 {
-	window = new sf::RenderWindow(sf::VideoMode(800, 600, 32), "RPG");
+	window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight, 32), "RPG",sf::Style::Fullscreen);
 	view = new sf::View();
 	view->reset(sf::FloatRect(0, 0, screenWidth,screenHeight ));//what part is shown
 	textureManager = new TextureManager();
 	LoadTextures();
 	//for testing
 	LoadLevel();
+	//GUI
+	mainGUI = new Gui(&guiTexture, screenWidth, screenHeight);
+	mainGUI->Init();
+
 	std::cout << "\nAfter LoadLevel() call" << std::endl;
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
 	player = new Player(&playerTexture,collisionHandling);
@@ -241,13 +245,13 @@ void Engine::RenderFrame()
 	posText.setStyle(sf::Text::Bold);
 	posText.setPosition(view->getCenter().x, view->getCenter().y + 20);
 
-	guiSprite.setPosition(view->getCenter().x - view->getCenter().x, view->getCenter().y * 2 - 100);
+	/*guiSprite.setPosition(view->getCenter().x - view->getCenter().x, view->getCenter().y * 2 - 100);
 	sf::View guiView;
 	guiView.reset(sf::FloatRect(view->getCenter().x - view->getCenter().x, view->getCenter().y * 2 - 100.0f, screenWidth, 100.0f));
 	guiView.setViewport(sf::FloatRect(0.0f, 0.8f, 1.0f,0.2f));
 	window->setView(guiView);
-	window->draw(guiSprite);
-
+	window->draw(guiSprite);*/
+	mainGUI->Draw(window);
 	window->setView(*view);
 	window->draw(posText);
 	window->draw(text);
@@ -287,12 +291,15 @@ void Engine::ProcessInput()
 			camera->GoToCenter(x, y);*/
 			//player->GetInput();
 			keyDown = true;
-			
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				std::exit(EXIT_SUCCESS);
+			}
 			//view->zoom(1.0f);
 			//view->move(0.0f, 1.0f);
 			//camera->SetRenderingRange(0, -1);//bc moving down
-			std::cout<<view->getTransform().getMatrix();
-			std::cout << "KeyPressed" << std::endl;
+			//std::cout<<view->getTransform().getMatrix();
+			//std::cout << "KeyPressed" << std::endl;
 		}
 		if (evt.type == sf::Event::KeyReleased)
 		{
@@ -327,8 +334,8 @@ void Engine::Update()
 		//scroll right when walking left
 		view->move(-2.0f, 0.0f);
 		camera->SetRenderingRange(2, 0);//bc moving down
-	}
-	if (playerPos.y >= screenHeight / 3 * 2 && player->GetVelocity().y > 0)
+	}//-100 for gui height?
+	if (playerPos.y >= screenHeight / 3 * 2 -100 && player->GetVelocity().y > 0)
 	{
 		//scroll up when walking down
 		view->move(0.0f, 2.0f);

@@ -7,6 +7,7 @@
 //#include "TileMap.h"
 #include "Camera.h"
 #include "Player.h"
+#include "Gui.h"
 //#include "NPC.h"
 class Engine
 {
@@ -25,6 +26,7 @@ private:
 	//GUI STUFF
 	sf::Texture guiTexture;
 	sf::Sprite guiSprite;
+	Gui* mainGUI;
 
 	//camera
 	Camera* camera;
