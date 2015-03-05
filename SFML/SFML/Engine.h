@@ -40,6 +40,7 @@ private:
 	//Player
 	Player *player;
 	sf::Texture playerTexture;
+	sf::Texture powerTexture;
 
 	std::vector<NPC*>level_NPCs;
 	/*NPC *npc;

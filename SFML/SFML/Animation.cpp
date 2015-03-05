@@ -8,6 +8,10 @@ Animation::Animation()
 	left = false;
 	right = false;
 	pause = true;
+
+	triggerMadness = false;
+	psychoticRage = false;
+	controlNPC = false;
 	currentFrame = 0;
 }
 Animation::~Animation()
@@ -71,6 +75,28 @@ void Animation::Update()
 				currentFrame = 6;
 			}
 		}
+		else if (controlNPC)//0-5
+		{
+			if (currentFrame == 6)
+			{
+				currentFrame = 0;
+			}
+		}
+		else if (psychoticRage)//6-11
+		{
+			if (currentFrame == 12)
+			{
+				currentFrame = 6;
+			}
+		}
+		else if (triggerMadness)//12-15
+		{
+			if (currentFrame == 16)
+			{
+				currentFrame = 12;
+			}
+		}
+		
 		clock.restart();
 	}
 	
@@ -79,6 +105,30 @@ void Animation::Update()
 sf::Sprite* Animation::GetCurrentFrame()
 {
 	return frames[currentFrame];
+}
+void Animation::Control()
+{
+	currentFrame = 0;
+	pause = false;
+	controlNPC = true;
+	psychoticRage = false;
+	triggerMadness = false;
+}
+void Animation::Rage()
+{
+	currentFrame = 6;
+	pause = false;
+	controlNPC = false;
+	psychoticRage = true;
+	triggerMadness = false;
+}
+void Animation::Madness()
+{
+	currentFrame = 12;
+	pause = false;
+	controlNPC = false;
+	psychoticRage = false;
+	triggerMadness = true;
 }
 void Animation::Left()
 {

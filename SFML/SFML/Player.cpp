@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Player::Player(sf::Texture *texture , CollisionHandling* collHand)
+Player::Player(sf::Texture *texture , CollisionHandling* collHand, sf::Texture *powers)
 {
 	//sprite = new sf::Sprite(*texture);
 	//texture = new sf::Texture (*texture);
@@ -13,10 +13,13 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand)
 	//sprite->setPosition(position);
 	isVisible = true;
 	animation = new Animation();
+	powerAnim = new Animation();
 	isMoving = false;
 
 	animation->SetFrames(*texture, 32, 32, (int)texture->getSize().x, (int)texture->getSize().y);
 	animation->SetPosition(position);
+	powerAnim->SetFrames(*powers, 96, 96, (int)powers->getSize().x, (int)powers->getSize().y);
+	powerAnim->SetPosition(position - sf::Vector2f(32.0f, 32.0f));
 	pixelsToMove = 32;//tile size
 	cHandler = collHand;
 
@@ -35,6 +38,8 @@ Player::~Player()
 	cHandler = nullptr;
 	delete animation;
 	animation = nullptr;
+	delete powerAnim;
+	powerAnim = nullptr;
 }
 
 void Player::GetInput(std::vector<NPC*>& NPCs)
@@ -122,7 +127,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 					//if they are set a bool to true
 					triggerMadness = true;
 					//play power animation
-
+					powerAnim->Madness();
 					//set ai to freakout
 					NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 2.0f);
 					NPCs[i]->SetBehaviour("Idle");//idle for now
@@ -157,8 +162,10 @@ void Player::Update()
 	SetPosition(position);
 
 	animation->Update();
+	powerAnim->Update();
 	//sprite->setPosition(position);
 	animation->SetPosition(position);
+	powerAnim->SetPosition(position - sf::Vector2f(32.0f, 32.0f));//so animation is always centered on player
 	
 	
 }
@@ -166,6 +173,11 @@ void Player::Draw(sf::RenderWindow *rw)
 {
 	
 	//rw->draw(*sprite);
-	rw->draw(*(animation->GetCurrentFrame()));
+	rw->draw(*animation->GetCurrentFrame());
+	if (triggerMadness || controlNPC || psychoticRage)
+	{
+		rw->draw(*powerAnim->GetCurrentFrame());
+	}
+	
 	//rw->draw(*te);
 }

@@ -6,7 +6,7 @@
 class Player
 {
 public:
-	Player(sf::Texture *texture, CollisionHandling* collHand);
+	Player(sf::Texture *texture, CollisionHandling* collHand, sf::Texture *powers);
 	~Player();
 	
 	sf::Vector2f GetPosition(){ return this->position; }
@@ -34,6 +34,7 @@ private:
 	//NPC GetNearbyNPC();
 
 	Animation* animation;
+	Animation* powerAnim;
 
 	//powers
 	bool triggerMadness;

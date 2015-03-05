@@ -26,6 +26,8 @@ Engine::~Engine()
 	collisionHandling = nullptr;
 	delete player;
 	player = nullptr;
+	delete mainGUI;
+	mainGUI = nullptr;
 }
 void Engine::LoadTextures()
 {
@@ -44,6 +46,11 @@ void Engine::LoadTextures()
 		std::cout << "Unable to load player texture";
 		std::exit(EXIT_FAILURE);
 	}
+	if (!powerTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/PowerSheet.png"))
+	{
+		std::cout << "Unable to load power texture";
+		std::exit(EXIT_FAILURE);
+	}
 	if (!npcTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/otherSprite.png"))
 	{
 		std::cout << "Unable to load npc texture";
@@ -54,7 +61,7 @@ void Engine::LoadTextures()
 		std::cout << " FONT ERROR";
 		std::exit(EXIT_FAILURE);
 	}
-	if (!guiTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/UIWindow2.png"))
+	if (!guiTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/UIWindow3.png"))
 	{
 		std::cout << "GUI ERROR";
 		std::exit(EXIT_FAILURE);
@@ -74,7 +81,7 @@ void Engine::LoadTextures()
 }
 bool Engine::Init()
 {
-	window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight, 32), "RPG",sf::Style::Fullscreen);
+	window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight, 32), "RPG");
 	view = new sf::View();
 	view->reset(sf::FloatRect(0, 0, screenWidth,screenHeight ));//what part is shown
 	textureManager = new TextureManager();
@@ -87,7 +94,7 @@ bool Engine::Init()
 
 	std::cout << "\nAfter LoadLevel() call" << std::endl;
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
-	player = new Player(&playerTexture,collisionHandling);
+	player = new Player(&playerTexture,collisionHandling,&powerTexture);
 	//INIT NPCS
 	for (int i = 0; i < currLevel->npcs.size(); i++)
 	{
@@ -218,11 +225,12 @@ void Engine::RenderFrame()
 
 	//window->draw(sprite);
 	//testTile->Draw(10, 10, window);
-	player->Draw(window);
+	
 	for (int i = 0; i < level_NPCs.size(); i++)
 	{
 		level_NPCs[i]->Draw(window);
 	}
+	player->Draw(window);
 	//npc->Draw(window);
 	/*npc2->Draw(window);
 	npc3->Draw(window);*/

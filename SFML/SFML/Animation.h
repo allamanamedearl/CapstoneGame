@@ -11,6 +11,11 @@ private:
 	bool up;
 	bool down;
 	bool pause;
+
+	bool triggerMadness;
+	bool psychoticRage;
+	bool controlNPC;
+
 	int currentFrame;
 	sf::Texture spriteSheet;
 	sf::Time time;
@@ -27,6 +32,11 @@ public:
 	void Up();
 	void Down();
 	void Pause();
+
+	void Madness();
+	void Control();
+	void Rage();
+
 	void SetPosition(sf::Vector2f pos);
 	void Update();
 	sf::Sprite* GetCurrentFrame();
