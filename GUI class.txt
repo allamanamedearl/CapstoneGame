@@ -1,3 +1,15 @@
+player powers
+-rage
+playAnimation
+----collisionhandling
+	CheckIfBreakable(playerPos)
+	for loop through surrounding tiles x and y
+		checkifTile
+		if true get tile
+			checkifbreakable
+			if true set tile walkable true and change
+			texture
+
 GUI()
 
 init()

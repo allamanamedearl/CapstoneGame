@@ -138,6 +138,24 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				//have a delay so that you can't keep triggering power, also so that there is a recharge time
 			}
 		}
+		//trigger psychotic rage
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::N) && !psychoticRage)
+		{
+			sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+			//check if surrounding tiles are breakable
+			for (int x = (int)playerTilePos.x - 1; x < (int)playerTilePos.x + 2; x++)
+			{
+				for (int y = (int)playerTilePos.y - 1; x < (int)playerTilePos.y + 2; x++)
+				{
+					//if it's a tile and not a blank space
+					if (cHandler->CheckIfTile(sf::Vector2f(x, y)))
+					{
+						
+					}
+				}
+			}
+
+		}
 	}
 	else//so you can;t get input while player is still moving
 	{

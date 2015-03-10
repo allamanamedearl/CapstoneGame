@@ -15,6 +15,17 @@ CollisionHandling::~CollisionHandling()
 	delete textMan;
 	textMan = nullptr;
 }
+bool CollisionHandling::CheckIfTile(sf::Vector2f pos)
+{
+	if (pos.x <0 || pos.x>tileMap->GetWidth() || pos.y <0 || pos.y>tileMap->GetHeight())
+	{
+		return false; //no there's NOT a tile there
+	}
+	else
+	{
+		return true;
+	}
+}
 sf::Vector2f CollisionHandling::GetWorldToTileCoords(sf::Vector2f pos)
 {
 	//std::cout << "TIleSIze COllision " << tileSize << std::endl;

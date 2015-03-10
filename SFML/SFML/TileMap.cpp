@@ -99,6 +99,7 @@ void TileMap::LoadLevel(std::string filename, TextureManager& textureMan)
 		bool isWalkable = (walkString == "true") ? true : false;//ternery yay! Phil would be proud
 		//adding npcs to map based on tile pos
 		std::string npcString = tile->first_attribute("npc")->value();
+		
 		NPC_ATTRIBUTES attrib;
 		if (npcString == "Idle")
 		{
@@ -118,9 +119,12 @@ void TileMap::LoadLevel(std::string filename, TextureManager& textureMan)
 			attrib.startPos = sf::Vector2f(x, y);
 			npcs.push_back(attrib);
 		}
+		//is it breakable?
+		std::string breakString = tile->first_attribute("breakable")->value();
+		bool isBreakable = (breakString == "true") ? true : false;
 
 		//create the tile and add it to the level
-		Tile* newTile = new Tile(textureMan.GetTexture(baseid),isWalkable);
+		Tile* newTile = new Tile(textureMan.GetTexture(baseid),isWalkable,isBreakable);
 		AddTile(x, y, newTile);
 		
 		//go to next tile

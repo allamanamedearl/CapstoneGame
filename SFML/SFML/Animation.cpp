@@ -124,7 +124,7 @@ void Animation::Rage()
 }
 void Animation::Madness()
 {
-	currentFrame = 12;
+	currentFrame = 15;//was 12
 	pause = false;
 	controlNPC = false;
 	psychoticRage = false;
