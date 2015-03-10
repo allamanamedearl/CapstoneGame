@@ -19,15 +19,22 @@ void Gui::Init()
 	background.setPosition(sf::Vector2f(0, screenHeight - background.getTextureRect().height));
 	
 	madBar = Bar(sf::Vector2f(background.getTextureRect().width - 50.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Yellow);
-	madBar.SetScale(0.5f);
+	
+
+	rageBar = Bar(sf::Vector2f(background.getTextureRect().width - 280.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Red);
+	controlBar = Bar(sf::Vector2f(background.getTextureRect().width - 490.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Cyan);
 }
 void Gui::Update()
 {
 	madBar.Update();
+	rageBar.Update();
+	controlBar.Update();
 }
 void Gui::Draw(sf::RenderWindow *window)
 {
 	window->setView(guiView);
 	window->draw(background);
 	madBar.Draw(window);
+	rageBar.Draw(window);
+	controlBar.Draw(window);
 }

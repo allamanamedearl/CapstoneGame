@@ -131,8 +131,8 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 					//set ai to freakout
 					NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 2.0f);
 					NPCs[i]->SetBehaviour("Idle");//idle for now
-					
-					break;
+					madClock.restart();//startclock for reload time
+					break; //maybe take this out so it affects all surounding enemies
 				}
 				
 				//have a delay so that you can't keep triggering power, also so that there is a recharge time
@@ -145,7 +145,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 			//set psychotic rage to true
 			psychoticRage = true;
 			powerAnim->Rage();
-			
+			rageClock.restart();
 			cHandler->CheckBreakableTiles(playerTilePos);
 
 		}
@@ -177,6 +177,17 @@ void Player::Update()
 	//sprite->setPosition(position);
 	animation->SetPosition(position);
 	powerAnim->SetPosition(position - sf::Vector2f(32.0f, 32.0f));//so animation is always centered on player
+
+	madTime = madClock.getElapsedTime();
+	if (madTime.asMilliseconds() >= 2000)//2 seconds
+	{
+		triggerMadness = false;
+	}
+	rageTime = rageClock.getElapsedTime();
+	if (rageTime.asMilliseconds() >= 2000)//2 seconds
+	{
+		psychoticRage = false;
+	}
 	
 	
 }

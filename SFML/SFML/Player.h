@@ -1,5 +1,6 @@
 #pragma once
 #include<SFML\Graphics.hpp>//may need to remove this later if player inherits
+#include<SFML\System\Clock.hpp>
 #include "CollisionHandling.h"
 #include "Animation.h"
 #include "NPC.h"
@@ -27,6 +28,14 @@ private:
 	//sf::Texture* texture;
 	bool isMoving;
 	float pixelsToMove;
+
+	//Time stuff for power
+	sf::Clock madClock;
+	sf::Clock rageClock;
+	sf::Clock controlClock;
+	sf::Time madTime;
+	sf::Time rageTime;
+	sf::Time controlTime;
 
 	CollisionHandling* cHandler;
 	//NPC targetNPC;

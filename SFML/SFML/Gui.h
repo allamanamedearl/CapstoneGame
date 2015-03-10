@@ -28,7 +28,9 @@ private:
 	sf::Vector2f position;
 	int screenWidth;
 	int screenHeight;
-	Bar madBar;
+	Bar madBar;//madness
+	Bar rageBar;
+	Bar controlBar;
 	
 };
 
