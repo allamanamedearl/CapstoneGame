@@ -142,18 +142,11 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::N) && !psychoticRage)
 		{
 			sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
-			//check if surrounding tiles are breakable
-			for (int x = (int)playerTilePos.x - 1; x < (int)playerTilePos.x + 2; x++)
-			{
-				for (int y = (int)playerTilePos.y - 1; x < (int)playerTilePos.y + 2; x++)
-				{
-					//if it's a tile and not a blank space
-					if (cHandler->CheckIfTile(sf::Vector2f(x, y)))
-					{
-						
-					}
-				}
-			}
+			//set psychotic rage to true
+			psychoticRage = true;
+			powerAnim->Rage();
+			
+			cHandler->CheckBreakableTiles(playerTilePos);
 
 		}
 	}

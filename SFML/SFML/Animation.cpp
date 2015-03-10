@@ -89,9 +89,9 @@ void Animation::Update()
 				currentFrame = 6;
 			}
 		}
-		else if (triggerMadness)//12-15
+		else if (triggerMadness)//12-17
 		{
-			if (currentFrame == 16)
+			if (currentFrame == 18)
 			{
 				currentFrame = 12;
 			}
@@ -124,7 +124,7 @@ void Animation::Rage()
 }
 void Animation::Madness()
 {
-	currentFrame = 15;//was 12
+	currentFrame = 12;//was 12
 	pause = false;
 	controlNPC = false;
 	psychoticRage = false;

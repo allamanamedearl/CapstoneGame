@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include "Bar.h"
 class Gui
 {
 public:
@@ -27,6 +28,7 @@ private:
 	sf::Vector2f position;
 	int screenWidth;
 	int screenHeight;
+	Bar madBar;
 	
 };
 

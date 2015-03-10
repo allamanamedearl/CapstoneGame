@@ -327,6 +327,7 @@ void Engine::Update()
 	//camera->Update();
 	//camera->GoTo(0, tileSize);
 	player->Update();
+	mainGUI->Update();
 	//if pos is greater than or equal to 2 thirds of the screen
 	//SCROLLING
 	//CONVERT PLAYER POSITION
