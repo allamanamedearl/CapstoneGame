@@ -16,6 +16,8 @@ private:
 	bool isMoving;
 	float pixelsToMove;
 
+	bool userActive;//for whether npc is being controlled by player
+
 	CollisionHandling *cHandler;
 	Animation *animation;
 	AIBehaviour *behaviour;
@@ -36,6 +38,7 @@ public:
 	sf::Vector2f GetStartPos(){ return this->start; }
 	sf::Vector2f GetEndPos(){ return this->end; }
 
+	void SetUserActive(bool active){ this->userActive = active; }
 	void SetBehaviour(std::string b);
 	void GetMovement(sf::Vector2f playerPos);
 	void Draw(sf::RenderWindow *rw);

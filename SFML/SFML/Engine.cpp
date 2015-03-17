@@ -331,30 +331,32 @@ void Engine::Update()
 	//if pos is greater than or equal to 2 thirds of the screen
 	//SCROLLING
 	//CONVERT PLAYER POSITION
-	sf::Vector2i playerPos = window->mapCoordsToPixel(player->GetPosition());
-	if (playerPos.x >= screenWidth/3 * 2 && player->GetVelocity().x > 0)
-	{
-		//scroll left when walking right
-		view->move(2.0f, 0.0f);
-		camera->SetRenderingRange(-2, 0);//bc moving down
-	}
-	if (playerPos.x <= screenWidth / 3 && player->GetVelocity().x < 0)
-	{
-		//scroll right when walking left
-		view->move(-2.0f, 0.0f);
-		camera->SetRenderingRange(2, 0);//bc moving down
-	}//-100 for gui height?
-	if (playerPos.y >= screenHeight / 3 * 2 -100 && player->GetVelocity().y > 0)
-	{
-		//scroll up when walking down
-		view->move(0.0f, 2.0f);
-		camera->SetRenderingRange(0, -2);//bc moving down
-	}
-	if (playerPos.y <= screenHeight / 3 && player->GetVelocity().y < 0)
-	{
-		//scroll down when walking up
-		view->move(0.0f, -2.0f);
-		camera->SetRenderingRange(0, 2);
+	if (player->CheckActive()){
+		sf::Vector2i playerPos = window->mapCoordsToPixel(player->GetPosition());
+		if (playerPos.x >= screenWidth / 3 * 2 && player->GetVelocity().x > 0)
+		{
+			//scroll left when walking right
+			view->move(2.0f, 0.0f);
+			camera->SetRenderingRange(-2, 0);//bc moving down
+		}
+		if (playerPos.x <= screenWidth / 3 && player->GetVelocity().x < 0)
+		{
+			//scroll right when walking left
+			view->move(-2.0f, 0.0f);
+			camera->SetRenderingRange(2, 0);//bc moving down
+		}//-100 for gui height?
+		if (playerPos.y >= screenHeight / 3 * 2 - 100 && player->GetVelocity().y > 0)
+		{
+			//scroll up when walking down
+			view->move(0.0f, 2.0f);
+			camera->SetRenderingRange(0, -2);//bc moving down
+		}
+		if (playerPos.y <= screenHeight / 3 && player->GetVelocity().y < 0)
+		{
+			//scroll down when walking up
+			view->move(0.0f, -2.0f);
+			camera->SetRenderingRange(0, 2);
+		}
 	}
 
 	

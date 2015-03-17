@@ -27,6 +27,7 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand, sf::Texture *
 	triggerMadness = false;
 	psychoticRage = false;
 	controlNPC = false;
+	userActive = true;
 }
 
 
@@ -44,125 +45,150 @@ Player::~Player()
 
 void Player::GetInput(std::vector<NPC*>& NPCs)
 {
-	
-	if (!isMoving){
-		animation->Pause();//no idle animation so when sprite is stopped it stays on currentFrame
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			animation->Up();
-			bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
-			if (isWalkable)
+	if (userActive){
+		if (!isMoving){
+			animation->Pause();//no idle animation so when sprite is stopped it stays on currentFrame
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				isMoving = true;
-				velocity.x = 0.0f;
-				velocity.y = -speed;
-			}
-			else//if next tile isn't walkable
-			{
-				velocity.y = 0.0f;
-			}
-
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			animation->Down();
-			bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
-			if (isWalkable)
-			{
-				isMoving = true;
-				velocity.x = 0.0f;
-				velocity.y = speed;
-			}
-			else//if next tile isn't walkable
-			{
-				velocity.y = 0.0f;
-			}
-			
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			animation->Left();
-			bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
-			if (isWalkable)
-			{
-				isMoving = true;
-				velocity.x = -speed;
-				velocity.y = 0.0f;
-			}
-			else//if next tile isn't walkable
-			{
-				velocity.x = 0.0f;
-			}
-			
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			animation->Right();
-			bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
-			if (isWalkable)
-			{
-				isMoving = true;
-				velocity.x = speed;
-				velocity.y = 0.0f;
-			}
-			else//if next tile isn't walkable
-			{
-				velocity.x = 0.0f;
-				velocity.y = 0.0f;
-			}
-		}
-		//*******POWERS***********
-		//trigger others's madness
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M) && !triggerMadness)
-		{
-			std::cout << "TRIGGER SOMEONE'S MADNESS" << std::endl;
-			sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
-			for (int i = 0; i < NPCs.size(); i++)
-			{
-				sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(NPCs[i]->GetPosition());
-				//check to see if any of the npcs are in range
-				if (npcTilePos.x >= (playerTilePos.x - 1) && npcTilePos.x <= (playerTilePos.x + 1) &&
-					npcTilePos.y >= (playerTilePos.y - 1) && npcTilePos.y <= (playerTilePos.y + 1))
+				animation->Up();
+				bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
+				if (isWalkable)
 				{
-					//if they are set a bool to true
-					triggerMadness = true;
-					//play power animation
-					powerAnim->Madness();
-					//set ai to freakout
-					NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 2.0f);
-					NPCs[i]->SetBehaviour("Idle");//idle for now
-					madClock.restart();//startclock for reload time
-					break; //maybe take this out so it affects all surounding enemies
+					isMoving = true;
+					velocity.x = 0.0f;
+					velocity.y = -speed;
 				}
+				else//if next tile isn't walkable
+				{
+					velocity.y = 0.0f;
+				}
+
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			{
+				animation->Down();
+				bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
+				if (isWalkable)
+				{
+					isMoving = true;
+					velocity.x = 0.0f;
+					velocity.y = speed;
+				}
+				else//if next tile isn't walkable
+				{
+					velocity.y = 0.0f;
+				}
+
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			{
+				animation->Left();
+				bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
+				if (isWalkable)
+				{
+					isMoving = true;
+					velocity.x = -speed;
+					velocity.y = 0.0f;
+				}
+				else//if next tile isn't walkable
+				{
+					velocity.x = 0.0f;
+				}
+
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				animation->Right();
+				bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
+				if (isWalkable)
+				{
+					isMoving = true;
+					velocity.x = speed;
+					velocity.y = 0.0f;
+				}
+				else//if next tile isn't walkable
+				{
+					velocity.x = 0.0f;
+					velocity.y = 0.0f;
+				}
+			}
+			//*******POWERS***********
+			//trigger others's madness
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M) && !triggerMadness)
+			{
+				std::cout << "TRIGGER SOMEONE'S MADNESS" << std::endl;
+				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+				for (int i = 0; i < NPCs.size(); i++)
+				{
+					sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(NPCs[i]->GetPosition());
+					//check to see if any of the npcs are in range
+					if (npcTilePos.x >= (playerTilePos.x - 1) && npcTilePos.x <= (playerTilePos.x + 1) &&
+						npcTilePos.y >= (playerTilePos.y - 1) && npcTilePos.y <= (playerTilePos.y + 1))
+					{
+						//if they are set a bool to true
+						triggerMadness = true;
+						//play power animation
+						powerAnim->Madness();
+						//set ai to freakout
+						NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 2.0f);
+						NPCs[i]->SetBehaviour("Idle");//idle for now
+						madClock.restart();//startclock for reload time
+						break; //maybe take this out so it affects all surounding enemies
+					}
+
+					//have a delay so that you can't keep triggering power, also so that there is a recharge time
+				}
+			}
+			//trigger psychotic rage
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N) && !psychoticRage)
+			{
+				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+				//set psychotic rage to true
+				psychoticRage = true;
+				powerAnim->Rage();
+				rageClock.restart();
+				cHandler->CheckBreakableTiles(playerTilePos);
+
+			}
+			//trigger control
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && !controlNPC)
+			{
 				
-				//have a delay so that you can't keep triggering power, also so that there is a recharge time
+				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+				for (int i = 0; i < NPCs.size(); i++)
+				{
+					sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(NPCs[i]->GetPosition());
+					//check to see if any of the npcs are in range
+					if (npcTilePos.x >= (playerTilePos.x - 1) && npcTilePos.x <= (playerTilePos.x + 1) &&
+						npcTilePos.y >= (playerTilePos.y - 1) && npcTilePos.y <= (playerTilePos.y + 1))
+					{
+						SetVelocity(sf::Vector2f(0.0f, 0.0f));
+						powerAnim->Control();//need to change animation so it shows it just affects npc infront of you maybe
+						NPCs[i]->SetUserActive(true);
+						NPCs[i]->SetSpeed(speed);
+						controlNPC = true;
+						
+						
+						userActive = false;
+						break; //maybe take this out so it affects all surounding enemies
+					}
+				}
 			}
 		}
-		//trigger psychotic rage
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::N) && !psychoticRage)
+		else//so you can;t get input while player is still moving
 		{
 			sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
-			//set psychotic rage to true
-			psychoticRage = true;
-			powerAnim->Rage();
-			rageClock.restart();
-			cHandler->CheckBreakableTiles(playerTilePos);
+			std::cout << "PLayer tile pos: " << playerTilePos.x << " " << playerTilePos.y << std::endl;
+			pixelsToMove -= speed;
+			if (pixelsToMove <= 0)
+			{
+				isMoving = false;
+				pixelsToMove = 32;
+				velocity.x = 0;
+				velocity.y = 0;
+			}
 
 		}
-	}
-	else//so you can;t get input while player is still moving
-	{
-		sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
-		std::cout << "PLayer tile pos: " << playerTilePos.x << " " << playerTilePos.y <<std::endl;
-		pixelsToMove -= speed;
-		if (pixelsToMove <= 0)
-		{
-			isMoving = false;
-			pixelsToMove = 32;
-			velocity.x = 0;
-			velocity.y = 0;
-		}
-		
 	}
 	
 }

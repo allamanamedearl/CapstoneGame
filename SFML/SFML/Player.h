@@ -18,6 +18,9 @@ public:
 	void GetInput(std::vector<NPC*> &NPCs);
 	void Draw(sf::RenderWindow *rw);
 	void Update();
+
+	void SetUserActive(bool active){ this->userActive = active; }
+	bool CheckActive(){ return this->userActive; }//returns whether player is active
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -50,6 +53,6 @@ private:
 	bool psychoticRage;
 	bool controlNPC;
 	
-	
+	bool userActive;//for whether npc is being controlled by player
 };
 

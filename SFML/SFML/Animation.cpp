@@ -94,6 +94,7 @@ void Animation::Update()
 			if (currentFrame == 18)
 			{
 				currentFrame = 12;
+				//pause = true;
 			}
 		}
 		
