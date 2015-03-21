@@ -21,6 +21,12 @@ public:
 
 	void SetUserActive(bool active){ this->userActive = active; }
 	bool CheckActive(){ return this->userActive; }//returns whether player is active
+	std::string CheckActivePowers();
+
+	//set powers to true or false
+	void SetRage(bool active){ this->psychoticRage = active; }
+	void SetMadness(bool active){ this->triggerMadness = active; }
+	void SetControl(bool active){ this->controlNPC = active; }
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -32,7 +38,7 @@ private:
 	bool isMoving;
 	float pixelsToMove;
 
-	//Time stuff for power
+	//Time stuff for power animations
 	sf::Clock madClock;
 	sf::Clock rageClock;
 	sf::Clock controlClock;
@@ -52,6 +58,10 @@ private:
 	bool triggerMadness;
 	bool psychoticRage;
 	bool controlNPC;
+	//bools for animation
+	bool animateMadness;
+	bool animateRage;
+	bool animateControl;
 	
 	bool userActive;//for whether npc is being controlled by player
 };

@@ -43,38 +43,38 @@ void Engine::LoadTextures()
 	
 	if (!playerTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/blondeSprite.png"))
 	{
-		std::cout << "Unable to load player texture";
+		//std::cout << "Unable to load player texture";
 		std::exit(EXIT_FAILURE);
 	}
 	if (!powerTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/PowerSheet.png"))
 	{
-		std::cout << "Unable to load power texture";
+		//std::cout << "Unable to load power texture";
 		std::exit(EXIT_FAILURE);
 	}
 	if (!npcTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/otherSprite.png"))
 	{
-		std::cout << "Unable to load npc texture";
+		//std::cout << "Unable to load npc texture";
 		std::exit(EXIT_FAILURE);
 	}
 	if (!guiFont.loadFromFile("C:/Windows/Fonts/ALGER.ttf"))
 	{
-		std::cout << " FONT ERROR";
+		//std::cout << " FONT ERROR";
 		std::exit(EXIT_FAILURE);
 	}
 	if (!guiTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/UIWindow3.png"))
 	{
-		std::cout << "GUI ERROR";
+		//std::cout << "GUI ERROR";
 		std::exit(EXIT_FAILURE);
 	}
 	//guiSprite.setTexture(guiTexture, true);
 	textureManager->SetTileSize(tileSize);
-	std::cout << "LOAD TEXTURES" << std::endl;
+	//std::cout << "LOAD TEXTURES" << std::endl;
 	//FOR TESTING LOADING TILESET FROM XML
 	/*try{
 		textureManager->LoadTileset("tileset.xml");
 	}
 	catch(std::string msg){
-		std::cout << "Failed to load.  Caught any exception." << std::endl;
+		//std::cout << "Failed to load.  Caught any exception." << std::endl;
 	}
 	*/
 	
@@ -92,7 +92,7 @@ bool Engine::Init()
 	mainGUI = new Gui(&guiTexture, screenWidth, screenHeight);
 	mainGUI->Init();
 
-	std::cout << "\nAfter LoadLevel() call" << std::endl;
+	//std::cout << "\nAfter LoadLevel() call" << std::endl;
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
 	player = new Player(&playerTexture,collisionHandling,&powerTexture);
 	//INIT NPCS
@@ -137,10 +137,10 @@ void Engine::LoadLevel()
 		}
 	}*/
 
-	std::cout << "LOADING LEVEL" << std::endl;
+	//std::cout << "LOADING LEVEL" << std::endl;
 	currLevel = new TileMap(20, 20);//values don't matter, going to be changed in load level
 	currLevel->LoadLevel("level.xml", *textureManager);
-	std::cout << currLevel->npcs.size() << std::endl;
+	//std::cout << currLevel->npcs.size() << std::endl;
 
 	//initialize collisionHandling
 	//collisionHandling = new CollisionHandling();
@@ -220,7 +220,7 @@ void Engine::RenderFrame()
 
 		}
 	}
-	std::cout << numDrawnTiles;//I'm a genius
+	//std::cout << numDrawnTiles;//I'm a genius
 #pragma endregion and now for something completely different
 
 	//window->draw(sprite);
@@ -261,8 +261,8 @@ void Engine::RenderFrame()
 	window->draw(guiSprite);*/
 	mainGUI->Draw(window);
 	window->setView(*view);
-	window->draw(posText);
-	window->draw(text);
+	//window->draw(posText);
+	//window->draw(text);
 	
 	window->display();
 	
@@ -272,9 +272,9 @@ void Engine::ProcessInput()
 	sf::Event evt;
 	if (num >= 1000)
 	{
-		std::cout << "Player Pos = " << player->GetPosition().x << " " << player->GetPosition().y << std::endl;
-		/*std::cout << "currtime " << currentTime << std::endl;
-		std::cout << "timeStep " << timeStep << std::endl;*/
+		//std::cout << "Player Pos = " << player->GetPosition().x << " " << player->GetPosition().y << std::endl;
+		/*//std::cout << "currtime " << currentTime << std::endl;
+		//std::cout << "timeStep " << timeStep << std::endl;*/
 		//collisionHandling->GetWorldToTileCoords(player->GetPosition());
 		num = 0;
 	}
@@ -306,8 +306,8 @@ void Engine::ProcessInput()
 			//view->zoom(1.0f);
 			//view->move(0.0f, 1.0f);
 			//camera->SetRenderingRange(0, -1);//bc moving down
-			//std::cout<<view->getTransform().getMatrix();
-			//std::cout << "KeyPressed" << std::endl;
+			////std::cout<<view->getTransform().getMatrix();
+			////std::cout << "KeyPressed" << std::endl;
 		}
 		if (evt.type == sf::Event::KeyReleased)
 		{
@@ -327,7 +327,12 @@ void Engine::Update()
 	//camera->Update();
 	//camera->GoTo(0, tileSize);
 	player->Update();
-	mainGUI->Update();
+	mainGUI->Update(player->CheckActivePowers());
+
+	//gui tells player if you powers are reloaded and you can use them again
+	player->SetRage(mainGUI->GetRage());
+	player->SetControl(mainGUI->GetControl());
+	player->SetMadness(mainGUI->GetMadness());
 	//if pos is greater than or equal to 2 thirds of the screen
 	//SCROLLING
 	//CONVERT PLAYER POSITION

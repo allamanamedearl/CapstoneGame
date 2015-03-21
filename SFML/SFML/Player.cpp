@@ -28,6 +28,11 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand, sf::Texture *
 	psychoticRage = false;
 	controlNPC = false;
 	userActive = true;
+
+	//animate bools
+	animateMadness = false;
+	animateControl = false;
+	animateRage = false;
 }
 
 
@@ -127,6 +132,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 					{
 						//if they are set a bool to true
 						triggerMadness = true;
+						animateMadness = true;
 						//play power animation
 						powerAnim->Madness();
 						//set ai to freakout
@@ -145,6 +151,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
 				//set psychotic rage to true
 				psychoticRage = true;
+				animateRage = true;
 				powerAnim->Rage();
 				rageClock.restart();
 				cHandler->CheckBreakableTiles(playerTilePos);
@@ -164,12 +171,14 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 					{
 						SetVelocity(sf::Vector2f(0.0f, 0.0f));
 						powerAnim->Control();//need to change animation so it shows it just affects npc infront of you maybe
+						controlClock.restart();
+						userActive = false;
 						NPCs[i]->SetUserActive(true);
 						NPCs[i]->SetSpeed(speed);
 						controlNPC = true;
+						animateControl = true;
 						
 						
-						userActive = false;
 						break; //maybe take this out so it affects all surounding enemies
 					}
 				}
@@ -178,7 +187,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 		else//so you can;t get input while player is still moving
 		{
 			sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
-			std::cout << "PLayer tile pos: " << playerTilePos.x << " " << playerTilePos.y << std::endl;
+			//std::cout << "PLayer tile pos: " << playerTilePos.x << " " << playerTilePos.y << std::endl;
 			pixelsToMove -= speed;
 			if (pixelsToMove <= 0)
 			{
@@ -191,6 +200,43 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 		}
 	}
 	
+}
+std::string Player::CheckActivePowers()
+{
+	std::string activePows;
+	if (controlNPC&&triggerMadness&&psychoticRage)
+	{
+		activePows = "cmp"; //c- control npc, m- trigger madness, p - psychotic rage
+	}
+	else if (controlNPC&&triggerMadness&&!psychoticRage)//control and trigger madness
+	{
+		activePows = "cm";
+	}
+	else if (controlNPC&& !triggerMadness && psychoticRage)//control and psychotic rage
+	{
+		activePows = "cp";
+	}
+	else if (controlNPC &&!triggerMadness && !psychoticRage)//just control
+	{
+		activePows = "c";
+	}
+	else if (!controlNPC&&triggerMadness&&psychoticRage)//madness and rage
+	{
+		activePows = "mp";
+	}
+	else if (!controlNPC&&triggerMadness&&!psychoticRage)//just madness
+	{
+		activePows = "m";
+	}
+	else if (!controlNPC&&!triggerMadness&&psychoticRage)//just rage
+	{
+		activePows = "p";
+	}
+	else if (!controlNPC&&!triggerMadness&&!psychoticRage)//none active
+	{
+		activePows = "0";
+	}
+	return activePows;
 }
 void Player::Update()
 {
@@ -207,12 +253,17 @@ void Player::Update()
 	madTime = madClock.getElapsedTime();
 	if (madTime.asMilliseconds() >= 2000)//2 seconds
 	{
-		triggerMadness = false;
+		animateMadness = false;
 	}
 	rageTime = rageClock.getElapsedTime();
 	if (rageTime.asMilliseconds() >= 2000)//2 seconds
 	{
-		psychoticRage = false;
+		animateRage = false;
+	}
+	controlTime = controlClock.getElapsedTime();
+	if (controlTime.asMilliseconds()>=2000)//2 seconds
+	{
+		animateControl = false;
 	}
 	
 	
@@ -222,7 +273,7 @@ void Player::Draw(sf::RenderWindow *rw)
 	
 	//rw->draw(*sprite);
 	rw->draw(*animation->GetCurrentFrame());
-	if (triggerMadness || controlNPC || psychoticRage)
+	if (animateMadness || animateControl || animateRage)
 	{
 		rw->draw(*powerAnim->GetCurrentFrame());
 	}

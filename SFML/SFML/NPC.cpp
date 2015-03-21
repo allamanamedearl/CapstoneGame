@@ -61,8 +61,8 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 					behaviour->ClearClosedList();
 				}
 				direction = behaviour->PatrolAI(position, velocity, cHandler->GetWorldToTileCoords(position), end);
-				std::cout << "Direction: " << direction << std::endl;
-				std::cout << "StartPos: " << GetStartPos().x << " " << GetStartPos().y << " EndPos: " << GetEndPos().x << " " << GetEndPos().y << std::endl;
+				//std::cout << "Direction: " << direction << std::endl;
+				//std::cout << "StartPos: " << GetStartPos().x << " " << GetStartPos().y << " EndPos: " << GetEndPos().x << " " << GetEndPos().y << std::endl;
 			}
 			if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Pursue)
 			{
@@ -78,9 +78,9 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 			{
 			case 'l':
 			{
-						std::cout << "left left left" << std::endl;
+						//std::cout << "left left left" << std::endl;
 						bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
-						std::cout << "*******ISWALKABLE LEFT = " << isWalkable << std::endl;
+						//std::cout << "*******ISWALKABLE LEFT = " << isWalkable << std::endl;
 						animation->Left();
 						if (isWalkable)
 						{
@@ -90,7 +90,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 						}
 						else//if next tile isn't walkable
 						{
-							std::cout << "********TILE NOT WALKABLE" << std::endl;
+							//std::cout << "********TILE NOT WALKABLE" << std::endl;
 							velocity.x = 0.0f;
 						}
 						break;
@@ -98,7 +98,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 
 			case 'r':
 			{
-						std::cout << "right right right" << std::endl;
+						//std::cout << "right right right" << std::endl;
 						bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
 						animation->Right();
 						if (isWalkable)
@@ -115,7 +115,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 			}
 			case 'u':
 			{
-						std::cout << "up up up" << std::endl;
+						//std::cout << "up up up" << std::endl;
 						bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
 						animation->Up();
 						if (isWalkable)
@@ -132,7 +132,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 			}
 			case 'd':
 			{
-						std::cout << "down down down" << std::endl;
+						//std::cout << "down down down" << std::endl;
 						bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
 						animation->Down();
 						if (isWalkable)
@@ -159,7 +159,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 		else//so you can;t get input while player is still moving
 		{
 			sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
-			std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
+			//std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
 			pixelsToMove -= speed;
 			if (pixelsToMove <= 0)
 			{
@@ -243,7 +243,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 		else//so you can;t get input while player is still moving
 		{
 			sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
-			std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
+			//std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
 			pixelsToMove -= speed;
 			if (pixelsToMove <= 0)
 			{

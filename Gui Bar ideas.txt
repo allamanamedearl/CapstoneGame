@@ -1,0 +1,14 @@
+
+check which powers player has triggered - call function in engine
+return a num or string eg. is it A? B? C? A&B? B&C? A&C? ABC? or    none
+pass that to a gui function then pass info to specified bars
+
+bar-    if draining hasn't been triggered drain it
+		set timer to start
+	if it has been triggered
+		update timer
+
+Render bar based on how much time has passed
+	BarLength *(TimePassed/PowerTimeLength) 
+
+player has timers for animation run length and power run length
