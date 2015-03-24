@@ -78,8 +78,12 @@ bool CollisionHandling::CheckBreakableTilesHint(sf::Vector2f pos)
 				//if breakable
 				if (tileMap->GetTile(x, y)->CheckIfBreakable())
 				{
-					//give hint
-					return true;
+					if (!tileMap->GetTile(x, y)->CheckIfWalkable())//and it's not walkable
+					{
+						//give hint
+						return true;
+					}
+					
 				}
 			}
 		}

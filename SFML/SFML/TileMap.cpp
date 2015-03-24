@@ -124,6 +124,13 @@ void TileMap::LoadLevel(std::string filename, TextureManager& textureMan)
 			attrib.endPos = sf::Vector2f(x, y);
 			npcs.push_back(attrib);
 		}
+		else if (npcString == "Guard")
+		{
+			attrib.behaviour = "Guard";
+			attrib.startPos = sf::Vector2f(x, y);
+			attrib.endPos = sf::Vector2f(x, y);
+			npcs.push_back(attrib);
+		}
 		//is it breakable?
 		std::string breakString = tile->first_attribute("breakable")->value();
 		bool isBreakable = (breakString == "true") ? true : false;

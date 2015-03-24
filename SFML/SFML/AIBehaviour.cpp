@@ -230,6 +230,18 @@ char AIBehaviour::PursueAI(sf::Vector2f pos, sf::Vector2f vel,sf::Vector2f end)
 	}
 	
 }
+char AIBehaviour::GuardAI(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f end)
+{
+	//end is player position
+	if (pos.x > end.x) //if ur to the right of the player
+	{
+		return 'r';//face right
+	}
+	else
+	{
+		return 'l';
+	}
+}
 int AIBehaviour::ManhattanDistance(sf::Vector2f point, sf::Vector2f goal)
 {
 	

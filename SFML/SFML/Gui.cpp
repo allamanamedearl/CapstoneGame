@@ -109,12 +109,28 @@ void Gui::Update(std::string activePows)
 	if (hintAnger)
 	{
 		
-		hintBox.setFillColor(sf::Color::Transparent);
-		hintBox.setOutlineColor(sf::Color::Yellow);
-		hintBox.setOutlineThickness(5.0f);
-		hintBox.setPosition(sf::Vector2f(rageBar.GetPosition().x - 150, rageBar.GetPosition().y-5.0f));
-		hintBox.setSize(sf::Vector2f(200.0f, rageBar.GetSize().y+10.0f));
+		hintBox2.setFillColor(sf::Color::Transparent);
+		hintBox2.setOutlineColor(sf::Color::Yellow);
+		hintBox2.setOutlineThickness(5.0f);
+		hintBox2.setPosition(sf::Vector2f(rageBar.GetPosition().x - 150, rageBar.GetPosition().y-5.0f));
+		hintBox2.setSize(sf::Vector2f(200.0f, rageBar.GetSize().y+10.0f));
 	}
+	if (hintControl)
+	{
+		hintBox1.setFillColor(sf::Color::Transparent);
+		hintBox1.setOutlineColor(sf::Color::Yellow);
+		hintBox1.setOutlineThickness(5.0f);
+		hintBox1.setPosition(sf::Vector2f(controlBar.GetPosition().x - 150, controlBar.GetPosition().y - 5.0f));
+		hintBox1.setSize(sf::Vector2f(200.0f, controlBar.GetSize().y + 10.0f));
+	}
+	if (hintMad)
+	{
+		hintBox3.setFillColor(sf::Color::Transparent);
+		hintBox3.setOutlineColor(sf::Color::Yellow);
+		hintBox3.setOutlineThickness(5.0f);
+		hintBox3.setPosition(sf::Vector2f(madBar.GetPosition().x - 150, madBar.GetPosition().y - 5.0f));
+		hintBox3.setSize(sf::Vector2f(200.0f, madBar.GetSize().y + 10.0f));
+	}		   
 	
 	
 	
@@ -128,6 +144,14 @@ void Gui::Draw(sf::RenderWindow *window)
 	controlBar.Draw(window);
 	if (hintAnger)
 	{
-		window->draw(hintBox);
+		window->draw(hintBox2);
+	}
+	if (hintControl)
+	{
+		window->draw(hintBox1);
+	}
+	if (hintMad)
+	{
+		window->draw(hintBox3);
 	}
 }

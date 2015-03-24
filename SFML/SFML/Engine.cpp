@@ -346,6 +346,22 @@ void Engine::Update()
 	{
 		mainGUI->SetHintAnger(false);
 	}
+	if (player->GetIfNearControlable())
+	{
+		mainGUI->SetHintControl(true);
+	}
+	else
+	{
+		mainGUI->SetHintControl(false);
+	}
+	if (player->GetIfNearTriggerable())
+	{
+		mainGUI->SetHintMad(true);
+	}
+	else
+	{
+		mainGUI->SetHintMad(false);
+	}
 	//if pos is greater than or equal to 2 thirds of the screen
 	//SCROLLING
 	//CONVERT PLAYER POSITION

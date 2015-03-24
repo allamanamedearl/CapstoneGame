@@ -30,6 +30,8 @@ public:
 
 	//hints stuff
 	bool GetIfNearBreakable(){ return this->nearBreakable; }
+	bool GetIfNearControlable(){ return this->nearControlable; }
+	bool GetIfNearTriggerable(){ return this->nearTriggerable; }
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -61,6 +63,8 @@ private:
 	bool triggerMadness;
 	bool psychoticRage;
 	bool controlNPC;
+
+	int numMadNPC;
 	//bools for animation
 	bool animateMadness;
 	bool animateRage;
@@ -68,6 +72,8 @@ private:
 
 	//bools for hints
 	bool nearBreakable;
+	bool nearControlable;
+	bool nearTriggerable;
 	
 	bool userActive;//for whether npc is being controlled by player
 };

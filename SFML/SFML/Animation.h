@@ -11,6 +11,8 @@ private:
 	bool up;
 	bool down;
 	bool pause;
+	bool faceLeft;
+	bool faceRight;
 
 	bool triggerMadness;
 	bool psychoticRage;
@@ -36,6 +38,9 @@ public:
 	void Madness();
 	void Control();
 	void Rage();
+	
+	void FaceLeft();
+	void FaceRight();
 
 	void SetPosition(sf::Vector2f pos);
 	void Update();

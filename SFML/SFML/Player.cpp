@@ -6,7 +6,7 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand, sf::Texture *
 {
 	//sprite = new sf::Sprite(*texture);
 	//texture = new sf::Texture (*texture);
-	speed = 1.0f;
+	speed = 0.5f;
 	position = sf::Vector2f(0.0f, 256.0f);
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	SetPosition(position);
@@ -35,6 +35,8 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand, sf::Texture *
 	animateRage = false;
 
 	nearBreakable = false;
+	nearControlable = false;
+	nearBreakable = false;
 }
 
 
@@ -52,6 +54,7 @@ Player::~Player()
 
 void Player::GetInput(std::vector<NPC*>& NPCs)
 {
+	
 	if (!controlNPC)
 	{
 		userActive = true;
@@ -64,8 +67,14 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 			}
 		}
 	}
+	if (!triggerMadness)
+	{
+		//set back to original behaviour
+		NPCs[numMadNPC]->SetSpeed(speed / 2);
+	}
 	if (userActive){
-		if (cHandler->CheckBreakableTilesHint(cHandler->GetWorldToTileCoords(position)))
+		sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+		if (cHandler->CheckBreakableTilesHint(playerTilePos))
 		{
 			nearBreakable = true;
 		}
@@ -73,6 +82,24 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 		{
 			nearBreakable = false;
 		}
+		//Check to see if close to NPC that you can CONTROL or TRIGGERMADNESS
+		for (int i = 0; i < NPCs.size(); i++)
+		{
+			sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(NPCs[i]->GetPosition());
+			//check to see if any of the npcs are in range
+			nearControlable = false;
+			nearTriggerable = false;
+			if (npcTilePos.x >= (playerTilePos.x - 1) && npcTilePos.x <= (playerTilePos.x + 1) &&
+				npcTilePos.y >= (playerTilePos.y - 1) && npcTilePos.y <= (playerTilePos.y + 1))
+			{
+				nearControlable = true;
+				nearTriggerable = true;
+				break;
+			}
+		}
+		
+		
+		
 		if (!isMoving){
 			animation->Pause();//no idle animation so when sprite is stopped it stays on currentFrame
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -144,7 +171,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M) && !triggerMadness)
 			{
 				std::cout << "TRIGGER SOMEONE'S MADNESS" << std::endl;
-				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+				
 				for (int i = 0; i < NPCs.size(); i++)
 				{
 					sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(NPCs[i]->GetPosition());
@@ -160,6 +187,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 						//set ai to freakout
 						NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 2.0f);
 						NPCs[i]->SetBehaviour("Idle");//idle for now
+						numMadNPC = i;
 						madClock.restart();//startclock for reload time
 						break; //maybe take this out so it affects all surounding enemies
 					}
@@ -170,7 +198,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 			//trigger psychotic rage
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N) && !psychoticRage)
 			{
-				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+				//sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
 				//set psychotic rage to true
 				psychoticRage = true;
 				animateRage = true;
@@ -183,7 +211,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && !controlNPC)
 			{
 				
-				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+				//sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
 				for (int i = 0; i < NPCs.size(); i++)
 				{
 					sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(NPCs[i]->GetPosition());
@@ -208,7 +236,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 		}
 		else//so you can;t get input while player is still moving
 		{
-			sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
+			//sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
 			//std::cout << "PLayer tile pos: " << playerTilePos.x << " " << playerTilePos.y << std::endl;
 			pixelsToMove -= speed;
 			if (pixelsToMove <= 0)

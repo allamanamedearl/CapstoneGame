@@ -4,7 +4,7 @@
 NPC::NPC(sf::Texture *texture, CollisionHandling* collHand, sf::Vector2f startPos)
 {
 
-	speed = 0.5f;
+	speed = 0.25f;
 	SetPosition(collHand->GetTileToWorldCoords(startPos));
 	SetStartPos(startPos);
 	velocity = sf::Vector2f(0.0f, 0.0f);
@@ -42,6 +42,10 @@ void NPC::SetBehaviour(std::string b)
 	{
 		behaviour->SetCurrentAI(AIBehaviour::Behaviour::Pursue);
 	}
+	else if (b == "Guard")
+	{
+		behaviour->SetCurrentAI(AIBehaviour::Behaviour::Guard);
+	}
 	
 }
 void NPC::GetMovement(sf::Vector2f playerPos)
@@ -74,87 +78,108 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 			{
 				direction = behaviour->IdleAI(position, velocity);
 			}
-			switch (direction)
+			if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Guard)
 			{
-			case 'l':
-			{
-						//std::cout << "left left left" << std::endl;
-						bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
-						//std::cout << "*******ISWALKABLE LEFT = " << isWalkable << std::endl;
-						animation->Left();
-						if (isWalkable)
-						{
-							velocity.x = -speed;
-							velocity.y = 0.0f;
-							isMoving = true;
-						}
-						else//if next tile isn't walkable
-						{
-							//std::cout << "********TILE NOT WALKABLE" << std::endl;
-							velocity.x = 0.0f;
-						}
-						break;
-			}
+				velocity = sf::Vector2f(0.0f, 0.0f);
+				direction = behaviour->GuardAI(position, velocity, playerPos);
+				if (direction == 'r')
+				{
+					//face right
+					animation->FaceRight();
 
-			case 'r':
+				}
+				if (direction == 'l')
+				{
+					//face left
+					animation->FaceLeft();
+				}
+			}
+			if (behaviour->GetCurrentAI() != AIBehaviour::Behaviour::Guard)
 			{
-						//std::cout << "right right right" << std::endl;
-						bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
-						animation->Right();
-						if (isWalkable)
-						{
-							velocity.x = speed;
-							velocity.y = 0.0f;
-							isMoving = true;
-						}
-						else//if next tile isn't walkable
-						{
+
+				switch (direction)
+				{
+				case 'l':
+				{
+							//std::cout << "left left left" << std::endl;
+							bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
+							//std::cout << "*******ISWALKABLE LEFT = " << isWalkable << std::endl;
+							animation->Left();
+							if (isWalkable)
+							{
+								velocity.x = -speed;
+								velocity.y = 0.0f;
+								isMoving = true;
+							}
+							else//if next tile isn't walkable
+							{
+								//std::cout << "********TILE NOT WALKABLE" << std::endl;
+								velocity.x = 0.0f;
+							}
+							break;
+				}
+
+				case 'r':
+				{
+							//std::cout << "right right right" << std::endl;
+							bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
+							animation->Right();
+							if (isWalkable)
+							{
+								velocity.x = speed;
+								velocity.y = 0.0f;
+								isMoving = true;
+							}
+							else//if next tile isn't walkable
+							{
+								velocity.x = 0.0f;
+							}
+							break;
+				}
+				case 'u':
+				{
+							//std::cout << "up up up" << std::endl;
+							bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
+							animation->Up();
+							if (isWalkable)
+							{
+								velocity.x = 0.0f;
+								velocity.y = -speed;
+								isMoving = true;
+							}
+							else//if next tile isn't walkable
+							{
+								velocity.y = 0.0f;
+							}
+							break;
+				}
+				case 'd':
+				{
+							//std::cout << "down down down" << std::endl;
+							bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
+							animation->Down();
+							if (isWalkable)
+							{
+								velocity.x = 0.0f;
+								velocity.y = speed;
+								isMoving = true;
+							}
+							else//if next tile isn't walkable
+							{
+								velocity.y = 0.0f;
+							}
+							break;
+				}
+				case 's':
+				{
+							animation->Pause();
 							velocity.x = 0.0f;
-						}
-						break;
-			}
-			case 'u':
-			{
-						//std::cout << "up up up" << std::endl;
-						bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
-						animation->Up();
-						if (isWalkable)
-						{
-							velocity.x = 0.0f;
-							velocity.y = -speed;
-							isMoving = true;
-						}
-						else//if next tile isn't walkable
-						{
 							velocity.y = 0.0f;
-						}
-						break;
+							break;
+				}
+				}
 			}
-			case 'd':
-			{
-						//std::cout << "down down down" << std::endl;
-						bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
-						animation->Down();
-						if (isWalkable)
-						{
-							velocity.x = 0.0f;
-							velocity.y = speed;
-							isMoving = true;
-						}
-						else//if next tile isn't walkable
-						{
-							velocity.y = 0.0f;
-						}
-						break;
-			}
-			case 's':
-			{
-						animation->Pause();
-						velocity.x = 0.0f;
-						velocity.y = 0.0f;
-						break;
-			}
-			}
+			
 		}
 		else//so you can;t get input while player is still moving
 		{

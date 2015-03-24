@@ -8,6 +8,8 @@ Animation::Animation()
 	left = false;
 	right = false;
 	pause = true;
+	faceLeft = false;
+	faceRight = false;
 
 	triggerMadness = false;
 	psychoticRage = false;
@@ -97,6 +99,14 @@ void Animation::Update()
 				//pause = true;
 			}
 		}
+		else if (faceLeft)
+		{
+			currentFrame = 4;
+		}
+		else if (faceRight)
+		{
+			currentFrame = 7;
+		}
 		
 		clock.restart();
 	}
@@ -139,6 +149,8 @@ void Animation::Left()
 	down = false;
 	up = false;
 	pause = false;
+	faceLeft = false;
+	faceRight = false;
 }
 void Animation::Right()
 {
@@ -148,6 +160,8 @@ void Animation::Right()
 	down = false;
 	up = false;
 	pause = false;
+	faceLeft = false;
+	faceRight = false;
 }
 void Animation::Up()
 {
@@ -157,6 +171,8 @@ void Animation::Up()
 	down = false;
 	left = false;
 	pause = false;
+	faceLeft = false;
+	faceRight = false;
 }
 void Animation::Down()
 {
@@ -166,8 +182,34 @@ void Animation::Down()
 	left = false;
 	up = false;
 	pause = false;
+	faceLeft = false;
+	faceRight = false;
 }
 void Animation::Pause()
 {
 	pause = true;
+	faceLeft = false;
+	faceRight = false;
+}
+void Animation::FaceLeft()
+{
+	currentFrame = 4;
+	right = false;
+	left = false;
+	down = false;
+	up = false;
+	pause = false;
+	faceLeft = true;
+	faceRight = false;
+}
+void Animation::FaceRight()
+{
+	currentFrame = 7;
+	right = false;
+	left = false;
+	down = false;
+	up = false;
+	pause = false;
+	faceLeft = false;
+	faceRight = true;
 }
