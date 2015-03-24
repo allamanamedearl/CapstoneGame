@@ -6,7 +6,7 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand, sf::Texture *
 {
 	//sprite = new sf::Sprite(*texture);
 	//texture = new sf::Texture (*texture);
-	speed = 2.0f;
+	speed = 1.0f;
 	position = sf::Vector2f(0.0f, 256.0f);
 	velocity = sf::Vector2f(0.0f, 0.0f);
 	SetPosition(position);
@@ -50,6 +50,18 @@ Player::~Player()
 
 void Player::GetInput(std::vector<NPC*>& NPCs)
 {
+	if (!controlNPC)
+	{
+		userActive = true;
+		for (int i = 0; i < NPCs.size(); i++)
+		{
+			if (NPCs[i]->GetUserActive())//if npc is user active
+			{
+				NPCs[i]->SetUserActive(false);
+				NPCs[i]->SetSpeed(speed / 2);
+			}
+		}
+	}
 	if (userActive){
 		if (!isMoving){
 			animation->Pause();//no idle animation so when sprite is stopped it stays on currentFrame

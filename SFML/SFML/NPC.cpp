@@ -4,7 +4,7 @@
 NPC::NPC(sf::Texture *texture, CollisionHandling* collHand, sf::Vector2f startPos)
 {
 
-	speed = 1.0f;
+	speed = 0.5f;
 	SetPosition(collHand->GetTileToWorldCoords(startPos));
 	SetStartPos(startPos);
 	velocity = sf::Vector2f(0.0f, 0.0f);
@@ -262,7 +262,7 @@ void NPC::Update()
 	//if (clock.getElapsedTime().asMilliseconds() >= 1000)//so he doesn't spaz out
 	//{
 		//GetMovement();
-		position += velocity;// *timeStep;
+	position += velocity;//*time;// *timeStep;
 		//clock.restart();
 	//}
 	//if (clock.getElapsedTime().asMilliseconds() >= 10000)//so he doesn't spaz out

@@ -59,6 +59,7 @@ void CollisionHandling::CheckBreakableTiles(sf::Vector2f pos)
 				{
 					//set tile to walkable
 					tileMap->GetTile(x, y)->SetWalkable(true);
+					tileMap->GetTile(x, y)->ReplaceTexture();
 				}
 			}
 		}

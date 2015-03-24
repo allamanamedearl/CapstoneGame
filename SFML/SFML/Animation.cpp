@@ -39,7 +39,7 @@ void Animation::SetPosition(sf::Vector2f pos)
 }
 void Animation::Update()
 {
-	if (clock.getElapsedTime().asMilliseconds() >= 100)
+	if (clock.getElapsedTime().asMilliseconds() >= 200)//used to be 100
 	{
 		if (!pause)
 		{

@@ -38,6 +38,7 @@ public:
 	sf::Vector2f GetStartPos(){ return this->start; }
 	sf::Vector2f GetEndPos(){ return this->end; }
 
+	bool GetUserActive(){return this->userActive;}
 	void SetUserActive(bool active){ this->userActive = active; }
 	void SetBehaviour(std::string b);
 	void GetMovement(sf::Vector2f playerPos);

@@ -51,7 +51,7 @@ void Engine::LoadTextures()
 		//std::cout << "Unable to load power texture";
 		std::exit(EXIT_FAILURE);
 	}
-	if (!npcTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/otherSprite.png"))
+	if (!npcTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/nurse.png"))//otherSprite.png"))
 	{
 		//std::cout << "Unable to load npc texture";
 		std::exit(EXIT_FAILURE);
@@ -92,6 +92,8 @@ bool Engine::Init()
 	mainGUI = new Gui(&guiTexture, screenWidth, screenHeight);
 	mainGUI->Init();
 
+	//time
+	timeSinceLastUpdate = 0.0f;
 	//std::cout << "\nAfter LoadLevel() call" << std::endl;
 	collisionHandling = new CollisionHandling(textureManager, currLevel);
 	player = new Player(&playerTexture,collisionHandling,&powerTexture);
@@ -100,7 +102,7 @@ bool Engine::Init()
 	{
 		NPC* npc = new NPC(&npcTexture, collisionHandling, currLevel->npcs[i].startPos);
 		npc->SetBehaviour(currLevel->npcs[i].behaviour);
-		npc->SetEndPos(sf::Vector2f(10.0f, 10.0f));//in case it's a patrol npc
+		npc->SetEndPos(currLevel->npcs[i].endPos);//sf::Vector2f(10.0f, 10.0f));//in case it's a patrol npc
 		level_NPCs.push_back(npc);
 	}
 	/*npc = new NPC(&npcTexture, collisionHandling, sf::Vector2f(5.0f, 5.0f));
@@ -320,8 +322,9 @@ void Engine::ProcessInput()
 
 void Engine::Update()
 {
-	//currentTime = clock.getElapsedTime().asMilliseconds();
-	//timeStep = currentTime - timeSinceLastUpdate;
+	elapsedTime = clock.getElapsedTime();
+	timeStep = (float)elapsedTime.asMilliseconds() - timeSinceLastUpdate;
+	timeSinceLastUpdate = (float)elapsedTime.asMilliseconds();
 	//camera->GoToCenter((int)player->GetPosition().x, (int)player->GetPosition().y);
 	
 	//camera->Update();

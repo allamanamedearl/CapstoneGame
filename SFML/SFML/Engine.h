@@ -49,9 +49,11 @@ private:
 	sf::Texture npcTexture;
 
 	//Time
+	sf::Clock clock;
+	sf::Time elapsedTime;
 	//float currentTime;
-	//float timeSinceLastUpdate;
-	//float timeStep;
+	float timeSinceLastUpdate;
+	float timeStep;
 	
 
 	//Collision Stuff

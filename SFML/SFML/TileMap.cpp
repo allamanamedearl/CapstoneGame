@@ -105,26 +105,36 @@ void TileMap::LoadLevel(std::string filename, TextureManager& textureMan)
 		{
 			attrib.behaviour = "Idle";
 			attrib.startPos = sf::Vector2f(x, y);
+			attrib.endPos = sf::Vector2f(x, y);
 			npcs.push_back(attrib);
 		}
 		else if (npcString == "Patrol")
 		{
 			attrib.behaviour = "Patrol";
 			attrib.startPos = sf::Vector2f(x, y);
+			int endX = atoi(tile->first_attribute("endX")->value());
+			int endY = atoi(tile->first_attribute("endY")->value());
+			attrib.endPos = sf::Vector2f(endX, endY);
 			npcs.push_back(attrib);
 		}
 		else if (npcString == "Pursue")
 		{
 			attrib.behaviour = "Pursue";
 			attrib.startPos = sf::Vector2f(x, y);
+			attrib.endPos = sf::Vector2f(x, y);
 			npcs.push_back(attrib);
 		}
 		//is it breakable?
 		std::string breakString = tile->first_attribute("breakable")->value();
 		bool isBreakable = (breakString == "true") ? true : false;
-
+		
 		//create the tile and add it to the level
 		Tile* newTile = new Tile(textureMan.GetTexture(baseid),isWalkable,isBreakable);
+		if (breakString == "true")
+		{
+			//set ClearedTIle
+			newTile->SetTileClearedTexture(*textureMan.GetTexture(0));//0 is floor tile
+		}
 		AddTile(x, y, newTile);
 		
 		//go to next tile

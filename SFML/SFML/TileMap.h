@@ -16,6 +16,7 @@ private:
 	{
 		std::string behaviour;//needs to be capitalized eg. Idle Patrol
 		sf::Vector2f startPos;//start position in tile coords
+		sf::Vector2f endPos;
 		//may need one for picture type
 	};
 	
