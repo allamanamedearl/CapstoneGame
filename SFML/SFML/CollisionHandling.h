@@ -10,6 +10,7 @@ public:
 	bool PlayerCollisionDetection(char pressed, sf::Vector2f playerPos, sf::Vector2f playerVel);
 	
 	void CheckBreakableTiles(sf::Vector2f pos);
+	bool CheckBreakableTilesHint(sf::Vector2f pos);
 private:
 	bool CheckIfTile(sf::Vector2f pos);//for checking if there's a tile there or just blank space
 	int tileSize;

@@ -30,6 +30,8 @@ private:
 	bool hintMad;
 	bool hintControl;
 	bool hintAnger;
+	sf::RectangleShape hintBox;
+
 	sf::Vector2f position;
 	int screenWidth;
 	int screenHeight;

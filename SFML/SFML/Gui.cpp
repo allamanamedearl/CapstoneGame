@@ -16,6 +16,10 @@ Gui::Gui(sf::Texture *texture,int screenWidth, int screenHeight)
 	controlLength = 10000;
 	rageLength = 5000;
 
+	hintAnger = false;
+	hintMad = false;
+	hintControl = false;
+
 }
 
 
@@ -102,6 +106,15 @@ void Gui::Update(std::string activePows)
 		}
 		rageBar.Update();
 	}
+	if (hintAnger)
+	{
+		
+		hintBox.setFillColor(sf::Color::Transparent);
+		hintBox.setOutlineColor(sf::Color::Yellow);
+		hintBox.setOutlineThickness(5.0f);
+		hintBox.setPosition(sf::Vector2f(rageBar.GetPosition().x - 150, rageBar.GetPosition().y-5.0f));
+		hintBox.setSize(sf::Vector2f(200.0f, rageBar.GetSize().y+10.0f));
+	}
 	
 	
 	
@@ -113,4 +126,8 @@ void Gui::Draw(sf::RenderWindow *window)
 	madBar.Draw(window);
 	rageBar.Draw(window);
 	controlBar.Draw(window);
+	if (hintAnger)
+	{
+		window->draw(hintBox);
+	}
 }

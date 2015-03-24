@@ -27,6 +27,9 @@ public:
 	void SetRage(bool active){ this->psychoticRage = active; }
 	void SetMadness(bool active){ this->triggerMadness = active; }
 	void SetControl(bool active){ this->controlNPC = active; }
+
+	//hints stuff
+	bool GetIfNearBreakable(){ return this->nearBreakable; }
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -62,6 +65,9 @@ private:
 	bool animateMadness;
 	bool animateRage;
 	bool animateControl;
+
+	//bools for hints
+	bool nearBreakable;
 	
 	bool userActive;//for whether npc is being controlled by player
 };

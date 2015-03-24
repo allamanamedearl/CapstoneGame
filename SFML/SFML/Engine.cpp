@@ -336,6 +336,16 @@ void Engine::Update()
 	player->SetRage(mainGUI->GetRage());
 	player->SetControl(mainGUI->GetControl());
 	player->SetMadness(mainGUI->GetMadness());
+
+	//DISPLAY HINTS
+	if (player->GetIfNearBreakable())
+	{
+		mainGUI->SetHintAnger(true);
+	}
+	else
+	{
+		mainGUI->SetHintAnger(false);
+	}
 	//if pos is greater than or equal to 2 thirds of the screen
 	//SCROLLING
 	//CONVERT PLAYER POSITION

@@ -33,6 +33,8 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand, sf::Texture *
 	animateMadness = false;
 	animateControl = false;
 	animateRage = false;
+
+	nearBreakable = false;
 }
 
 
@@ -63,6 +65,14 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 		}
 	}
 	if (userActive){
+		if (cHandler->CheckBreakableTilesHint(cHandler->GetWorldToTileCoords(position)))
+		{
+			nearBreakable = true;
+		}
+		else
+		{
+			nearBreakable = false;
+		}
 		if (!isMoving){
 			animation->Pause();//no idle animation so when sprite is stopped it stays on currentFrame
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))

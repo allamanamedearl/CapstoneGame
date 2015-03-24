@@ -65,6 +65,27 @@ void CollisionHandling::CheckBreakableTiles(sf::Vector2f pos)
 		}
 	}
 }
+bool CollisionHandling::CheckBreakableTilesHint(sf::Vector2f pos)
+{
+	//check if surrounding tiles are breakable
+	for (int x = (int)pos.x - 1; x < (int)pos.x + 2; x++)
+	{
+		for (int y = (int)pos.y - 1; y < (int)pos.y + 2; y++)
+		{
+			//if it's a tile and not a blank space
+			if (CheckIfTile(sf::Vector2f(x, y)))
+			{
+				//if breakable
+				if (tileMap->GetTile(x, y)->CheckIfBreakable())
+				{
+					//give hint
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
 bool CollisionHandling::PlayerCollisionDetection(char pressed, sf::Vector2f playerPos, sf::Vector2f playerVel)
 {
 	//sf::Vector2f tilePos = GetWorldToTileCoords(playerPos);//player position in tile coordinates
