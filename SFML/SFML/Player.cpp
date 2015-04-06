@@ -179,11 +179,12 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 					if (npcTilePos.x >= (playerTilePos.x - 1) && npcTilePos.x <= (playerTilePos.x + 1) &&
 						npcTilePos.y >= (playerTilePos.y - 1) && npcTilePos.y <= (playerTilePos.y + 1))
 					{
+						//play power animation
+						powerAnim->Madness();
 						//if they are set a bool to true
 						triggerMadness = true;
 						animateMadness = true;
-						//play power animation
-						powerAnim->Madness();
+						
 						//set ai to freakout
 						NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 2.0f);
 						NPCs[i]->SetBehaviour("Idle");//idle for now
@@ -198,11 +199,12 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 			//trigger psychotic rage
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N) && !psychoticRage)
 			{
+				powerAnim->Rage();
 				//sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
 				//set psychotic rage to true
 				psychoticRage = true;
 				animateRage = true;
-				powerAnim->Rage();
+				
 				rageClock.restart();
 				cHandler->CheckBreakableTiles(playerTilePos);
 

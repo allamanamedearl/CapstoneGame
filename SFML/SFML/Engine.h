@@ -12,6 +12,8 @@
 class Engine
 {
 private:
+	enum GameState {Menu,Play,End};
+	GameState currentState;
 	//testing stuff
 	TextureManager* textureManager;
 	sf::Texture sprite;
@@ -36,6 +38,8 @@ private:
 	//map
 	TileMap* currLevel;
 	int tileSize;
+
+	LightEngine* lightEng;
 
 	//Player
 	Player *player;

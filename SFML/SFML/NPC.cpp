@@ -4,7 +4,7 @@
 NPC::NPC(sf::Texture *texture, CollisionHandling* collHand, sf::Vector2f startPos)
 {
 
-	speed = 0.25f;
+	speed = 0.125;//0.25f;
 	SetPosition(collHand->GetTileToWorldCoords(startPos));
 	SetStartPos(startPos);
 	velocity = sf::Vector2f(0.0f, 0.0f);
@@ -15,6 +15,7 @@ NPC::NPC(sf::Texture *texture, CollisionHandling* collHand, sf::Vector2f startPo
 	behaviour = new AIBehaviour(collHand);
 	pixelsToMove = 32;//tile size
 	userActive = false;
+	playerCaught = false;
 }
 
 
@@ -48,6 +49,10 @@ void NPC::SetBehaviour(std::string b)
 	}
 	
 }
+void NPC::SetOriginalBehaviour(std::string b)
+{
+	originalAI = b;
+}
 void NPC::GetMovement(sf::Vector2f playerPos)
 {
 	char direction;
@@ -65,6 +70,13 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 					behaviour->ClearClosedList();
 				}
 				direction = behaviour->PatrolAI(position, velocity, cHandler->GetWorldToTileCoords(position), end);
+				
+				//if player in EYE SIGHT
+				if (behaviour->CheckPlayerInSight(direction, position, velocity, playerPos))
+				{
+					SetBehaviour("Pursue");
+					//direction = behaviour->PursueAI(position, velocity, playerPos);//left out bc pursue comes right after in if statements
+				}
 				//std::cout << "Direction: " << direction << std::endl;
 				//std::cout << "StartPos: " << GetStartPos().x << " " << GetStartPos().y << " EndPos: " << GetEndPos().x << " " << GetEndPos().y << std::endl;
 			}
@@ -72,6 +84,11 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 			{
 				//Pursue ai will convert playerPos to tile coords
 				direction = behaviour->PursueAI(position, velocity, playerPos);
+				//if player is out of EYE SIGHT
+				if (!behaviour->CheckPlayerInSight(direction, position, velocity, playerPos))
+				{
+					SetBehaviour(originalAI);
+				}
 			}
 
 			if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Idle)
@@ -93,10 +110,17 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 					//face left
 					animation->FaceLeft();
 				}
+				//if player in EYE SIGHT
+				if (behaviour->CheckPlayerInSight(direction, position, velocity, playerPos))
+				{
+					SetBehaviour("Pursue");
+					direction = behaviour->PursueAI(position, velocity, playerPos);
+				}
 			}
 			if (behaviour->GetCurrentAI() != AIBehaviour::Behaviour::Guard)
 			{
-
+				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(playerPos);
+				sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
 				switch (direction)
 				{
 				case 'l':
@@ -105,6 +129,10 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
 							//std::cout << "*******ISWALKABLE LEFT = " << isWalkable << std::endl;
 							animation->Left();
+							if (playerTilePos.x >= npcTilePos.x - 1.0f && playerTilePos.x<= npcTilePos.x && playerTilePos.y == npcTilePos.y)
+							{
+								playerCaught = true;
+							}
 							if (isWalkable)
 							{
 								velocity.x = -speed;
@@ -116,6 +144,8 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 								//std::cout << "********TILE NOT WALKABLE" << std::endl;
 								velocity.x = 0.0f;
 							}
+							
+							
 							break;
 				}
 
@@ -124,6 +154,10 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							//std::cout << "right right right" << std::endl;
 							bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
 							animation->Right();
+							if (playerTilePos.x <= npcTilePos.x + 1.0f && playerTilePos.x >= npcTilePos.x && playerTilePos.y == npcTilePos.y)
+							{
+								playerCaught = true;
+							}
 							if (isWalkable)
 							{
 								velocity.x = speed;
@@ -134,6 +168,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							{
 								velocity.x = 0.0f;
 							}
+							
 							break;
 				}
 				case 'u':
@@ -141,6 +176,10 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							//std::cout << "up up up" << std::endl;
 							bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
 							animation->Up();
+							if (playerTilePos.y >= npcTilePos.y - 1.0f && playerTilePos.y<= npcTilePos.y&& playerTilePos.x == npcTilePos.x)
+							{
+								playerCaught = true;
+							}
 							if (isWalkable)
 							{
 								velocity.x = 0.0f;
@@ -151,6 +190,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							{
 								velocity.y = 0.0f;
 							}
+							
 							break;
 				}
 				case 'd':
@@ -158,6 +198,10 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							//std::cout << "down down down" << std::endl;
 							bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
 							animation->Down();
+							if (playerTilePos.y <= npcTilePos.y + 1.0f && playerTilePos.y >= npcTilePos.y && playerTilePos.x == npcTilePos.x)
+							{
+								playerCaught = true;
+							}
 							if (isWalkable)
 							{
 								velocity.x = 0.0f;
@@ -168,6 +212,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							{
 								velocity.y = 0.0f;
 							}
+							
 							break;
 				}
 				case 's':

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "LightEngine.h"
 #include "Tile.h"
 #include "TextureManager.h"
 class TileMap
@@ -29,6 +30,7 @@ public:
 	Tile* GetTile(int x, int y);
 
 	void LoadLevel(std::string filename, TextureManager& textureMan);
+	void LoadLightMap(std::string filename, LightEngine& lightEngine, int tileSize);
 
 	int GetWidth();
 	int GetHeight();

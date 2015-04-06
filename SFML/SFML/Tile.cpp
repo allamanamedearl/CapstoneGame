@@ -15,5 +15,6 @@ Tile::~Tile()
 void Tile::Draw(int x, int y, sf::RenderWindow* rw)
 {
 	baseSprite.setPosition(x, y);
+	baseSprite.setColor(sf::Color(128,128,128,100));
 	rw->draw(baseSprite);
 }

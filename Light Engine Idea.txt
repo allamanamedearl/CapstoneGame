@@ -1,0 +1,9 @@
+Load lights from xml
+
+x and y begin pos point, end point, radius and arc size, colour?
+
+Add settings for non walkable tiles to block light
+
+add XML loading of light info to LightEngine class
+
+tilemap class -> add each wall block to lightengine block list

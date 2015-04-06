@@ -216,18 +216,18 @@ char AIBehaviour::PursueAI(sf::Vector2f pos, sf::Vector2f vel,sf::Vector2f end)
 	}
 	prevPlayerPos = currPlayerPos;
 	//check if npc is in same position as player
-	if (cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(0,1) ||
-		cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(1,0)||
-		cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(0,-1)||
-		cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(-1,0))
-	{
-		return 's';//s for stop
-	}
-	else
-	{
-		//pass npc position, velocity, start which is pos converted to tile coords, end is playerPos converted to tileCoords
+	//if (cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(0,1) ||
+	//	cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(1,0)||
+	//	cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(0,-1)||
+	//	cHandler->GetWorldToTileCoords(end) == cHandler->GetWorldToTileCoords(pos) - sf::Vector2f(-1,0))
+	//{
+	//	return 's';//s for stop
+	//}
+	//else
+	//{
+	//	//pass npc position, velocity, start which is pos converted to tile coords, end is playerPos converted to tileCoords
 		return PatrolAI(pos, vel, cHandler->GetWorldToTileCoords(pos), cHandler->GetWorldToTileCoords(end));
-	}
+	//}
 	
 }
 char AIBehaviour::GuardAI(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f end)
@@ -247,6 +247,91 @@ int AIBehaviour::ManhattanDistance(sf::Vector2f point, sf::Vector2f goal)
 	
 	return (int)(fabsf(point.x - goal.x) + fabsf(point.y - goal.y));
 	//Mathf.RoundToInt(Mathf.Abs(point.x - goal.x) + Mathf.Abs(point.y - goal.y));
+}
+bool AIBehaviour::CheckPlayerInSight(char direction,sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f end)
+{
+	//which direction npc is facing
+	//tilesize is 32 
+	//if within 3 tiles distance then pursue
+	//return true;
+	sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(pos);
+	currPlayerPos = cHandler->GetWorldToTileCoords(end);
+	switch (direction)
+	{
+	case 'l':
+	{
+				if (npcTilePos.x - currPlayerPos.x <= 3.0f && npcTilePos.x - currPlayerPos.x >= 0.0f && currPlayerPos.y == npcTilePos.y || currPlayerPos.y == npcTilePos.y + 1.0f || currPlayerPos.y == npcTilePos.y - 1.0f)
+				{
+					//check to see if there is a wall in between// stuff returns true if it's walkable
+					if (cHandler->PlayerCollisionDetection('l', pos, vel) &&
+						cHandler->PlayerCollisionDetection('l', sf::Vector2f(pos.x - 32.0f, pos.y), vel) &&
+						cHandler->PlayerCollisionDetection('l', sf::Vector2f(pos.x - 64.0f, pos.y), vel))
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return false;
+				}
+				break;
+	}
+		
+	case 'r':
+	{
+				if (currPlayerPos.x - npcTilePos.x <= 3.0f && currPlayerPos.x - npcTilePos.x >= 0.0f && currPlayerPos.y == npcTilePos.y || currPlayerPos.y == npcTilePos.y + 1.0f || currPlayerPos.y == npcTilePos.y - 1.0f)
+				{
+					//check to see if there is a wall in between// stuff returns true if it's walkable
+					if (cHandler->PlayerCollisionDetection('r', pos, vel) &&
+						cHandler->PlayerCollisionDetection('r', sf::Vector2f(pos.x + 32.0f, pos.y), vel) &&
+						cHandler->PlayerCollisionDetection('r', sf::Vector2f(pos.x + 64.0f, pos.y), vel))
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return false;
+				}
+				break;
+	}
+	case 'u':
+	{
+				if (npcTilePos.y - currPlayerPos.y <= 3.0f && npcTilePos.y - currPlayerPos.y >= 0.0f &&  currPlayerPos.x == npcTilePos.x || currPlayerPos.x == npcTilePos.x + 1.0f || currPlayerPos.x == npcTilePos.x - 1.0f)
+				{
+					//check to see if there is a wall in between// stuff returns true if it's walkable
+					if (cHandler->PlayerCollisionDetection('u', pos, vel) &&
+						cHandler->PlayerCollisionDetection('u', sf::Vector2f(pos.x, pos.y-32.0f), vel) &&
+						cHandler->PlayerCollisionDetection('u', sf::Vector2f(pos.x, pos.y-64.0f), vel))
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return false;
+				}
+				break;
+	}
+	case 'd':
+	{
+				if (currPlayerPos.y - npcTilePos.y <= 3.0f && currPlayerPos.y - npcTilePos.y >= 0.0f &&  currPlayerPos.x == npcTilePos.x || currPlayerPos.x == npcTilePos.x + 1.0f || currPlayerPos.x == npcTilePos.x - 1.0f)
+				{
+					//check to see if there is a wall in between// stuff returns true if it's walkable
+					if (cHandler->PlayerCollisionDetection('d', pos, vel) &&
+						cHandler->PlayerCollisionDetection('d', sf::Vector2f(pos.x, pos.y + 32.0f), vel) &&
+						cHandler->PlayerCollisionDetection('d', sf::Vector2f(pos.x, pos.y +64.0f), vel))
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return false;
+				}
+				break;
+	}
+	}
 }
 bool AIBehaviour::CheckIfInClosedList(sf::Vector2f pos)
 {

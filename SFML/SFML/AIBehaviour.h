@@ -15,7 +15,7 @@ public:
 	char PatrolAI(sf::Vector2f pos,sf::Vector2f vel,sf::Vector2f start,sf::Vector2f end);
 	char PursueAI(sf::Vector2f pos,sf::Vector2f vel,sf::Vector2f end);
 	char GuardAI(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f end);
-
+	bool CheckPlayerInSight(char direction,sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f end);
 	bool CheckIfInClosedList(sf::Vector2f pos);
 	void ClearClosedList();
 

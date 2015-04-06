@@ -15,12 +15,14 @@ private:
 	float speed;
 	bool isMoving;
 	float pixelsToMove;
+	bool playerCaught;
 
 	bool userActive;//for whether npc is being controlled by player
 
 	CollisionHandling *cHandler;
 	Animation *animation;
 	AIBehaviour *behaviour;
+	std::string originalAI;//first behaviour starting off
 public:
 	NPC(sf::Texture *texture, CollisionHandling* collHand, sf::Vector2f startPos);//start pos maybe in tileCoord eg x=3 y=5
 	~NPC();
@@ -39,8 +41,10 @@ public:
 	sf::Vector2f GetEndPos(){ return this->end; }
 
 	bool GetUserActive(){return this->userActive;}
+	bool GetIfPlayerCaught(){ return this->playerCaught; }
 	void SetUserActive(bool active){ this->userActive = active; }
 	void SetBehaviour(std::string b);
+	void SetOriginalBehaviour(std::string b);
 	void GetMovement(sf::Vector2f playerPos);
 	void Draw(sf::RenderWindow *rw);
 	void Update();
