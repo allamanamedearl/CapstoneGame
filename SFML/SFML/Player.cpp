@@ -186,7 +186,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 						animateMadness = true;
 						
 						//set ai to freakout
-						NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 2.0f);
+						NPCs[i]->SetSpeed(NPCs[i]->GetSpeed() * 4.0f);
 						NPCs[i]->SetBehaviour("Idle");//idle for now
 						numMadNPC = i;
 						madClock.restart();//startclock for reload time

@@ -32,11 +32,11 @@ void Gui::Init()
 	guiView.setViewport(sf::FloatRect(0.0f, 0.8f, 1.0f, 0.2f));
 	background.setPosition(sf::Vector2f(0, screenHeight - background.getTextureRect().height));
 	
-	madBar = Bar(sf::Vector2f(background.getTextureRect().width - 50.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Yellow);
+	madBar = Bar(sf::Vector2f(background.getTextureRect().width - 35.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Yellow);
 	//madBar.SetScale(0.0f);
 
-	rageBar = Bar(sf::Vector2f(background.getTextureRect().width - 280.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Red);
-	controlBar = Bar(sf::Vector2f(background.getTextureRect().width - 490.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Cyan);
+	rageBar = Bar(sf::Vector2f(background.getTextureRect().width - 190.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Red);
+	controlBar = Bar(sf::Vector2f(background.getTextureRect().width - 330.0f, screenHeight - 80.0f), sf::Vector2f(15.0f, 60.0f), sf::Color::Cyan);
 }
 void Gui::Update(std::string activePows)
 {
@@ -112,24 +112,24 @@ void Gui::Update(std::string activePows)
 		hintBox2.setFillColor(sf::Color::Transparent);
 		hintBox2.setOutlineColor(sf::Color::Yellow);
 		hintBox2.setOutlineThickness(5.0f);
-		hintBox2.setPosition(sf::Vector2f(rageBar.GetPosition().x - 150, rageBar.GetPosition().y-5.0f));
-		hintBox2.setSize(sf::Vector2f(200.0f, rageBar.GetSize().y+10.0f));
+		hintBox2.setPosition(sf::Vector2f(rageBar.GetPosition().x - 112, rageBar.GetPosition().y-5.0f));
+		hintBox2.setSize(sf::Vector2f(135.0f, rageBar.GetSize().y+10.0f));
 	}
 	if (hintControl)
 	{
 		hintBox1.setFillColor(sf::Color::Transparent);
 		hintBox1.setOutlineColor(sf::Color::Yellow);
 		hintBox1.setOutlineThickness(5.0f);
-		hintBox1.setPosition(sf::Vector2f(controlBar.GetPosition().x - 150, controlBar.GetPosition().y - 5.0f));
-		hintBox1.setSize(sf::Vector2f(200.0f, controlBar.GetSize().y + 10.0f));
+		hintBox1.setPosition(sf::Vector2f(controlBar.GetPosition().x - 115, controlBar.GetPosition().y - 5.0f));
+		hintBox1.setSize(sf::Vector2f(135.0f, controlBar.GetSize().y + 10.0f));
 	}
 	if (hintMad)
 	{
 		hintBox3.setFillColor(sf::Color::Transparent);
 		hintBox3.setOutlineColor(sf::Color::Yellow);
 		hintBox3.setOutlineThickness(5.0f);
-		hintBox3.setPosition(sf::Vector2f(madBar.GetPosition().x - 150, madBar.GetPosition().y - 5.0f));
-		hintBox3.setSize(sf::Vector2f(200.0f, madBar.GetSize().y + 10.0f));
+		hintBox3.setPosition(sf::Vector2f(madBar.GetPosition().x - 118, madBar.GetPosition().y - 5.0f));
+		hintBox3.setSize(sf::Vector2f(138.0f, madBar.GetSize().y + 10.0f));
 	}		   
 	
 	

@@ -192,8 +192,9 @@ void TileMap::LoadLightMap(std::string filename, LightEngine& lightEngine, int t
 		tmpLight.angle = direction;
 		tmpLight.angleSpread = arcSize;
 		tmpLight.radius = radius;
-		tmpLight.colour = sf::Color(255, 255, 255, 100);//for now
+		//tmpLight.colour = sf::Color::Transparent;//for now
 		tmpLight.position = sf::Vector2f((float)x*tileSize, (float)y*tileSize);
+		tmpLight.dynamic = true;
 		lightEngine.Lights.push_back(tmpLight);
 
 		//go to next tile

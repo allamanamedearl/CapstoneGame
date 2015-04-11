@@ -95,9 +95,9 @@ void LightEngine::ShineLight(Light &l, sf::RenderTarget &rt)
 		end.x += cos(radians) * dyn_len;
 		end.y += sin(radians) * dyn_len;
 		sf::Vertex startLine = sf::Vertex(l.position);
-		startLine.color = sf::Color(255, 255, 255, 100);
+		startLine.color = sf::Color(255, 255, 255, 10);
 		sf::Vertex endLine = sf::Vertex(end);
-		endLine.color = sf::Color(255, 255, 255, 100);
+		endLine.color = sf::Color(255, 255, 255, 10);
 		sf::Vertex line[] =
 		{
 			/*sf::Vertex(l.position),

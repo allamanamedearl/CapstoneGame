@@ -63,7 +63,7 @@ void Engine::LoadTextures()
 			//std::cout << " FONT ERROR";
 			std::exit(EXIT_FAILURE);
 		}
-		if (!guiTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/UIWindow3.png"))
+		if (!guiTexture.loadFromFile("C:/Users/Cassie/Desktop/School Stuff/Capstone/CapstoneGit/SFML/SFML/guiRect.png"))
 		{
 			//std::cout << "GUI ERROR";
 			std::exit(EXIT_FAILURE);
@@ -475,8 +475,8 @@ void Engine::Update()
 		{
 			if (level_NPCs[i]->GetIfPlayerCaught())
 			{
-				currentState = GameState::End;
-				break;
+				//currentState = GameState::End;
+				//break;
 			}
 			level_NPCs[i]->Update();
 			
