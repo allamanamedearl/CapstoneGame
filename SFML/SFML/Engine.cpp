@@ -29,6 +29,8 @@ Engine::~Engine()
 	player = nullptr;
 	delete mainGUI;
 	mainGUI = nullptr;
+	delete dialogue;
+	dialogue = nullptr;
 }
 void Engine::LoadTextures()
 {
@@ -90,7 +92,7 @@ bool Engine::Init()
 	{
 		if (window == nullptr)
 		{
-			window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight, 32), "RPG");//, sf::Style::Fullscreen);
+			window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight, 32), "RPG");// , sf::Style::Fullscreen);
 		}
 		
 		view = new sf::View();
@@ -104,7 +106,8 @@ bool Engine::Init()
 		//GUI
 		mainGUI = new Gui(&guiTexture, screenWidth, screenHeight);
 		mainGUI->Init();
-
+		//dialogue stuff
+		dialogue = new Dialogue("dialogue.xml", sf::Vector2f(10.0f, screenHeight -90.0f));
 		//time
 		timeSinceLastUpdate = 0.0f;
 		//std::cout << "\nAfter LoadLevel() call" << std::endl;
@@ -270,11 +273,19 @@ void Engine::RenderFrame()
 
 		//sf::Vector2i pPosI = sf::Vector2i((int)player->GetPosition().x, (int)player->GetPosition().y);
 		sf::Vector2i pWorldPos = window->mapCoordsToPixel(player->GetPosition());
-		posText.setString("PLAYER POS X: " + std::to_string(pWorldPos.x) + " Y: " + std::to_string(pWorldPos.y));
+		posText.setString("PLAYER WorldPOS X: " + std::to_string(pWorldPos.x) + " Y: " + std::to_string(pWorldPos.y));
 		posText.setCharacterSize(24);
 		posText.setColor(sf::Color::Red);
 		posText.setStyle(sf::Text::Bold);
 		posText.setPosition(view->getCenter().x, view->getCenter().y + 20);
+
+		sf::Text other;
+		other.setString("Player get Pos x:" + std::to_string(player->GetPosition().x) + " y: " + std::to_string(player->GetPosition().y));
+		other.setFont(guiFont);
+		other.setCharacterSize(24);
+		other.setColor(sf::Color::Black);
+		other.setStyle(sf::Text::Bold);
+		other.setPosition(view->getCenter().x-50, view->getCenter().y + 40);
 
 		/*guiSprite.setPosition(view->getCenter().x - view->getCenter().x, view->getCenter().y * 2 - 100);
 		sf::View guiView;
@@ -282,10 +293,16 @@ void Engine::RenderFrame()
 		guiView.setViewport(sf::FloatRect(0.0f, 0.8f, 1.0f,0.2f));
 		window->setView(guiView);
 		window->draw(guiSprite);*/
+
+		dialogue->LoadDialogue(1);
 		mainGUI->Draw(window);
+		dialogue->RenderDialogue(window);
+
 		window->setView(*view);
-		//window->draw(posText);
-		//window->draw(text);
+		
+		window->draw(posText);
+		window->draw(text);
+		window->draw(other);
 
 		window->display();
 	}
@@ -405,7 +422,7 @@ void Engine::Update()
 
 		//camera->Update();
 		//camera->GoTo(0, tileSize);
-		player->Update();
+		player->Update(timeStep/10);
 		mainGUI->Update(player->CheckActivePowers());
 
 		//gui tells player if you powers are reloaded and you can use them again
@@ -446,26 +463,26 @@ void Engine::Update()
 			if (playerPos.x >= screenWidth / 3 * 2 && player->GetVelocity().x > 0)
 			{
 				//scroll left when walking right
-				view->move(2.0f, 0.0f);
-				camera->SetRenderingRange(-2, 0);//bc moving down
+				view->move(2.0f*timeStep/10, 0.0f);
+				camera->SetRenderingRange(-2 * timeStep / 10, 0);//bc moving down
 			}
 			if (playerPos.x <= screenWidth / 3 && player->GetVelocity().x < 0)
 			{
 				//scroll right when walking left
-				view->move(-2.0f, 0.0f);
-				camera->SetRenderingRange(2, 0);//bc moving down
+				view->move(-2.0f*timeStep / 10, 0.0f);
+				camera->SetRenderingRange(2 * timeStep / 10, 0);//bc moving down
 			}//-100 for gui height?
 			if (playerPos.y >= screenHeight / 3 * 2 - 100 && player->GetVelocity().y > 0)
 			{
 				//scroll up when walking down
-				view->move(0.0f, 2.0f);
-				camera->SetRenderingRange(0, -2);//bc moving down
+				view->move(0.0f, 2.0f*timeStep / 10);
+				camera->SetRenderingRange(0, -2 * timeStep / 10);//bc moving down
 			}
 			if (playerPos.y <= screenHeight / 3 && player->GetVelocity().y < 0)
 			{
 				//scroll down when walking up
-				view->move(0.0f, -2.0f);
-				camera->SetRenderingRange(0, 2);
+				view->move(0.0f, -2.0f*timeStep / 10);
+				camera->SetRenderingRange(0, 2 * timeStep / 10);
 			}
 		}
 
@@ -478,7 +495,7 @@ void Engine::Update()
 				//currentState = GameState::End;
 				//break;
 			}
-			level_NPCs[i]->Update();
+			level_NPCs[i]->Update(timeStep/10);
 			
 		}
 		/*npc->Update();

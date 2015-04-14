@@ -1,0 +1,5 @@
+<script>
+	<character id="1">
+		<dialogue text="Blah blah blah"/>
+	</character>
+</script>

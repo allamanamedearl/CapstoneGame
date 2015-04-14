@@ -8,6 +8,7 @@ class NPC
 {
 private:
 	sf::Vector2f position;
+	sf::Vector2f pastPos;
 	sf::Vector2f velocity;
 	sf::Vector2f start;//start position is tile coordinates
 	sf::Vector2f end;//also tile coords
@@ -47,6 +48,6 @@ public:
 	void SetOriginalBehaviour(std::string b);
 	void GetMovement(sf::Vector2f playerPos);
 	void Draw(sf::RenderWindow *rw);
-	void Update();
+	void Update(float timeStep);
 };
 

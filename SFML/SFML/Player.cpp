@@ -108,6 +108,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
 				if (isWalkable)
 				{
+					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = 0.0f;
 					velocity.y = -speed;
@@ -124,6 +125,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
 				if (isWalkable)
 				{
+					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = 0.0f;
 					velocity.y = speed;
@@ -140,6 +142,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
 				if (isWalkable)
 				{
+					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = -speed;
 					velocity.y = 0.0f;
@@ -156,6 +159,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
 				if (isWalkable)
 				{
+					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = speed;
 					velocity.y = 0.0f;
@@ -240,14 +244,26 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 		{
 			//sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(position);
 			//std::cout << "PLayer tile pos: " << playerTilePos.x << " " << playerTilePos.y << std::endl;
-			pixelsToMove -= speed;
+			if (pastPos.x - position.x >= pixelsToMove || pastPos.x - position.x <= -pixelsToMove || pastPos.y - position.y >= pixelsToMove || pastPos.y - position.y <= -pixelsToMove)
+			{
+				isMoving = false;
+				velocity.x = 0.0f;
+				velocity.y = 0.0f;
+			}
+			/*pixelsToMove -= speed;
 			if (pixelsToMove <= 0)
 			{
 				isMoving = false;
 				pixelsToMove = 32;
 				velocity.x = 0;
 				velocity.y = 0;
-			}
+			}*/
+			/*if ((int)position.x % (int)pixelsToMove == 0 || (int)position.y % (int)pixelsToMove ==0)
+			{
+				isMoving = false;
+				velocity.x = 0.0f;
+				velocity.y = 0.0f;
+			}*/
 
 		}
 	}
@@ -290,10 +306,10 @@ std::string Player::CheckActivePowers()
 	}
 	return activePows;
 }
-void Player::Update()
+void Player::Update(float timeStep)
 {
-
-	position += velocity;// *timeStep;
+	
+	position += velocity*timeStep;
 	SetPosition(position);
 
 	animation->Update();

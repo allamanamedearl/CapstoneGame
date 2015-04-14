@@ -17,7 +17,7 @@ public:
 	
 	void GetInput(std::vector<NPC*> &NPCs);
 	void Draw(sf::RenderWindow *rw);
-	void Update();
+	void Update(float timeStep);
 
 	void SetUserActive(bool active){ this->userActive = active; }
 	bool CheckActive(){ return this->userActive; }//returns whether player is active
@@ -42,6 +42,7 @@ private:
 	//sf::Texture* texture;
 	bool isMoving;
 	float pixelsToMove;
+	sf::Vector2f pastPos;
 
 	//Time stuff for power animations
 	sf::Clock madClock;

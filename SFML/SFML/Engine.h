@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "Gui.h"
+#include "Dialogue.h"
 //#include "NPC.h"
 class Engine
 {
@@ -29,6 +30,9 @@ private:
 	sf::Texture guiTexture;
 	sf::Sprite guiSprite;
 	Gui* mainGUI;
+
+	//Dialogue Stuff
+	Dialogue* dialogue;
 
 	//camera
 	Camera* camera;

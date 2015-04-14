@@ -90,6 +90,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionHandling.cpp" />
+    <ClCompile Include="Dialogue.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Gui.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionHandling.h" />
+    <ClInclude Include="Dialogue.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="Light.h" />

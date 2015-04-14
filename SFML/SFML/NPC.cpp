@@ -135,6 +135,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							}
 							if (isWalkable)
 							{
+								pastPos = GetPosition();
 								velocity.x = -speed;
 								velocity.y = 0.0f;
 								isMoving = true;
@@ -160,6 +161,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							}
 							if (isWalkable)
 							{
+								pastPos = GetPosition();
 								velocity.x = speed;
 								velocity.y = 0.0f;
 								isMoving = true;
@@ -182,6 +184,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							}
 							if (isWalkable)
 							{
+								pastPos = GetPosition();
 								velocity.x = 0.0f;
 								velocity.y = -speed;
 								isMoving = true;
@@ -204,6 +207,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							}
 							if (isWalkable)
 							{
+								pastPos = GetPosition();
 								velocity.x = 0.0f;
 								velocity.y = speed;
 								isMoving = true;
@@ -228,15 +232,21 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 		}
 		else//so you can;t get input while player is still moving
 		{
-			sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
+			//sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
 			//std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
-			pixelsToMove -= speed;
+			/*pixelsToMove -= speed;
 			if (pixelsToMove <= 0)
 			{
 				isMoving = false;
 				pixelsToMove = 32;
 				velocity.x = 0;
 				velocity.y = 0;
+			}*/
+			if (pastPos.x - position.x >= pixelsToMove || pastPos.x - position.x <= -pixelsToMove || pastPos.y - position.y >= pixelsToMove || pastPos.y - position.y <= -pixelsToMove)
+			{
+				isMoving = false;
+				velocity.x = 0.0f;
+				velocity.y = 0.0f;
 			}
 
 		}
@@ -251,6 +261,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
 				if (isWalkable)
 				{
+					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = 0.0f;
 					velocity.y = -speed;
@@ -267,6 +278,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
 				if (isWalkable)
 				{
+					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = 0.0f;
 					velocity.y = speed;
@@ -283,6 +295,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
 				if (isWalkable)
 				{
+					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = -speed;
 					velocity.y = 0.0f;
@@ -299,6 +312,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
 				if (isWalkable)
 				{
+					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = speed;
 					velocity.y = 0.0f;
@@ -312,27 +326,33 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 		}
 		else//so you can;t get input while player is still moving
 		{
-			sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
-			//std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
-			pixelsToMove -= speed;
-			if (pixelsToMove <= 0)
+			//sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
+			////std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
+			//pixelsToMove -= speed;
+			//if (pixelsToMove <= 0)
+			//{
+			//	isMoving = false;
+			//	pixelsToMove = 32;
+			//	velocity.x = 0;
+			//	velocity.y = 0;
+			//}
+			if (pastPos.x - position.x >= pixelsToMove || pastPos.x - position.x <= -pixelsToMove || pastPos.y - position.y >= pixelsToMove || pastPos.y - position.y <= -pixelsToMove)
 			{
 				isMoving = false;
-				pixelsToMove = 32;
-				velocity.x = 0;
-				velocity.y = 0;
+				velocity.x = 0.0f;
+				velocity.y = 0.0f;
 			}
 
 		}
 	}
 	
 }
-void NPC::Update()
+void NPC::Update(float timeStep)
 {
 	//if (clock.getElapsedTime().asMilliseconds() >= 1000)//so he doesn't spaz out
 	//{
 		//GetMovement();
-	position += velocity;//*time;// *timeStep;
+	position += velocity*timeStep;
 		//clock.restart();
 	//}
 	//if (clock.getElapsedTime().asMilliseconds() >= 10000)//so he doesn't spaz out
