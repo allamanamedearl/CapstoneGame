@@ -9,6 +9,7 @@ class NPC
 private:
 	sf::Vector2f position;
 	sf::Vector2f pastPos;
+	sf::Vector2f targetPos;//tile npc is moving to
 	sf::Vector2f velocity;
 	sf::Vector2f start;//start position is tile coordinates
 	sf::Vector2f end;//also tile coords

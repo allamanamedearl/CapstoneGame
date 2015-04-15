@@ -42,7 +42,8 @@ private:
 	//sf::Texture* texture;
 	bool isMoving;
 	float pixelsToMove;
-	sf::Vector2f pastPos;
+	sf::Vector2f endPos;//target end position
+	sf::Vector2f pastPos;//starting position before moving
 
 	//Time stuff for power animations
 	sf::Clock madClock;

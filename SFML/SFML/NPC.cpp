@@ -136,6 +136,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							if (isWalkable)
 							{
 								pastPos = GetPosition();
+								targetPos = sf::Vector2f(GetPosition().x-pixelsToMove, GetPosition().y);
 								velocity.x = -speed;
 								velocity.y = 0.0f;
 								isMoving = true;
@@ -162,6 +163,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							if (isWalkable)
 							{
 								pastPos = GetPosition();
+								targetPos = sf::Vector2f(GetPosition().x+pixelsToMove, GetPosition().y);
 								velocity.x = speed;
 								velocity.y = 0.0f;
 								isMoving = true;
@@ -185,6 +187,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							if (isWalkable)
 							{
 								pastPos = GetPosition();
+								targetPos = sf::Vector2f(GetPosition().x, GetPosition().y-pixelsToMove);
 								velocity.x = 0.0f;
 								velocity.y = -speed;
 								isMoving = true;
@@ -208,6 +211,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 							if (isWalkable)
 							{
 								pastPos = GetPosition();
+								targetPos = sf::Vector2f(GetPosition().x, GetPosition().y + pixelsToMove);
 								velocity.x = 0.0f;
 								velocity.y = speed;
 								isMoving = true;
@@ -247,6 +251,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				isMoving = false;
 				velocity.x = 0.0f;
 				velocity.y = 0.0f;
+				position = targetPos;
 			}
 
 		}
@@ -262,6 +267,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				if (isWalkable)
 				{
 					pastPos = GetPosition();
+					targetPos = sf::Vector2f(GetPosition().x, GetPosition().y - pixelsToMove);
 					isMoving = true;
 					velocity.x = 0.0f;
 					velocity.y = -speed;
@@ -272,13 +278,14 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				}
 
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
 				animation->Down();
 				bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
 				if (isWalkable)
 				{
 					pastPos = GetPosition();
+					targetPos = sf::Vector2f(GetPosition().x, GetPosition().y+pixelsToMove);
 					isMoving = true;
 					velocity.x = 0.0f;
 					velocity.y = speed;
@@ -289,13 +296,14 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				}
 
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
 				animation->Left();
 				bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
 				if (isWalkable)
 				{
 					pastPos = GetPosition();
+					targetPos = sf::Vector2f(GetPosition().x-pixelsToMove, GetPosition().y);
 					isMoving = true;
 					velocity.x = -speed;
 					velocity.y = 0.0f;
@@ -306,13 +314,14 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				}
 
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				animation->Right();
 				bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
 				if (isWalkable)
 				{
 					pastPos = GetPosition();
+					targetPos = sf::Vector2f(GetPosition().x+pixelsToMove, GetPosition().y);
 					isMoving = true;
 					velocity.x = speed;
 					velocity.y = 0.0f;
@@ -320,27 +329,18 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 				else//if next tile isn't walkable
 				{
 					velocity.x = 0.0f;
-					velocity.y = 0.0f;
 				}
 			}
 		}
 		else//so you can;t get input while player is still moving
 		{
-			//sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
-			////std::cout << "NPC tile pos: " << npcTilePos.x << " " << npcTilePos.y << std::endl;
-			//pixelsToMove -= speed;
-			//if (pixelsToMove <= 0)
-			//{
-			//	isMoving = false;
-			//	pixelsToMove = 32;
-			//	velocity.x = 0;
-			//	velocity.y = 0;
-			//}
+			
 			if (pastPos.x - position.x >= pixelsToMove || pastPos.x - position.x <= -pixelsToMove || pastPos.y - position.y >= pixelsToMove || pastPos.y - position.y <= -pixelsToMove)
 			{
 				isMoving = false;
 				velocity.x = 0.0f;
 				velocity.y = 0.0f;
+				position = targetPos;
 			}
 
 		}

@@ -108,6 +108,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				bool isWalkable = cHandler->PlayerCollisionDetection('u', position, velocity);
 				if (isWalkable)
 				{
+					endPos = sf::Vector2f(GetPosition().x,GetPosition().y - pixelsToMove);//end position target is up
 					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = 0.0f;
@@ -119,12 +120,13 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				}
 
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
 				animation->Down();
 				bool isWalkable = cHandler->PlayerCollisionDetection('d', position, velocity);
 				if (isWalkable)
 				{
+					endPos = sf::Vector2f(GetPosition().x,GetPosition().y + pixelsToMove);
 					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = 0.0f;
@@ -136,12 +138,13 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				}
 
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
 				animation->Left();
 				bool isWalkable = cHandler->PlayerCollisionDetection('l', position, velocity);
 				if (isWalkable)
 				{
+					endPos = sf::Vector2f(GetPosition().x - pixelsToMove, GetPosition().y);
 					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = -speed;
@@ -153,12 +156,13 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				}
 
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				animation->Right();
 				bool isWalkable = cHandler->PlayerCollisionDetection('r', position, velocity);
 				if (isWalkable)
 				{
+					endPos = sf::Vector2f(GetPosition().x + pixelsToMove, GetPosition().y);
 					pastPos = GetPosition();
 					isMoving = true;
 					velocity.x = speed;
@@ -167,7 +171,7 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				else//if next tile isn't walkable
 				{
 					velocity.x = 0.0f;
-					velocity.y = 0.0f;
+					//velocity.y = 0.0f;
 				}
 			}
 			//*******POWERS***********
@@ -249,6 +253,8 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 				isMoving = false;
 				velocity.x = 0.0f;
 				velocity.y = 0.0f;
+				position = endPos;//set position to the target end position
+				//pastPos = sf::Vector2f(NULL,NULL);
 			}
 			/*pixelsToMove -= speed;
 			if (pixelsToMove <= 0)
