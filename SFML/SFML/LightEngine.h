@@ -11,11 +11,13 @@ class LightEngine
 public:
 	LightEngine();
 	~LightEngine();
-	void Step(sf::RenderTarget &rt);
+	void InitLights();
+	void DrawLights(sf::RenderTarget &rt);
 	std::vector <Light>Lights;//container for lights
 	std::vector<Block>Blocks;//container for blocks
+	sf::VertexArray allLights;
 private:
-	void ShineLight(Light &l, sf::RenderTarget &rt);
+	void ShineLight(Light &l);
 	static const float Distance(const sf::Vector2f &p1, const sf::Vector2f &p2);
 	static const sf::Vector2f GetCenter(const sf::FloatRect &fr);//get center of rectangle
 

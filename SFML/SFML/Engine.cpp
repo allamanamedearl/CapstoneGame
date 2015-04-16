@@ -92,7 +92,7 @@ bool Engine::Init()
 	{
 		if (window == nullptr)
 		{
-			window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight, 32), "RPG");// , sf::Style::Fullscreen);
+			window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight, 32), "Irrenhaus");// , sf::Style::Fullscreen);
 		}
 		
 		view = new sf::View();
@@ -106,6 +106,8 @@ bool Engine::Init()
 		//GUI
 		mainGUI = new Gui(&guiTexture, screenWidth, screenHeight);
 		mainGUI->Init();
+		//Light init
+		lightEng->InitLights();
 		//dialogue stuff
 		dialogue = new Dialogue("dialogue.xml", sf::Vector2f(10.0f, screenHeight -90.0f));
 		//time
@@ -256,7 +258,7 @@ void Engine::RenderFrame()
 			level_NPCs[i]->Draw(window);
 		}
 		player->Draw(window);
-		lightEng->Step(*window);
+		lightEng->DrawLights(*window);
 		//npc->Draw(window);
 		/*npc2->Draw(window);
 		npc3->Draw(window);*/
@@ -296,13 +298,13 @@ void Engine::RenderFrame()
 
 		dialogue->LoadDialogue(1);
 		mainGUI->Draw(window);
-		dialogue->RenderDialogue(window);
+		//dialogue->RenderDialogue(window);
 
 		window->setView(*view);
 		
-		window->draw(posText);
-		window->draw(text);
-		window->draw(other);
+		//window->draw(posText);
+		//window->draw(text);
+		//window->draw(other);
 
 		window->display();
 	}

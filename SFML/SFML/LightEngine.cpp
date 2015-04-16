@@ -29,14 +29,14 @@ const float LightEngine::Distance(const sf::Vector2f &p1, const sf::Vector2f &p2
 
 	return c;
 }
-void LightEngine::Step(sf::RenderTarget &rt)
+void LightEngine::InitLights()
 {
 	for (unsigned i = 0; i < Lights.size(); i++)
 	{
-		ShineLight(Lights[i], rt);
+		ShineLight(Lights[i]);
 	}
 }
-void LightEngine::ShineLight(Light &l, sf::RenderTarget &rt)
+void LightEngine::ShineLight(Light &l)
 {
 	/*
 	remember back in the Light class, we had something called 'angleSpread' ?
@@ -105,16 +105,25 @@ void LightEngine::ShineLight(Light &l, sf::RenderTarget &rt)
 			startLine,
 			endLine
 		};
+		
 		/*sf::RectangleShape line;
 		line.setFillColor(sf::Color(255, 255, 255, 100));
 		line.setPosition(l.position);
 		line.setSize(sf::Vector2f(end.x - l.position.x,2.0f));
 		rt.draw(line);*/
-		
-		rt.draw(line, 2, sf::Lines);// sf::RenderStates::RenderStates());
+		//allLights.push_back();
+		allLights.append(startLine);
+		allLights.append(endLine);
+		//rt.draw(line, 2, sf::Lines);// sf::RenderStates::RenderStates());
 		//rt.Draw(sf::Shape(sf::Shape::Line(l.position, end, 1, l.color)));
 	}
+	allLights.setPrimitiveType(sf::Lines);
+	//rt.draw(allLights);
 
+}
+void LightEngine::DrawLights(sf::RenderTarget &rt)
+{
+	rt.draw(allLights);
 }
 bool LightEngine::FindDistance::LightHitsBlock(Light &l, Block &b, float cur_ang, float &refleng)
 {
