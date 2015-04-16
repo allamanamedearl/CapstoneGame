@@ -9,6 +9,8 @@ Light::Light()
 	position = sf::Vector2f(0.0f, 0.0f);
 	angle = 0;
 	dynamic = true;
+	getsBlocked = false;
+	blockAngle = 0.0f;
 }
 
 

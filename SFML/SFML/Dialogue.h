@@ -9,7 +9,8 @@ class Dialogue
 {
 private:
 	std::string source;
-	sf::Texture background;
+	sf::Texture charTexture;
+	sf::Sprite charSprite;
 	sf::Font font;
 	sf::Text text;
 	sf::RectangleShape rectangle;

@@ -298,7 +298,7 @@ void Engine::RenderFrame()
 
 		dialogue->LoadDialogue(1);
 		mainGUI->Draw(window);
-		//dialogue->RenderDialogue(window);
+		dialogue->RenderDialogue(window);
 
 		window->setView(*view);
 		
@@ -425,6 +425,12 @@ void Engine::Update()
 		//camera->Update();
 		//camera->GoTo(0, tileSize);
 		player->Update(timeStep/10);
+		//check if player is in light
+		//checks center,
+		if (lightEng->CheckForPlayerCollision(player->GetPosition()+sf::Vector2f(tileSize/2,tileSize/2)))
+		{
+			std::cout << "IN LIGHT\n";
+		}
 		mainGUI->Update(player->CheckActivePowers());
 
 		//gui tells player if you powers are reloaded and you can use them again

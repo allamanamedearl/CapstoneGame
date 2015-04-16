@@ -13,5 +13,7 @@ public:
 	float angleSpread;//spread of light creating an arc
 	float angle;//where the light's pointing at
 	bool dynamic;
+	bool getsBlocked;
+	float blockAngle;
 };
 

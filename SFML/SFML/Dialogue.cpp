@@ -11,8 +11,10 @@ Dialogue::Dialogue()
 	rectangle.setOutlineColor(sf::Color::Black);
 	text.setCharacterSize(18);
 	text.setColor(sf::Color::Black);
-	text.setPosition(0.0f, 510.0f);
+	text.setPosition(80.0f, 510.0f);
 	text.setFont(font);
+
+	charSprite.setPosition(0.0f, 490.0f);
 	//text.setStyle(sf::Text::Bold);
 	
 }
@@ -33,8 +35,10 @@ Dialogue::Dialogue(std::string source,sf::Vector2f pos)
 	text.setCharacterSize(18);
 	//text.setStyle(sf::Text::Bold);
 	text.setColor(sf::Color::Black);
-	text.setPosition(pos.x + 5.0f, pos.y + 10.0f);
+	text.setPosition(pos.x + 80.0f, pos.y + 10.0f);
 	text.setFont(font);
+
+	charSprite.setPosition(sf::Vector2f(pos.x, pos.y-10.0f));
 	
 }
 Dialogue::~Dialogue()
@@ -85,6 +89,40 @@ void Dialogue::LoadDialogue(int id)
 	//std::string dialogue = character->first_attribute("dialogue")->value();
 
 	text.setString(dialogue);
+	switch (id)
+	{
+	case 1:
+	{
+			  if (!charTexture.loadFromFile("patient1small.png"))
+				  std::exit(EXIT_FAILURE);
+			  else
+			  {
+				  charSprite.setTexture(charTexture);
+			  }
+			  break;
+	}
+	case 2:
+	{
+			  if (!charTexture.loadFromFile("patient2small.png"))
+				  std::exit(EXIT_FAILURE);
+			  else
+			  {
+				  charSprite.setTexture(charTexture);
+			  }
+			  break;
+	}
+	case 3:
+	{
+			  if (!charTexture.loadFromFile("patient3small.png"))
+				  std::exit(EXIT_FAILURE);
+			  else
+			  {
+				  charSprite.setTexture(charTexture);
+			  }
+			  break;
+	}
+		break;
+	}
 	//return dialogue;
 	
 }
@@ -92,6 +130,7 @@ void Dialogue::RenderDialogue(sf::RenderWindow* window)
 {
 	//text.setString(dialogue);
 	window->draw(rectangle);
+	window->draw(charSprite);
 	window->draw(text);
 	
 }
