@@ -28,6 +28,12 @@ public:
 	void SetMadness(bool active){ this->triggerMadness = active; }
 	void SetControl(bool active){ this->controlNPC = active; }
 
+	bool GetIsTalking(){ return this->isTalking; }
+	void SetIsTalking(bool talking){ this->isTalking = talking; }
+
+	int GetIdConvoPartner(){ return this->idConvoPartner; }
+	void SetIdConvoPartner(int id){ this->idConvoPartner = id; }
+
 	//hints stuff
 	bool GetIfNearBreakable(){ return this->nearBreakable; }
 	bool GetIfNearControlable(){ return this->nearControlable; }
@@ -44,6 +50,9 @@ private:
 	float pixelsToMove;
 	sf::Vector2f endPos;//target end position
 	sf::Vector2f pastPos;//starting position before moving
+
+	bool isTalking;
+	int idConvoPartner;
 
 	//Time stuff for power animations
 	sf::Clock madClock;

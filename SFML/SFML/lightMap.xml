@@ -2,4 +2,5 @@
 	<light x="1" y="1" radius="150" arc_size="60" angle="15"/>
 	<light x="5" y="3" radius="150" arc_size="60" angle="90"/>
 	<light x="6" y="6" radius="150" arc_size="60" angle="45"/>
+	<light x="15" y="8" radius="150" arc_size="60" angle="-45"/>
 </lights>

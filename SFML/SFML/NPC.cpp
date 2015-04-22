@@ -16,6 +16,9 @@ NPC::NPC(sf::Texture *texture, CollisionHandling* collHand, sf::Vector2f startPo
 	pixelsToMove = 32;//tile size
 	userActive = false;
 	playerCaught = false;
+
+	controlEffect.loadFromFile("controlEffect.png");
+	madnessEffect.loadFromFile("madnessEffect.png");
 }
 
 
@@ -94,6 +97,13 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 			if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Idle)
 			{
 				direction = behaviour->IdleAI(position, velocity);
+				
+				spriteEffect.setTexture(madnessEffect);
+			}
+			if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Stand)
+			{
+				velocity = sf::Vector2f(0.0f, 0.0f);
+				animation->FaceLeft();
 			}
 			if (behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Guard)
 			{
@@ -117,7 +127,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 					direction = behaviour->PursueAI(position, velocity, playerPos);
 				}
 			}
-			if (behaviour->GetCurrentAI() != AIBehaviour::Behaviour::Guard)
+			if (behaviour->GetCurrentAI() != AIBehaviour::Behaviour::Guard && behaviour->GetCurrentAI() !=AIBehaviour::Behaviour::Stand)
 			{
 				sf::Vector2f playerTilePos = cHandler->GetWorldToTileCoords(playerPos);
 				sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(position);
@@ -258,6 +268,7 @@ void NPC::GetMovement(sf::Vector2f playerPos)
 	}
 	else
 	{
+		spriteEffect.setTexture(controlEffect);
 		if (!isMoving){
 			animation->Pause();//no idle animation so when sprite is stopped it stays on currentFrame
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -365,8 +376,14 @@ void NPC::Update(float timeStep)
 	animation->Update();
 	//sprite->setPosition(position);
 	animation->SetPosition(position);
+	spriteEffect.setPosition(position);
 }
 void NPC::Draw(sf::RenderWindow *rw)
 {
 	rw->draw(*animation->GetCurrentFrame());
+	if (userActive || behaviour->GetCurrentAI() == AIBehaviour::Behaviour::Idle)
+	{
+		rw->draw(spriteEffect);	
+	}
+	
 }

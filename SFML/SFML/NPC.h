@@ -19,6 +19,11 @@ private:
 	float pixelsToMove;
 	bool playerCaught;
 
+	int id;//for dialogue
+
+	sf::Texture controlEffect;//power effect on npc
+	sf::Texture madnessEffect;
+	sf::Sprite spriteEffect;
 	bool userActive;//for whether npc is being controlled by player
 
 	CollisionHandling *cHandler;
@@ -33,6 +38,9 @@ public:
 	void SetPosition(sf::Vector2f pos){ this->position = pos; }
 	sf::Vector2f GetVelocity(){ return this->velocity; }
 	void SetVelocity(sf::Vector2f vel){ this->velocity = vel; }
+
+	int GetId(){ return this->id; }
+	void SetId(int id){ this->id = id; }
 	
 	float GetSpeed(){ return this->speed; }
 	void SetSpeed(float val){ this->speed = val; }

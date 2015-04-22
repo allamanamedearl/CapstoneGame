@@ -122,6 +122,7 @@ bool Engine::Init()
 			npc->SetBehaviour(currLevel->npcs[i].behaviour);
 			npc->SetOriginalBehaviour(currLevel->npcs[i].behaviour);
 			npc->SetEndPos(currLevel->npcs[i].endPos);//sf::Vector2f(10.0f, 10.0f));//in case it's a patrol npc
+			npc->SetId(currLevel->npcs[i].id);
 			level_NPCs.push_back(npc);
 		}
 	}
@@ -295,11 +296,15 @@ void Engine::RenderFrame()
 		guiView.setViewport(sf::FloatRect(0.0f, 0.8f, 1.0f,0.2f));
 		window->setView(guiView);
 		window->draw(guiSprite);*/
-
-		dialogue->LoadDialogue(1);
+		
+		
 		mainGUI->Draw(window);
-		dialogue->RenderDialogue(window);
-
+		
+		if (player->GetIsTalking())
+		{
+			dialogue->LoadDialogue(player->GetIdConvoPartner());
+			dialogue->RenderDialogue(window);
+		}
 		window->setView(*view);
 		
 		//window->draw(posText);
@@ -471,26 +476,26 @@ void Engine::Update()
 			if (playerPos.x >= screenWidth / 3 * 2 && player->GetVelocity().x > 0)
 			{
 				//scroll left when walking right
-				view->move(2.0f*timeStep/10, 0.0f);
-				camera->SetRenderingRange(-2 * timeStep / 10, 0);//bc moving down
+				view->move(2.0f, 0.0f);//*timeStep/10, 0.0f);
+				camera->SetRenderingRange(-2 , 0);//bc moving down x *
 			}
 			if (playerPos.x <= screenWidth / 3 && player->GetVelocity().x < 0)
 			{
 				//scroll right when walking left
-				view->move(-2.0f*timeStep / 10, 0.0f);
-				camera->SetRenderingRange(2 * timeStep / 10, 0);//bc moving down
+				view->move(-2.0f, 0.0f);//timeStep / 10, 0.0f);
+				camera->SetRenderingRange(2, 0);// *timeStep / 10, 0);//bc moving down
 			}//-100 for gui height?
 			if (playerPos.y >= screenHeight / 3 * 2 - 100 && player->GetVelocity().y > 0)
 			{
 				//scroll up when walking down
-				view->move(0.0f, 2.0f*timeStep / 10);
-				camera->SetRenderingRange(0, -2 * timeStep / 10);//bc moving down
+				view->move(0.0f, 2.0f);// *timeStep / 10);
+				camera->SetRenderingRange(0, -2);// *timeStep / 10);//bc moving down
 			}
 			if (playerPos.y <= screenHeight / 3 && player->GetVelocity().y < 0)
 			{
 				//scroll down when walking up
-				view->move(0.0f, -2.0f*timeStep / 10);
-				camera->SetRenderingRange(0, 2 * timeStep / 10);
+				view->move(0.0f, -2.0f);// *timeStep / 10);
+				camera->SetRenderingRange(0, 2);//* timeStep / 10);
 			}
 		}
 

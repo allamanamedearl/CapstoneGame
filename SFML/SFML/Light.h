@@ -10,7 +10,7 @@ public:
 	sf::Vector2f position;
 	sf::Color colour;
 	float radius;//how far light will shine to
-	float angleSpread;//spread of light creating an arc
+	float angleSpread;//spread of light creating an arc <)
 	float angle;//where the light's pointing at
 	bool dynamic;
 	bool getsBlocked;

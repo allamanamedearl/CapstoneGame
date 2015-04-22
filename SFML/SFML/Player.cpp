@@ -15,6 +15,8 @@ Player::Player(sf::Texture *texture , CollisionHandling* collHand, sf::Texture *
 	animation = new Animation();
 	powerAnim = new Animation();
 	isMoving = false;
+	isTalking = false;
+	idConvoPartner = 0;
 
 	animation->SetFrames(*texture, 32, 32, (int)texture->getSize().x, (int)texture->getSize().y);
 	animation->SetPosition(position);
@@ -243,6 +245,37 @@ void Player::GetInput(std::vector<NPC*>& NPCs)
 					}
 				}
 			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				if (!isTalking)
+				{
+					//check for npc up,left,right,down
+					for (int i = 0; i < NPCs.size(); i++)
+					{
+						sf::Vector2f npcTilePos = cHandler->GetWorldToTileCoords(NPCs[i]->GetPosition());
+						//check to see if any of the npcs are in range
+						if (npcTilePos.x >= (playerTilePos.x - 1) && npcTilePos.x <= (playerTilePos.x + 1) &&
+							npcTilePos.y >= (playerTilePos.y - 1) && npcTilePos.y <= (playerTilePos.y + 1))
+						{
+							//get that npc id
+							//set isTalking to true
+							idConvoPartner=NPCs[i]->GetId();
+							isTalking = true;
+							break;
+						}
+						else
+						{
+							isTalking = false;
+						}
+					}	
+				}
+				
+				else
+				{
+					isTalking = false;
+				}
+				
+			}
 		}
 		else//so you can;t get input while player is still moving
 		{
@@ -346,7 +379,17 @@ void Player::Draw(sf::RenderWindow *rw)
 {
 	
 	//rw->draw(*sprite);
-	rw->draw(*animation->GetCurrentFrame());
+	if (controlNPC)
+	{
+		animation->GetCurrentFrame()->setColor(sf::Color(255, 255, 255, 50));
+		rw->draw(*animation->GetCurrentFrame());
+	}
+	else
+	{
+		animation->GetCurrentFrame()->setColor(sf::Color(255, 255, 255, 255));
+		rw->draw(*animation->GetCurrentFrame());
+	}
+	
 	if (animateMadness || animateControl || animateRage)
 	{
 		rw->draw(*powerAnim->GetCurrentFrame());

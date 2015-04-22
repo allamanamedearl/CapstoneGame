@@ -8,7 +8,7 @@ class AIBehaviour
 public:
 	AIBehaviour(CollisionHandling *collHandling);
 	~AIBehaviour();
-	enum Behaviour { Idle, Patrol, Pursue, Guard };
+	enum Behaviour { Idle, Patrol, Pursue, Guard, Stand };
 	Behaviour GetCurrentAI(){ return this->currentAI; }
 	void SetCurrentAI(Behaviour AI){ this->currentAI = AI; }
 	char IdleAI(sf::Vector2f pos,sf::Vector2f vel);

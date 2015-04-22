@@ -11,7 +11,7 @@
 	<tile x="7" y="0" baseid="1" walkable="false" npc="0" breakable="false"/>
 	<tile x="8" y="0" baseid="1" walkable="false" npc="0" breakable="false"/>
 	<tile x="9" y="0" baseid="0" walkable="true" npc="0" breakable="false"/>
-	<tile x="10" y="0" baseid="0" walkable="true" npc="0" breakable="false"/>
+	<tile x="10" y="0" baseid="0" walkable="true" npc="Stand" breakable="false" charId="1"/>
 	<tile x="11" y="0" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="12" y="0" baseid="1" walkable="false" npc="0" breakable="false"/>
 	<tile x="13" y="0" baseid="1" walkable="false" npc="0" breakable="false"/>
@@ -501,12 +501,12 @@
 	<tile x="97" y="4" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="98" y="4" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="99" y="4" baseid="0" walkable="true" npc="0" breakable="false"/>
-	<tile x="0" y="5" baseid="0" walkable="true" npc="Idle" breakable="false"/>
+	<tile x="0" y="5" baseid="0" walkable="true" npc="Idle" breakable="false" charId="1"/>
 	<tile x="1" y="5" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="2" y="5" baseid="0" walkable="true" npc="0" breakable="false"/>
-	<tile x="3" y="5" baseid="0" walkable="true" npc="Guard" breakable="false"/>
+	<tile x="3" y="5" baseid="0" walkable="true" npc="Guard" breakable="false" charId="1"/>
 	<tile x="4" y="5" baseid="0" walkable="true" npc="0" breakable="false"/>
-	<tile x="5" y="5" baseid="0" walkable="true" npc="Patrol" breakable="false" endX="10" endY="10"/>
+	<tile x="5" y="5" baseid="0" walkable="true" npc="Patrol" breakable="false" endX="10" endY="10" charId="1"/>
 	<tile x="6" y="5" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="7" y="5" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="8" y="5" baseid="0" walkable="true" npc="0" breakable="false"/>
@@ -1007,7 +1007,7 @@
 	<tile x="3" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="4" y="10" baseid="5" walkable="false" npc="0" breakable="true"/>
 	<tile x="5" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
-	<tile x="6" y="10" baseid="0" walkable="true" npc="Guard" breakable="false"/>
+	<tile x="6" y="10" baseid="0" walkable="true" npc="Guard" breakable="false" charId="1"/>
 	<tile x="7" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="8" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="9" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
@@ -1025,7 +1025,7 @@
 	<tile x="21" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="22" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="23" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
-	<tile x="24" y="10" baseid="0" walkable="true" npc="Patrol" breakable="false" endX="35" endY="30"/>
+	<tile x="24" y="10" baseid="0" walkable="true" npc="Patrol" breakable="false" endX="35" endY="30" charId="1"/>
 	<tile x="25" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="26" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="27" y="10" baseid="0" walkable="true" npc="0" breakable="false"/>
@@ -3604,7 +3604,7 @@
 	<tile x="0" y="36" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="1" y="36" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="2" y="36" baseid="0" walkable="true" npc="0" breakable="false"/>
-	<tile x="3" y="36" baseid="0" walkable="true" npc="Guard" breakable="false"/>
+	<tile x="3" y="36" baseid="0" walkable="true" npc="Stand" breakable="false" charId="1"/>
 	<tile x="4" y="36" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="5" y="36" baseid="0" walkable="true" npc="0" breakable="false"/>
 	<tile x="6" y="36" baseid="0" walkable="true" npc="0" breakable="false"/>

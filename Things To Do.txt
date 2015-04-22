@@ -1,0 +1,12 @@
+Light Calculations - add more points on player to test to see if in light
+		   - modify so it doesn't say ur in the light when standing in the
+		     shadow of a blocked light
+NPC - have an original speed and a modified speed for when madness is triggered
+    - add if statement so madness texture effect only shows up when the speed is
+      greater than the original (that means npc is mad)
+    - set npc speed back to original when no longer mad
+AI - modify to inspect npcs who have gone mad
+   - nearby bad npcs head to player if player is spotted in light
+UI - space bar when pressed shows dialogue - add that key to GUI- have game pause
+     when dialogue pops up
+   - eye - open in light, closed not in light

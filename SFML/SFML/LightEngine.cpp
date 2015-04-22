@@ -38,21 +38,7 @@ void LightEngine::InitLights()
 }
 void LightEngine::ShineLight(Light &l)
 {
-	/*
-	remember back in the Light class, we had something called 'angleSpread' ?
-	that's to create a tunnel, or arc shaped light. Like this:
-	/)
-	/  )
-	/    )
-	/      )
-	<       )
-	\      )
-	\    )
-	\  )
-	\)
-
-	Obviously it'll look better than an ascii drawing
-	*/
+	
 
 	//http://math2.org/math/geometry/circles.htm
 	float current_angle = l.angle - (l.angleSpread / 2); //This will rotate the angle back far enough to get a desired arc
@@ -74,10 +60,11 @@ void LightEngine::ShineLight(Light &l)
 
 	float addto = 1.f / l.radius;
 	bool firstHitofBlock = false;//so it doesn't change blocked angle to the next line's angle
-	for (current_angle; current_angle < l.angle + (l.angleSpread / 2); current_angle += addto * (180.f / 3.14f)) //we need to add to the current angle, until it reaches the end of the arc. we divide 1.f by radius for a more solid shape. Otherwize you could see lines seperating
+	//need to add to the current angle, until it reaches the end of the arc. divide 1.f by radius for a more solid shape. Otherwise you could see lines seperating
+	for (current_angle; current_angle < l.angle + (l.angleSpread / 2); current_angle += addto * (180.f / 3.14f)) 
 	{
 		dyn_len = l.radius; //Reset the length
-		findDis.start = true; //Start of finding a light, we need to reset
+		findDis.start = true; //Start of finding a light, need to reset
 		findDis.shortest = 0; //Reset the shortest.
 
 
@@ -217,7 +204,7 @@ bool LightEngine::FindDistance::LightHitsBlock(Light &l, Block &b, float cur_ang
 
 			pointpos.x += cos(radians) * distance;
 			pointpos.y += sin(radians) * distance;
-			//By doing this, we check if the angle is in the direciton of the block.
+			//By doing this, check if the angle is in the direciton of the block.
 
 			if (b.fRect.contains(pointpos)) //If it was, than the point would be intersecting the rectangle of the block
 			{
