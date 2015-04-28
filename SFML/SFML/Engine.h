@@ -44,6 +44,7 @@ private:
 	int tileSize;
 
 	LightEngine* lightEng;
+	bool inLight;
 
 	//Player
 	Player *player;

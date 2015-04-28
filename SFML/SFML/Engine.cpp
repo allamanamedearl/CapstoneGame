@@ -297,7 +297,24 @@ void Engine::RenderFrame()
 		window->setView(guiView);
 		window->draw(guiSprite);*/
 		
+		sf::Text inLightTxt;
+		if (inLight)
+		{
+			inLightTxt.setString("In LIGHT");
+			inLightTxt.setColor(sf::Color::Yellow);
+		}
+		else
+		{
+			inLightTxt.setString("In SHADOW");
+			inLightTxt.setColor(sf::Color::Black);
+		}
 		
+		inLightTxt.setFont(guiFont);
+		inLightTxt.setCharacterSize(24);
+		
+		inLightTxt.setStyle(sf::Text::Bold);
+		inLightTxt.setPosition(view->getCenter().x - 300.0f, view->getCenter().y + 225.0f);
+
 		mainGUI->Draw(window);
 		
 		if (player->GetIsTalking())
@@ -306,7 +323,7 @@ void Engine::RenderFrame()
 			dialogue->RenderDialogue(window);
 		}
 		window->setView(*view);
-		
+		window->draw(inLightTxt);
 		//window->draw(posText);
 		//window->draw(text);
 		//window->draw(other);
@@ -435,6 +452,11 @@ void Engine::Update()
 		if (lightEng->CheckForPlayerCollision(player->GetPosition()+sf::Vector2f(tileSize/2,tileSize/2)))
 		{
 			std::cout << "IN LIGHT\n";
+			inLight = true;
+		}
+		else
+		{
+			inLight = false;
 		}
 		mainGUI->Update(player->CheckActivePowers());
 
